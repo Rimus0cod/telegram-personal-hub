@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { CloudSun, CheckSquare, StickyNote, Timer, Plus, Search, Trash2, Play, Pause, RotateCcw, Sun, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, LocateFixed, RefreshCw, Droplets, Wind, Sunrise, Sunset, Pencil, X, Check, MapPin } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeSanitize from 'rehype-sanitize';
+import Nutrition from './Nutrition';
+import { CloudSun, CheckSquare, StickyNote, Timer, Plus, Search, Trash2, Play, Pause, RotateCcw, Sun, Cloud, CloudRain, CloudSnow, CloudFog, CloudLightning, LocateFixed, RefreshCw, Droplets, Wind, Sunrise, Sunset, Pencil, X, Check, MapPin, Copy, BookOpen, ArrowLeft, CalendarDays } from 'lucide-react';
 import './style.css';
 
 const API=import.meta.env.VITE_API_URL||'';
@@ -11,7 +15,22 @@ async function request(path:string, options:RequestInit={}) {
  if(!response.ok){let detail=`Request failed (${response.status})`;try{const body=await response.json();detail=body.detail||detail}catch{};const error=Object.assign(new Error(detail),{status:response.status});throw error}
  return response.status===204?null:response.json();
 }
-type Tab='home'|'tasks'|'notes'|'focus'|'weather';
+type Tab='home'|'tasks'|'notes'|'focus'|'weather'|'nutrition';
+function prepareNoteMarkdown(source:string){
+ const lines=source.replace(/\r\n?/g,'\n').split('\n');
+ const isPipeRow=(line:string)=>line.includes('|')&&line.split('|').length>=3;
+ for(let i=0;i<lines.length;){
+  if(!isPipeRow(lines[i])||/^\s*\|?\s*:?-{3,}/.test(lines[i])){i++;continue}
+  let end=i;while(end<lines.length&&isPipeRow(lines[end]))end++;
+  if(end-i>=2&&!/^\s*\|?\s*:?-{3,}/.test(lines[i+1])){
+   const columns=lines[i].split('|').length-1;
+   lines.splice(i+1,0,Array(columns+1).fill('---').join(' | '));
+   end++;
+  }
+  i=end;
+ }
+ return lines.join('\n');
+}
 function weatherInfo(code:number,isDay=true){
  if(code===0)return {label:'Ясно',Icon:isDay?Sun:CloudSun};
  if([1,2].includes(code))return {label:'Переменная облачность',Icon:CloudSun};
@@ -23,7 +42,7 @@ function weatherInfo(code:number,isDay=true){
  return {label:'Переменная облачность',Icon:CloudSun};
 }
 export default function App(){
- const [tab,setTab]=useState<Tab>('home'),[draft,setDraft]=useState(''),[noteContent,setNoteContent]=useState(''),[editingNote,setEditingNote]=useState<any>(null),[city,setCity]=useState(''),[selectedCityName,setSelectedCityName]=useState(''),[cityOptions,setCityOptions]=useState<any[]>([]),[searchingCities,setSearchingCities]=useState(false),[loadingWeather,setLoadingWeather]=useState(false),[searchText,setSearchText]=useState(''),[query,setQuery]=useState(''),[seconds,setSeconds]=useState(1500),[running,setRunning]=useState(false),[taskFilter,setTaskFilter]=useState('all'),[focusMode,setFocusMode]=useState('focus'),[notice,setNotice]=useState('');
+ const [tab,setTab]=useState<Tab>('home'),[draft,setDraft]=useState(''),[noteContent,setNoteContent]=useState(''),[editingNote,setEditingNote]=useState<any>(null),[viewingNote,setViewingNote]=useState<any>(null),[city,setCity]=useState(''),[selectedCityName,setSelectedCityName]=useState(''),[cityOptions,setCityOptions]=useState<any[]>([]),[searchingCities,setSearchingCities]=useState(false),[loadingWeather,setLoadingWeather]=useState(false),[searchText,setSearchText]=useState(''),[query,setQuery]=useState(''),[seconds,setSeconds]=useState(1500),[running,setRunning]=useState(false),[taskFilter,setTaskFilter]=useState('all'),[focusMode,setFocusMode]=useState('focus'),[notice,setNotice]=useState('');
  const qc=useQueryClient(); const me=useQuery({queryKey:['me'],queryFn:()=>request('/auth/me'),retry:false,enabled:!!initData});
  const tasks=useQuery({queryKey:['tasks',taskFilter],queryFn:()=>request('/tasks?status='+taskFilter) as Promise<any[]> ,enabled:!!initData});
  const notes=useQuery({queryKey:['notes',query],queryFn:()=>request('/notes?q='+encodeURIComponent(query)) as Promise<any[]>,enabled:!!initData});
@@ -34,19 +53,21 @@ export default function App(){
  const updateTask=useMutation({mutationFn:({t,title}:any)=>request(`/tasks/${t.id}`,{method:'PATCH',body:JSON.stringify({title})}),onSuccess:()=>qc.invalidateQueries({queryKey:['tasks']})});
  const deleteTask=useMutation({mutationFn:(t:any)=>request(`/tasks/${t.id}`,{method:'DELETE'}),onSuccess:()=>qc.invalidateQueries({queryKey:['tasks']})});
  const updateNote=useMutation({mutationFn:({n,title,content}:any)=>request(`/notes/${n.id}`,{method:'PATCH',body:JSON.stringify({title,content})}),onSuccess:()=>{setEditingNote(null);setNotice('Note updated');qc.invalidateQueries({queryKey:['notes']})},onError:(e:any)=>setNotice(e.message)});
- const remove=useMutation({mutationFn:(n:any)=>request(`/notes/${n.id}`,{method:'DELETE'}),onSuccess:(_data,n)=>{if(editingNote?.id===n.id){setEditingNote(null);setDraft('');setNoteContent('')}setNotice('Заметка удалена');qc.invalidateQueries({queryKey:['notes']})},onError:(e:any)=>setNotice(`Не удалось удалить заметку: ${e.message}`)});
+ const remove=useMutation({mutationFn:(n:any)=>request(`/notes/${n.id}`,{method:'DELETE'}),onSuccess:(_data,n)=>{if(editingNote?.id===n.id){setEditingNote(null);setDraft('');setNoteContent('')}if(viewingNote?.id===n.id)setViewingNote(null);setNotice('Заметка удалена');qc.invalidateQueries({queryKey:['notes']})},onError:(e:any)=>setNotice(`Не удалось удалить заметку: ${e.message}`)});
  const record=useMutation({mutationFn:({mode,duration}:any)=>request('/focus/sessions',{method:'POST',body:JSON.stringify({duration,mode,completed:true,started_at:new Date(Date.now()-duration*60000).toISOString()})}),onSuccess:()=>qc.invalidateQueries({queryKey:['stats']})});
  const stats=useQuery({queryKey:['stats'],queryFn:()=>request('/focus/stats'),enabled:!!initData});
  useEffect(()=>{if(!running)return;const id=setInterval(()=>setSeconds(s=>{if(s<=1){setRunning(false);const duration=focusMode==='focus'?25:focusMode==='short_break'?5:15;record.mutate({mode:focusMode,duration});return duration*60}return s-1}),1000);return()=>clearInterval(id)},[running,focusMode]);
  useEffect(()=>{if(!initData||city.trim().length<2||city.trim()===selectedCityName){setCityOptions([]);setSearchingCities(false);return}let active=true;setSearchingCities(true);const timer=setTimeout(()=>request('/weather/search?city='+encodeURIComponent(city.trim())).then((results:any[])=>{if(active)setCityOptions(results)}).catch((e:any)=>{if(active)setNotice(`Не удалось найти город: ${e.message}`)}).finally(()=>{if(active)setSearchingCities(false)}),300);return()=>{active=false;clearTimeout(timer)}},[city,selectedCityName]);
  useEffect(()=>{const timer=setTimeout(()=>setQuery(searchText.trim()),250);return()=>clearTimeout(timer)},[searchText]);
+ useEffect(()=>{if(!viewingNote)return;const handleKey=(event:KeyboardEvent)=>{if(event.key==='Escape')setViewingNote(null)};window.addEventListener('keydown',handleKey);return()=>window.removeEventListener('keydown',handleKey)},[viewingNote]);
  async function chooseCity(name=city,latitude?:number,longitude?:number){if(!name.trim())return;setLoadingWeather(true);setNotice('');try{const params=new URLSearchParams({city:name.trim()});if(latitude!=null&&longitude!=null){params.set('latitude',String(latitude));params.set('longitude',String(longitude))}const r=await request('/weather?'+params.toString());qc.setQueryData(['weather'],r);setCityOptions([]);setSelectedCityName(r.city||name);setCity(r.city||name);setNotice('')}catch(e:any){setNotice(`Не удалось загрузить погоду: ${e.message}`)}finally{setLoadingWeather(false)}}
  function useCurrentLocation(){if(!navigator.geolocation){setNotice('Геолокация недоступна в этом приложении.');return}setLoadingWeather(true);setNotice('Определяем местоположение…');navigator.geolocation.getCurrentPosition(async position=>{try{const {latitude,longitude}=position.coords;const data=await request(`/weather?latitude=${latitude}&longitude=${longitude}`);qc.setQueryData(['weather'],{...data,city:'Моё местоположение'});setNotice('')}catch(e:any){setNotice(`Не удалось загрузить погоду: ${e.message}`)}finally{setLoadingWeather(false)}},error=>{setLoadingWeather(false);setNotice(error.code===1?'Разрешите доступ к местоположению в настройках Telegram.':'Не удалось определить местоположение.')},{enableHighAccuracy:false,timeout:10000,maximumAge:300000})}
  function confirmDeleteNote(note:any){const removeNote=()=>remove.mutate(note);if(telegram?.showConfirm){telegram.showConfirm('Удалить эту заметку?',(confirmed:boolean)=>{if(confirmed)removeNote()})}else if(window.confirm('Удалить эту заметку?'))removeNote()}
+ async function copyNote(note:any){try{await navigator.clipboard.writeText(`${note.title}\n\n${note.content||''}`);setNotice('Текст заметки скопирован')}catch{setNotice('Не удалось скопировать текст на этом устройстве')}}
  const list=tab==='notes'?notes.data:[];
  const currentWeather=weather.data?.current;
  const currentCondition=weatherInfo(currentWeather?.weather_code??0,currentWeather?.is_day!==0);
- return <main><header><div><span className="eyebrow">YOUR PERSONAL SPACE</span><h1>{tab==='home'?`Good day${me.data?.first_name?`, ${me.data.first_name}`:''}`:({tasks:'Tasks',notes:'Notes',focus:'Focus',weather:'Weather'} as any)[tab]}</h1></div><span className="avatar">{me.data?.first_name?.[0]||'✦'}</span></header>
+ return <main><header><div><span className="eyebrow">YOUR PERSONAL SPACE</span><h1>{tab==='home'?`Good day${me.data?.first_name?`, ${me.data.first_name}`:''}`:({tasks:'Tasks',notes:'Notes',focus:'Focus',weather:'Weather',nutrition:'Питание'} as any)[tab]}</h1></div><span className="avatar">{me.data?.first_name?.[0]||'✦'}</span></header>
  {!initData&&<section className="card warning">Откройте приложение через Telegram-бота, чтобы войти и сохранять свои данные. В обычном браузере Telegram не передаёт данные безопасного входа.</section>}
  {notice&&<button className="notice" onClick={()=>setNotice('')}>{notice} <span>×</span></button>}
  {tab==='home'&&<><button className="card weather" onClick={()=>setTab('weather')}><currentCondition.Icon/><div><b>{currentWeather?.temperature_2m!=null?`${Math.round(currentWeather.temperature_2m)}° · ${currentCondition.label}`:weather.isLoading?'Загружаем погоду…':'Выберите город'}</b><small>{weather.data?.city||'Прогноз на 5 дней'}</small></div><span className="chevron">›</span></button><div className="grid"><button className="card stat" onClick={()=>setTab('tasks')}><CheckSquare/><b>{tasks.data?.filter(t=>!t.completed).length??'—'}</b><small>Open tasks</small></button><button className="card stat" onClick={()=>setTab('notes')}><StickyNote/><b>{notes.data?.length??'—'}</b><small>Notes</small></button></div><button className="card focus-card" onClick={()=>setTab('focus')}><Timer/><div><b>Focus timer</b><small>{stats.data?.sessions??0} sessions · {stats.data?.focus_minutes??0} min focused</small></div><span className="chevron">›</span></button><h2>Quick actions</h2><div className="quick"><button onClick={()=>setTab('tasks')}>+ New task</button><button onClick={()=>setTab('notes')}>+ New note</button></div></>}
@@ -61,7 +82,7 @@ export default function App(){
   <div className="list-heading"><b>{query?'Результаты поиска':'Мои заметки'}</b><small>{notes.data?.length??0}</small></div>
   {notes.isFetching&&initData&&<p className="inline-loading"><RefreshCw className="spin" size={15}/> Обновляем список…</p>}{notes.isError&&<p className="error">Не удалось загрузить заметки: {(notes.error as Error).message}</p>}
   <div className="notes-list">{list?.map((n:any)=><article className={`note-card ${editingNote?.id===n.id?'editing':''}`} key={n.id}>
-   <button className="note-open" onClick={()=>{setEditingNote(n);setDraft(n.title);setNoteContent(n.content);window.scrollTo({top:0,behavior:'smooth'})}}><span className="note-card-title">{n.title}</span><span className="note-preview">{n.content||'Нет текста — нажмите, чтобы добавить'}</span><span className="note-date">Изменена {new Date(n.updated_at).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}</span></button>
+   <button className="note-open" onClick={()=>setViewingNote(n)} aria-label={`Открыть заметку: ${n.title}`}><span className="note-card-title">{n.title}</span><span className="note-preview">{n.content||'Нет текста — нажмите, чтобы открыть'}</span><span className="note-date">Изменена {new Date(n.updated_at).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}</span></button>
    <div className="note-actions"><button className="icon" onClick={()=>{setEditingNote(n);setDraft(n.title);setNoteContent(n.content);window.scrollTo({top:0,behavior:'smooth'})}} aria-label="Редактировать"><Pencil size={16}/></button><button className="icon danger-icon" onClick={()=>confirmDeleteNote(n)} aria-label="Удалить заметку"><Trash2 size={16}/></button></div>
   </article>)}</div>
   {notes.data?.length===0&&<p className="empty">{query?'По этому запросу заметок нет. Попробуйте изменить слова поиска.':'Пока заметок нет. Создайте первую — она останется здесь.'}</p>}
@@ -83,5 +104,7 @@ export default function App(){
   </>}
  </>}
  {tab==='focus'&&<section className="card timer"><div className="quick modes">{[['focus',25],['short_break',5],['long_break',15]].map(([mode,mins]:any)=><button className={focusMode===mode?'selected':''} key={mode} onClick={()=>{setRunning(false);setFocusMode(mode);setSeconds(mins*60)}}>{mode==='focus'?'Focus':mode==='short_break'?'Short break':'Long break'}</button>)}</div><span>{focusMode.replace('_',' ').toUpperCase()}</span><div className="clock">{String(Math.floor(seconds/60)).padStart(2,'0')}:{String(seconds%60).padStart(2,'0')}</div><div className="controls"><button onClick={()=>setRunning(!running)}>{running?<Pause/>:<Play/>}{running?'Pause':'Start'}</button><button className="icon" onClick={()=>{setRunning(false);setSeconds(focusMode==='focus'?1500:focusMode==='short_break'?300:900)}} aria-label="Reset"><RotateCcw/></button></div><p>{stats.data?.sessions??0} completed sessions · {stats.data?.focus_minutes??0} focus minutes</p></section>}
- <nav>{([['home','Hub'],['tasks','Tasks'],['notes','Notes'],['focus','Focus'],['weather','Weather']] as [Tab,string][]).map(([v,label])=><button className={tab===v?'active':''} onClick={()=>setTab(v)} key={v}>{label}</button>)}</nav></main>
+ {tab==='nutrition'&&<Nutrition request={request} initData={initData} setNotice={setNotice}/>}
+ {viewingNote&&<div className="note-reader-backdrop" onClick={()=>setViewingNote(null)}><section className="note-reader" role="dialog" aria-modal="true" aria-labelledby="reader-title" onClick={e=>e.stopPropagation()}><div className="reader-toolbar"><button className="reader-back" onClick={()=>setViewingNote(null)}><ArrowLeft size={17}/>К заметкам</button><button className="icon" onClick={()=>setViewingNote(null)} aria-label="Закрыть"><X size={19}/></button></div><div className="reader-meta"><span><BookOpen size={15}/> ЗАМЕТКА</span><span><CalendarDays size={14}/>{new Date(viewingNote.updated_at).toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'})}</span></div><h2 id="reader-title" className="reader-title">{viewingNote.title}</h2><div className="reader-content">{viewingNote.content?<ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]} components={{a:({node,...props})=><a {...props} target="_blank" rel="noopener noreferrer"/>}}>{prepareNoteMarkdown(viewingNote.content)}</ReactMarkdown>:<span className="reader-empty">В этой заметке пока нет текста.</span>}</div><div className="reader-actions"><button className="reader-copy" onClick={()=>copyNote(viewingNote)}><Copy size={16}/>Копировать</button><button onClick={()=>{setEditingNote(viewingNote);setDraft(viewingNote.title);setNoteContent(viewingNote.content||'');setViewingNote(null);window.scrollTo({top:0,behavior:'smooth'})}}><Pencil size={16}/>Редактировать</button><button className="reader-delete" onClick={()=>confirmDeleteNote(viewingNote)}><Trash2 size={16}/>Удалить</button></div></section></div>}
+ <nav>{([['home','Hub'],['tasks','Tasks'],['notes','Notes'],['nutrition','Питание'],['focus','Focus'],['weather','Weather']] as [Tab,string][]).map(([v,label])=><button className={tab===v?'active':''} onClick={()=>setTab(v)} key={v}>{label}</button>)}</nav></main>
 }

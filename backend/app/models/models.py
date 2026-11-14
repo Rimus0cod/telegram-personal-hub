@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, BigInteger, Index
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, BigInteger, Index, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
 
@@ -17,6 +17,7 @@ class User(Base):
     notes: Mapped[list["Note"]] = relationship(cascade="all, delete-orphan")
     tasks: Mapped[list["Task"]] = relationship(cascade="all, delete-orphan")
     sessions: Mapped[list["FocusSession"]] = relationship(cascade="all, delete-orphan")
+    meals: Mapped[list["MealEntry"]] = relationship(cascade="all, delete-orphan")
 
 class Note(Base):
     __tablename__ = "notes"
@@ -51,3 +52,29 @@ class FocusSession(Base):
     completed: Mapped[bool] = mapped_column(Boolean, default=True)
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     finished_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+class MealEntry(Base):
+    __tablename__ = "meal_entries"
+    __table_args__ = (Index("ix_meals_user_day", "user_id", "day"),)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    day: Mapped[str] = mapped_column(String(10), index=True)
+    meal_type: Mapped[str] = mapped_column(String(16), default="other")
+    name: Mapped[str] = mapped_column(String(160))
+    calories: Mapped[int] = mapped_column(Integer)
+    protein: Mapped[float] = mapped_column(default=0)
+    carbs: Mapped[float] = mapped_column(default=0)
+    fat: Mapped[float] = mapped_column(default=0)
+    ingredients: Mapped[str] = mapped_column(Text, default="")
+    serving_grams: Mapped[int] = mapped_column(Integer, default=100)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+class SavedRecipe(Base):
+    __tablename__ = "saved_recipes"
+    __table_args__ = (Index("ix_recipes_user_name", "user_id", "name"),)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    name: Mapped[str] = mapped_column(String(160))
+    meal_type: Mapped[str] = mapped_column(String(16), default="lunch")
+    ingredients: Mapped[list] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
