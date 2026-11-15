@@ -1,118 +1,177 @@
 # Telegram Personal Hub
 
-A Telegram Mini App with personal weather, notes, tasks, and a focus timer. The React frontend talks to a FastAPI service; PostgreSQL stores user-scoped data; an aiogram bot opens the Mini App.
+#### Video Demo: <URL>
 
-## Architecture
+Telegram Personal Hub is a CS50x Final Project and personal portfolio project: a private Telegram Mini App that brings daily weather, notes, tasks, a Focus Timer, and nutrition tracking with macros (КБЖУ) into one place. It is built as three cooperating applications: a React/Vite Mini App, a FastAPI backend, and an aiogram bot that launches the Mini App.
 
-- `frontend/`: React, TypeScript, Vite, TanStack Query, Telegram WebApp initData.
-- `backend/`: FastAPI, SQLAlchemy 2, Pydantic, Open-Meteo integration.
-- `bot/`: aiogram 3 `/start` and `/help` commands.
-- `docker-compose.yml`: PostgreSQL, Redis, a one-shot Alembic `migrate` service, API, bot, and Nginx-served frontend.
+The goal is to reduce the friction of using several separate tools every day. A Telegram user opens the bot, taps one button, and gets a small personal workspace that is already authenticated by Telegram and scoped to their own data.
 
-The API verifies Telegram's HMAC signature and `auth_date` before creating/loading a user. Every private resource query filters by that database user's ID. `BOT_TOKEN` stays in server containers.
+## Technologies and architecture
 
-## Rate limiting
+- **Frontend:** React 18, TypeScript, Vite, TanStack Query, Telegram WebApp `initData`, Nginx in production.
+- **Backend:** FastAPI, SQLAlchemy 2, Pydantic 2, Alembic, PostgreSQL 16, Redis for rate limiting, Open-Meteo and Open Food Facts integrations.
+- **Bot:** aiogram 3, `/start` and `/help`, opening the Mini App URL.
+- **Infrastructure:** Docker Compose with PostgreSQL, Redis, a one-shot Alembic `migrate` service, the API, the bot, and an Nginx-served frontend.
+- **Testing:** pytest for the backend and Vitest for the frontend.
 
-Authenticated `/api/v1` routes use per-user Redis token buckets: 120 requests/min generally, 60 writes/min, 30 weather/min, and shared limits for Open Food Facts (30/min plus 20 searches/min or 10 barcode lookups/min and 100/hour). Limits are checked atomically in Redis after authentication; `/health` is not user-limited.
+Request path:
 
-Compose starts an internal Redis service and configures `REDIS_URL`. For a backend run outside Compose, set `REDIS_URL` (for example `redis://localhost:6379/0`); when it is unset, rate limiting is disabled for local development. If Redis is configured but unavailable after startup, ordinary CRUD keeps working (fail-open), while Weather and Open Food Facts endpoints return `503` (fail-closed). Rate-limit counters are ephemeral and may be lost on restart.
+```text
+Telegram bot
+    -> Telegram Mini App (React/Vite)
+    -> Nginx same-origin proxy
+    -> FastAPI /api/v1
+    -> PostgreSQL (SQLAlchemy) and Redis (rate limiting)
+```
 
-## Requirements
+The frontend sends Telegram's original `initData` as `Authorization: tma <initData>`. The backend validates the HMAC signature and `auth_date`, resolves a database user, and every private query is filtered by that user's database ID. No mock authentication mode is provided for a plain browser preview.
 
-Docker Compose v2 is recommended. For local development: Python 3.12+, Node.js 22+, PostgreSQL (or SQLite for a local API), and a Telegram bot token from [@BotFather](https://t.me/BotFather).
+## Features
 
-## Configure and run with Docker
+### Telegram authentication and Mini App
 
-1. Copy `.env.example` to `.env` and set `BOT_TOKEN`, a strong `POSTGRES_PASSWORD`, and the public HTTPS `WEBAPP_URL`.
-2. Start everything with `docker compose up --build`. The one-shot `migrate` service applies Alembic before the backend starts; if it fails, the backend is not started. Images are named `<COMPOSE_PROJECT_NAME>-backend`, `-bot` and `-frontend`. Set `COMPOSE_PROJECT_NAME` explicitly in `.env` and keep it stable in production; if it is unset, Compose derives a project name from the directory, which can collide with another checkout of the same directory name. Use a different value and port for a separate stack.
-3. Open `http://localhost:8080` for local preview, or configure an HTTPS reverse proxy and set that public URL as the bot's Mini App URL with BotFather.
-4. Send `/start` to your bot and tap **Open Personal Hub**.
+The API verifies Telegram's Web App HMAC construction and rejects invalid, tampered, or expired `initData`. The resolved user is loaded or created server-side. The frontend never supplies an authoritative user ID, and private resources are always queried with the authenticated user's database ID.
 
-Take a verified PostgreSQL backup before every migration or upgrade; see `docs/BACKUP_RESTORE.md`.
+### Notes and tasks
 
-The API is served on the same origin under `/api/v1`; `/health` is the health endpoint and `/docs` is available on the backend container at port 8000 (publish it locally if needed).
+Notes support create, read, update, delete, search, and Markdown rendering. Tasks support create, read, update, delete, completion toggling, priorities, due dates, filtering by status, and sorting by creation or due date. Updates reject explicit `null` values for non-nullable fields instead of turning them into database errors. Notes and tasks are isolated between Telegram accounts.
 
-To host the ngrok tunnel inside Docker as well, add your ngrok account authtoken to `NGROK_AUTHTOKEN` in `.env`, then start the tunnel profile with `docker compose --profile tunnel up -d ngrok`. The tunnel targets the frontend service on the Compose network.
+### Focus Timer
 
-## Production hardening
+The Focus Timer supports focus, short-break, and long-break modes. The countdown is driven by an absolute deadline rather than by counting interval callbacks, so switching tabs, sleeping a device, or reloading the page does not silently lose time.
 
-Backend and bot images run as non-root UID/GID 10001 with bytecode writes disabled; the frontend Nginx image keeps its upstream root master process and drops workers to `nginx`. Compose applies per-service memory/CPU limits, stop grace periods for application containers, `no-new-privileges` for backend/bot/migrate, and `json-file` log rotation (`10m` × `3`). PostgreSQL is limited to 1 GiB and Redis to 256 MiB; raise these only after measuring real usage.
+Completed sessions are stored through the API with duration, mode, start/finish timestamps, and a client-generated idempotency key. The frontend keeps unsaved sessions in a local pending queue, lets the user retry them explicitly, and preserves completed sessions across reloads. The backend normalizes timestamps to UTC, validates session windows, detects races with a unique `(user_id, client_id)` index, and returns `409` when the same `client_id` is reused with a different payload. The Focus statistics endpoint reports completed focus sessions and total focus minutes.
 
-PostgreSQL, Redis and the backend are not published outside the Compose network; only the frontend port is exposed. The one-shot migration service has no resource limit, so migrations and restores are not throttled by an arbitrary low cap.
+### Weather
 
-For the complete first-deployment sequence (read-only audit, backup verification, build, migrations, switch, health checks, rollback), see `docs/DEPLOYMENT.md`.
+Weather uses Open-Meteo for city geocoding and a five-day forecast. Users can search for a city or use browser geolocation; the last chosen city is saved on the user record. The backend merges multilingual geocoding results, validates coordinates, and returns clear `400`, `404`, `422`, or `502` errors when input or the external provider fails.
 
-## Local development
+### Nutrition and КБЖУ
 
-Backend, from `backend/`:
+Nutrition tracks meals by day, meal type, calories, protein, carbohydrates, and fat (КБЖУ). Each meal stores its current serving size together with the original base serving and base macros. Changing the serving recalculates calories and macros from the base values, so repeatedly resizing a meal does not compound rounding errors or destroy the original nutrition data.
+
+The Nutrition screen also supports daily calorie and macro targets, copying a day's meals to another day, CSV export, saved recipes, a shared community food catalog, barcode lookup, and optional OCR of nutrition labels. Camera and OCR features are optional; manual entry remains available.
+
+### Recipes and food catalog
+
+Saved recipes are private to the authenticated user and can be reused on a selected day. The community food catalog supports barcode lookup and user-contributed foods. It protects existing entries from being overwritten by another user, handles race conditions on duplicate barcodes, and supports weighted EAN-13 prefixes used by variable-measure products. Open Food Facts is used as an external fallback when a barcode is not in the local catalog.
+
+### Telegram bot
+
+The aiogram bot provides `/start` and `/help` and opens the Mini App. It intentionally does not duplicate notes, tasks, or nutrition logic; the Mini App and API remain the single implementation of the product features.
+
+## Important files and directories
+
+| Path | What it does |
+|---|---|
+| `backend/app/main.py` | Creates the FastAPI app, registers `/api/v1` routers, applies the rate-limit dependency, and exposes `/health`. |
+| `backend/app/api/` | HTTP routes and request/response schemas for auth, notes, tasks, focus, weather, and nutrition. |
+| `backend/app/models/models.py` | SQLAlchemy models and indexes for users, notes, tasks, focus sessions, meals, recipes, and community foods. |
+| `backend/app/services/telegram_auth.py` | Telegram `initData` signature and expiry validation. |
+| `backend/app/dependencies/auth.py` | Resolves the authenticated database user and applies profile validation. |
+| `backend/app/core/rate_limit.py` | Per-user Redis token buckets, category limits, and failure policy. |
+| `backend/app/core/migration_lock.py` | PostgreSQL advisory lock for serialized migrations. |
+| `backend/alembic/` | Forward-only schema migrations, including Nutrition reconciliation and Focus idempotency. |
+| `backend/tests/` | Auth, user isolation, CRUD, Focus, rate-limit, migration, and backup/restore tests. |
+| `frontend/src/App.tsx` | Main Mini App shell, notes, tasks, weather, home screen, and API helper. |
+| `frontend/src/Nutrition.tsx` | Nutrition UI, meals, targets, recipes, catalog, barcode, OCR, copy-day, and CSV export. |
+| `frontend/src/focus/` | Timer state machine, persistence, delivery queue, hooks, modes, and UI tests. |
+| `frontend/src/food-catalog.ts`, `food-search.ts` | Food normalization and remote catalog search helpers. |
+| `frontend/src/csv.ts` | CSV generation for nutrition export. |
+| `frontend/nginx.conf` | Same-origin production proxy from the frontend to the API. |
+| `bot/main.py`, `bot/config.py` | aiogram bot commands and Mini App URL configuration. |
+| `docker-compose.yml` | PostgreSQL, Redis, one-shot migration, backend, bot, frontend, and optional ngrok tunnel. |
+| `docs/` | Architecture, API, deployment, migration, and backup/restore documentation. |
+| `scripts/` | PostgreSQL backup and restore verification scripts. |
+
+## Design decisions
+
+- **Authenticate on the server, never in the browser.** The backend validates Telegram's HMAC and `auth_date` before resolving a user. This prevents a modified client from claiming another Telegram identity.
+- **Scope every private query by the authenticated user.** Object lookups combine the requested ID with the current user's database ID and return `404` when the resource is not owned. This avoids leaking whether another user's record exists.
+- **Make Focus session delivery idempotent.** A client-generated UUID plus a unique `(user_id, client_id)` index makes retries safe. Reusing a key with a different payload is a conflict, not a duplicate.
+- **Use atomic Redis token buckets.** A Lua script performs check-and-consume in one Redis operation, so multiple workers share one clock and budget. Ordinary CRUD fails open when Redis is unavailable, while external-provider endpoints fail closed.
+- **Use forward-only Alembic migrations.** Schema changes are applied by Alembic, not at application startup. `0003_nutrition_schema` reconciles older and partially patched Nutrition schemas without dropping user tables; `0004_focus_session_client_id` adds the Focus idempotency key. A PostgreSQL advisory lock and one-shot migration service keep deployment migrations serialized.
+- **Separate base nutrition values from the current serving.** Storing `base_*` macros and `serving_grams` lets the UI rescale a meal without repeatedly scaling already-scaled numbers.
+- **Harden the deployment boundary.** Backend and bot run as non-root, base images are pinned by digest, Compose applies resource and log limits, and backup/restore scripts verify archives before use. These measures protect user data and make recovery predictable.
+
+## Running locally
+
+### Docker Compose
+
+1. Copy `.env.example` to `.env` and set `BOT_TOKEN`, `POSTGRES_PASSWORD`, `WEBAPP_URL`, and an explicit `COMPOSE_PROJECT_NAME`.
+2. Start the stack:
+
+   ```bash
+   docker compose up --build
+   ```
+
+   The one-shot `migrate` service applies Alembic before the backend starts. If migration fails, the backend is not started.
+
+3. Open `http://localhost:8080` for a preview, or configure an HTTPS reverse proxy and set that public URL in BotFather.
+4. Send `/start` to the bot and open the Mini App.
+
+Set `COMPOSE_PROJECT_NAME` explicitly for each environment so image, container, and volume names are predictable. If it is omitted, Compose derives a name from the directory, which is not a safe way to manage production.
+
+### Backend
 
 ```bash
+cd backend
 python -m venv .venv
-# activate the environment, then:
+# activate the virtual environment
 pip install -r requirements-dev.txt
 alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
-Runtime dependencies are locked with hashes in `requirements.txt`; `requirements-dev.txt` adds the test tooling and is the file to use for local development. Regenerate either lock from its `.in` file with the same command, for example:
+For local development, set `DATABASE_URL` (SQLite or PostgreSQL), `BOT_TOKEN`, and optionally `REDIS_URL`. Without `REDIS_URL`, rate limiting is disabled. Runtime dependencies are hash-locked in `requirements.txt`; `requirements-dev.txt` adds test tooling.
+
+### Frontend
 
 ```bash
-uv pip compile requirements.in --universal --python-version 3.12 --generate-hashes --output-file requirements.txt
-uv pip compile requirements-dev.in --universal --python-version 3.12 --generate-hashes --output-file requirements-dev.txt
-```
-
-The bot has its own lock, `bot/requirements.txt`, generated from `bot/requirements.in` with the same options.
-
-Set `DATABASE_URL=sqlite:///./hub.db`, `BOT_TOKEN`, and optionally `REDIS_URL=redis://localhost:6379/0` in the environment for local use. Without `REDIS_URL`, rate limiting is disabled. Frontend, from `frontend/`:
-
-```bash
-npm install
+cd frontend
+npm ci
 npm run dev
 ```
 
-The browser preview is intentionally not authenticated. A valid Telegram launch provides signed `initData`; no mock user mode is provided. For local Mini App testing, expose the frontend through an HTTPS tunnel and configure that URL in BotFather. The frontend calls the API from its own origin, so use a development proxy or set `VITE_API_URL` to a reachable backend URL.
+The frontend calls the API from its own origin. For separate local servers, set `VITE_API_URL` to a reachable backend URL. A plain browser preview is intentionally unauthenticated; use a Telegram launch or an HTTPS tunnel for the real Mini App flow.
 
-Bot, from `bot/`:
+### Bot
 
 ```bash
+cd bot
 pip install -r requirements.txt
-BOT_TOKEN=... WEBAPP_URL=https://your-domain.example python main.py
+BOT_TOKEN=<token> WEBAPP_URL=<https-url> python main.py
 ```
 
-## Telegram and HTTPS setup
+## Testing
 
-Create a bot with `/newbot` in BotFather and keep its token private. Configure `WEBAPP_URL` to the HTTPS URL where the frontend is hosted, then use BotFather's Mini App settings to set the same URL. Telegram requires HTTPS for a remotely hosted Mini App. For a server deployment, point a domain's DNS at the host and configure Caddy, Nginx, or another TLS reverse proxy to forward public HTTPS traffic to port 8080. Keep PostgreSQL and the API port private; the compose frontend proxy forwards `/api/` internally to FastAPI.
-
-## Database migrations
-
-The backend container runs only Uvicorn. Compose has a one-shot `migrate` service that executes `alembic upgrade head`; the backend starts only after it exits successfully. The service is safe to run repeatedly, and a PostgreSQL advisory lock serializes concurrent migration jobs. For local development, run `alembic upgrade head` manually from `backend/`.
-
-Revision `0003_nutrition_schema` reconciles fresh databases, databases still at `0002_add_last_city`, and databases that were partially patched by older startup DDL, without dropping user tables. `0004_focus_session_client_id` adds the Focus idempotency key. Migrations are forward-only: use a verified PostgreSQL backup rather than `alembic downgrade` for rollback. PostgreSQL 16 is the version used by Compose and verified by the migration tests. See `docs/MIGRATIONS.md` for the frozen-revision policy and `docs/BACKUP_RESTORE.md` for backup, verification and restore.
-
-## Tests and build
+Backend:
 
 ```bash
 cd backend
 pip install -r requirements-dev.txt
 pytest
-cd ../frontend
+```
+
+The backend suite covers Telegram authentication, user isolation, CRUD validation, Focus sessions and races, Redis rate limiting, migration reconciliation, and backup/restore. PostgreSQL integration tests run only when `TEST_POSTGRES_URL` points at a disposable test database whose name contains `test`; backup/restore integration tests use the additional environment described in `backend/tests/test_backup_restore.py`. Redis integration tests require a disposable Redis service.
+
+Frontend:
+
+```bash
+cd frontend
 npm ci
 npm test
 npm run build
 ```
 
-`docker compose up --build` builds all three application images (named from `COMPOSE_PROJECT_NAME`) and runs the one-shot migration service. Set `COMPOSE_PROJECT_NAME` explicitly for each environment; if it is omitted, Compose derives a project name from the directory, which is not a safe way to manage production. Use a different value (and port) to run an isolated stack without touching another project's images or volumes.
+Vitest covers timer state transitions, timer persistence and delivery queues, and CSV generation. `npm run build` runs TypeScript checking and a production Vite build.
 
-PostgreSQL migration tests use `TEST_POSTGRES_URL` and are intended for PostgreSQL 16. `TEST_POSTGRES_URL` must point at a disposable test database whose name contains `test`; do not point it at production.
+## Current status
 
-## Common issues
+The application is implemented, tested, and running as a private personal deployment. The main features are usable end to end: Telegram authentication, notes, tasks, weather, Focus Timer, nutrition, recipes, food catalog, and the bot entry point.
 
-- **401 in Mini App:** open from the bot; verify server `BOT_TOKEN` matches the bot that launched it and device time is correct.
-- **initData expired:** launch the app again; max age is controlled by `INIT_DATA_MAX_AGE` (default 24 hours).
-- **Bot cannot start:** set `BOT_TOKEN` and make sure another polling process is not already using the same bot.
-- **Telegram refuses the Mini App URL:** configure a publicly reachable HTTPS URL in BotFather.
-- **Weather errors:** check outbound access to Open-Meteo; it does not require a key.
+Remaining work is limited to the CS50x submission process: recording the video demo, adding its URL above, and a final submission review. The tracked repository is intentionally self-contained and does not include deployment secrets or user data.
 
-## Current scope
+## AI assistance
 
-The automated suite covers Telegram initData signature/expiry validation and forward SQLite migration scenarios (fresh, legacy `0002`, partially patched schema, repeated runs, and no import-time DDL). PostgreSQL migration coverage runs only when `TEST_POSTGRES_URL` points at a disposable test database whose name contains `test`. Expand it with API isolation, CRUD, focus statistics, and mocked weather provider cases before production. Timer state is client-side; completed focus sessions are persisted when a timer reaches zero.
+OpenCode with KIMI K3 was used for initial project analysis and auditing; it was not used to generate the application code. DeepSeek assisted with documentation, debugging, and implementation of selected functions in the Focus Timer, Weather, and Nutrition/КБЖУ areas. The specific assisted implementations are marked with concise comments in the source. AI use is disclosed in accordance with CS50's final-project policy.

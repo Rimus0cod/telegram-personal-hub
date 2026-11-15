@@ -175,6 +175,7 @@ def add_meal(payload: MealInput, db: Session = Depends(get_db), user: User = Dep
     return serialize(row)
 
 
+# AI assistance: DeepSeek helped implement and debug the serving-size and macro recalculation.
 @router.patch("/{meal_id}")
 def update_portion(meal_id: int, payload: PortionInput, db: Session = Depends(get_db), user: User = Depends(current_user)):
     row = db.query(MealEntry).filter(MealEntry.id == meal_id, MealEntry.user_id == user.id).first()

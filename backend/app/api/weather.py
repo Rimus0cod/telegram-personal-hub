@@ -14,6 +14,7 @@ def _language_order(name:str):
     if re.search(r"[a-z]",name,re.IGNORECASE): return ("en","uk","ru")
     return ("ru","uk","en")
 
+# AI assistance: DeepSeek helped implement and debug the multilingual geocoding/result-ranking logic.
 async def _geocode(name:str,count:int=8):
     languages=_language_order(name)
     async with httpx.AsyncClient(timeout=10) as client:

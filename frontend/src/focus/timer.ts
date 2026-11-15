@@ -143,6 +143,7 @@ export function formatClock(seconds: number): string {
   return `${String(minutes).padStart(2, '0')}:${String(safe % 60).padStart(2, '0')}`;
 }
 
+// AI assistance: DeepSeek helped implement and debug the timer state machine and pending-session handling.
 export function timerReducer(state: TimerState, event: TimerEvent): TimerState {
   switch (event.type) {
     case 'start': {
