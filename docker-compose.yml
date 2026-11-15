@@ -4,9 +4,12 @@ x-logging: &default-logging
     max-size: "10m"
     max-file: "3"
 
+# COMPOSE_PROJECT_NAME is set explicitly in .env for production. Compose also
+# derives a project name from the directory when the variable is unset; do not
+# rely on that for production, because equal directory names can collide.
 x-backend: &backend
   build: ./backend
-  image: ${COMPOSE_PROJECT_NAME:?Set COMPOSE_PROJECT_NAME in .env, for example telegram-personal-hub}-backend
+  image: ${COMPOSE_PROJECT_NAME:?COMPOSE_PROJECT_NAME must not be empty}-backend
 
 services:
   db:
@@ -76,7 +79,7 @@ services:
       retries: 5
   bot:
     build: ./bot
-    image: ${COMPOSE_PROJECT_NAME:?Set COMPOSE_PROJECT_NAME in .env, for example telegram-personal-hub}-bot
+    image: ${COMPOSE_PROJECT_NAME:?COMPOSE_PROJECT_NAME must not be empty}-bot
     restart: unless-stopped
     mem_limit: 256m
     cpus: "0.5"
@@ -91,7 +94,7 @@ services:
       backend: {condition: service_healthy}
   frontend:
     build: ./frontend
-    image: ${COMPOSE_PROJECT_NAME:?Set COMPOSE_PROJECT_NAME in .env, for example telegram-personal-hub}-frontend
+    image: ${COMPOSE_PROJECT_NAME:?COMPOSE_PROJECT_NAME must not be empty}-frontend
     restart: unless-stopped
     mem_limit: 128m
     cpus: "0.5"

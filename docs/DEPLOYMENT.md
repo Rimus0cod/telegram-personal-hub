@@ -14,11 +14,16 @@ The application runs as three services plus PostgreSQL and Redis:
 
 Images are named `<COMPOSE_PROJECT_NAME>-backend`, `-bot` and `-frontend`, and
 `COMPOSE_PROJECT_NAME` also sets the Compose project name, container names and
-volume names. It is required: Compose fails fast if it is missing. Keep the
-production value stable (for example `telegram-personal-hub`) and use a
-different value plus a different port for a parallel/test stack. `-p` alone does
-not rename images, so do not rely on it for isolation. Use lowercase letters,
-digits, dashes and underscores only.
+volume names. Set it explicitly for every environment and keep the production
+value stable and unique (for example `telegram-personal-hub`). If it is unset,
+Compose does **not** fail: it derives a project name from the directory, which
+can produce unexpected names or collide when two checkouts share a directory
+basename. Do not rely on that behavior for production. Use a different value
+plus a different port for a parallel/test stack. Do not mix `COMPOSE_PROJECT_NAME`
+with a conflicting `-p` value: Compose uses its resolved project name for both
+resources and image names. Before any deployment command, verify the selected
+project name and rendered image names. Use lowercase letters, digits, dashes and
+underscores only.
 
 ## 1. Read-only server audit
 
@@ -37,14 +42,22 @@ Record existing containers, volumes, ports, production project paths and free
 resources. Do not read `.env`, container environments with secrets, or database
 contents. Do not stop or restart an existing installation during this step.
 
-Decide a project name and a free localhost port. The project name must match
-`COMPOSE_PROJECT_NAME` in `.env` for the real deployment:
+Decide a stable project name and a free localhost port. Set
+`COMPOSE_PROJECT_NAME` explicitly, and keep the same value in `.env` for the
+real deployment:
 
 ```bash
 export COMPOSE_PROJECT_NAME=telegram-personal-hub
 export PORT=18080   # test only; production uses its chosen port
 ```
 
+Verify the selected name and image tags before starting anything:
+
+```bash
+docker compose config --images
+```
+
+Every application image must start with the chosen `COMPOSE_PROJECT_NAME`.
 For a parallel test stack, use a different `COMPOSE_PROJECT_NAME` and port, and
 its own `.env`/environment file. Never reuse the production name for tests.
 
@@ -84,9 +97,10 @@ verified. Do not proceed if the archive is unreadable.
 
 - preserve the existing `.env` and user data; do not upload `.env`, `.git`,
   `.venv`, `node_modules`, databases or caches;
-- an `.env` created before this hardening must add
+- an `.env` created before this hardening should add
   `COMPOSE_PROJECT_NAME=<stable-name>` (for the current deployment,
-  `telegram-personal-hub`); Compose fails fast if it is missing;
+  `telegram-personal-hub`) so the project and image names stay stable; if it is
+  omitted, Compose derives a name from the directory;
 - build the three images from the reviewed tree;
 - validate Compose interpolation and ports before starting anything.
 

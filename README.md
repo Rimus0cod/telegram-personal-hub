@@ -24,7 +24,7 @@ Docker Compose v2 is recommended. For local development: Python 3.12+, Node.js 2
 ## Configure and run with Docker
 
 1. Copy `.env.example` to `.env` and set `BOT_TOKEN`, a strong `POSTGRES_PASSWORD`, and the public HTTPS `WEBAPP_URL`.
-2. Start everything with `docker compose up --build`. The one-shot `migrate` service applies Alembic before the backend starts; if it fails, the backend is not started. Images are named `<COMPOSE_PROJECT_NAME>-backend`, `-bot` and `-frontend` from `.env`; use a different `COMPOSE_PROJECT_NAME` and port for a separate stack so images, volumes and containers do not collide.
+2. Start everything with `docker compose up --build`. The one-shot `migrate` service applies Alembic before the backend starts; if it fails, the backend is not started. Images are named `<COMPOSE_PROJECT_NAME>-backend`, `-bot` and `-frontend`. Set `COMPOSE_PROJECT_NAME` explicitly in `.env` and keep it stable in production; if it is unset, Compose derives a project name from the directory, which can collide with another checkout of the same directory name. Use a different value and port for a separate stack.
 3. Open `http://localhost:8080` for local preview, or configure an HTTPS reverse proxy and set that public URL as the bot's Mini App URL with BotFather.
 4. Send `/start` to your bot and tap **Open Personal Hub**.
 
@@ -101,7 +101,7 @@ npm test
 npm run build
 ```
 
-`docker compose up --build` builds all three application images (named from `COMPOSE_PROJECT_NAME`) and runs the one-shot migration service. Use a different `COMPOSE_PROJECT_NAME` (and port) to run an isolated stack without touching another project's images or volumes.
+`docker compose up --build` builds all three application images (named from `COMPOSE_PROJECT_NAME`) and runs the one-shot migration service. Set `COMPOSE_PROJECT_NAME` explicitly for each environment; if it is omitted, Compose derives a project name from the directory, which is not a safe way to manage production. Use a different value (and port) to run an isolated stack without touching another project's images or volumes.
 
 PostgreSQL migration tests use `TEST_POSTGRES_URL` and are intended for PostgreSQL 16. `TEST_POSTGRES_URL` must point at a disposable test database whose name contains `test`; do not point it at production.
 

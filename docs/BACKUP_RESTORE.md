@@ -110,8 +110,9 @@ Alembic head is the version the application expects.
 
 The application database name is fixed in Compose (`hub`). The safe switch is
 manual and must be done during a maintenance window. Run Compose from the
-deployment directory so `.env` supplies the same `COMPOSE_PROJECT_NAME` (and
-therefore the same project, images and volume) as the running stack; see
+deployment directory and keep `COMPOSE_PROJECT_NAME` explicitly set in `.env`
+(recommended) so the same project, images and volume are selected as the running
+stack; if it is unset, Compose derives a name from the directory. See
 `docs/DEPLOYMENT.md`.
 
 1. Stop writers:

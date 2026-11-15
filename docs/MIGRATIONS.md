@@ -88,10 +88,13 @@ To apply pending migrations without starting the rest of the stack:
 docker compose run --rm migrate
 ```
 
-Compose reads the deployment's `COMPOSE_PROJECT_NAME` from `.env`, so the same
-command selects the same project, images, volumes and database as the rest of
-the stack. `-p` alone does not rename images; do not mix a `-p` value with a
-different `COMPOSE_PROJECT_NAME`. The `migrate` service reuses the backend image
+Compose uses the deployment's `COMPOSE_PROJECT_NAME` when it is set in `.env`
+(recommended), so the same command selects the same project, images, volumes and
+database as the rest of the stack. Run commands from the deployment directory.
+If the variable is unset, Compose derives a project name from the directory; set
+it explicitly for production. Do not mix `-p` with a different
+`COMPOSE_PROJECT_NAME`: Compose uses its resolved project name for resources and
+image names. The `migrate` service reuses the backend image
 (`<COMPOSE_PROJECT_NAME>-backend`), so a migration can never run against a
 different application build than the backend it precedes. The full deployment
 ordering is in `docs/DEPLOYMENT.md`.
