@@ -128,11 +128,11 @@ def _run_script(pg_tools, script: str, args, env):
     )
 
 
-def _migrate(pg_tools, database_url):
+def _migrate(pg_tools, database_url, revision="head"):
     env = os.environ.copy()
     env["DATABASE_URL"] = database_url
     result = subprocess.run(
-        [sys.executable, "-m", "alembic", "-c", "alembic.ini", "upgrade", "head"],
+        [sys.executable, "-m", "alembic", "-c", "alembic.ini", "upgrade", revision],
         cwd=str(BACKEND_DIR),
         env=env,
         capture_output=True,
@@ -342,11 +342,243 @@ def test_corrupt_and_empty_backups_are_rejected(
 
 
 def test_scripts_do_not_contain_automatic_drop_commands():
-    restore = (SCRIPTS / "restore-postgres.sh").read_text(encoding="utf-8").lower()
-    backup = (SCRIPTS / "backup-postgres.sh").read_text(encoding="utf-8").lower()
+    restore_text = (SCRIPTS / "restore-postgres.sh").read_text(encoding="utf-8").lower()
+    backup_text = (SCRIPTS / "backup-postgres.sh").read_text(encoding="utf-8").lower()
+    restore = "\n".join(
+        line for line in restore_text.splitlines() if not line.lstrip().startswith("#")
+    )
+    backup = "\n".join(
+        line for line in backup_text.splitlines() if not line.lstrip().startswith("#")
+    )
     assert "dropdb" not in restore
     assert "drop database" not in restore
+    assert "alembic upgrade" not in restore
+    assert "alembic downgrade" not in restore
+    assert "truncate" not in restore
+    assert "delete from" not in restore
     assert "echo $database_url" not in backup
     assert "echo $database_url" not in restore
     assert "pgpassword=" not in backup
     assert "pgpassword=" not in restore
+
+
+# ---------------------------------------------------------------------------
+# Schema-aware verification across supported revisions.
+# ---------------------------------------------------------------------------
+
+REVISION_0002 = "0002_add_last_city"
+REVISION_0003 = "0003_nutrition_schema"
+REVISION_0004 = "0004_focus_session_client_id"
+
+CORE_0002_INDEXES = (
+    "ix_users_telegram_id",
+    "ix_notes_user_updated",
+    "ix_tasks_user_completed",
+    "ix_focus_user_finished",
+)
+CORE_0003_INDEXES = CORE_0002_INDEXES + (
+    "ix_meals_user_day",
+    "ix_recipes_user_name",
+    "ix_community_foods_barcode",
+)
+CORE_0004_INDEXES = CORE_0003_INDEXES + ("uq_focus_sessions_user_client",)
+
+
+def _execute_sql(url, statement):
+    engine = create_engine(url)
+    try:
+        with engine.begin() as connection:
+            connection.execute(text(statement))
+    finally:
+        engine.dispose()
+
+
+def _create_source(pg_tools, admin_engine, prefix, revision):
+    name = _database_name(prefix)
+    _admin_execute(admin_engine, f'CREATE DATABASE "{name}"')
+    url = str(pg_tools["admin_url"].set(database=name))
+    _migrate(pg_tools, url, revision)
+    return name, url
+
+
+def _dump_database(pg_tools, database, tmp_path, prefix):
+    backup_dir = tmp_path / f"{prefix}_{uuid.uuid4().hex[:8]}"
+    backup_dir.mkdir()
+    env = _script_env(pg_tools, database, {"BACKUP_DIR": _bash_path(backup_dir)})
+    result = _run_script(pg_tools, "backup-postgres.sh", [], env)
+    assert result.returncode == 0, f"{result.stdout}\n{result.stderr}"
+    dumps = list(backup_dir.glob("*.dump"))
+    assert len(dumps) == 1, dumps
+    return dumps[0]
+
+
+def _restore_with(pg_tools, backup, target, expected=None):
+    extra = {
+        "RESTORE_CONFIRM": target,
+        "PGMAINTENANCE_DB": "postgres",
+    }
+    if expected is not None:
+        extra["EXPECTED_ALEMBIC_HEAD"] = expected
+    env = _script_env(pg_tools, "postgres", extra)
+    return _run_script(
+        pg_tools,
+        "restore-postgres.sh",
+        [_bash_path(backup), target],
+        env,
+    )
+
+
+def _index_count(url, names):
+    engine = create_engine(url)
+    try:
+        with engine.connect() as connection:
+            return connection.execute(
+                text(
+                    "SELECT count(*) FROM pg_indexes WHERE schemaname='public' "
+                    "AND indexname = ANY(:names)"
+                ),
+                {"names": list(names)},
+            ).scalar()
+    finally:
+        engine.dispose()
+
+
+def _restored_head(url):
+    engine = create_engine(url)
+    try:
+        with engine.connect() as connection:
+            return connection.execute(text("SELECT version_num FROM alembic_version")).scalar()
+    finally:
+        engine.dispose()
+
+
+@pytest.mark.parametrize(
+    ("revision", "expected_indexes"),
+    [
+        (REVISION_0002, CORE_0002_INDEXES),
+        (REVISION_0003, CORE_0003_INDEXES),
+        (REVISION_0004, CORE_0004_INDEXES),
+    ],
+)
+def test_restore_accepts_each_supported_revision(
+    pg_tools, admin_engine, tmp_path, revision, expected_indexes
+):
+    source, source_url = _create_source(
+        pg_tools, admin_engine, "hub_55a_src", revision
+    )
+    target = _database_name("hub_55a_dst")
+    try:
+        if revision != REVISION_0004:
+            # A pre-0004 backup must not be required to contain the 0004 index.
+            _execute_sql(source_url, "DROP INDEX IF EXISTS uq_focus_sessions_user_client")
+        backup = _dump_database(pg_tools, source, tmp_path, revision)
+        result = _restore_with(pg_tools, backup, target, revision)
+        assert result.returncode == 0, f"{result.stdout}\n{result.stderr}"
+        target_url = str(pg_tools["admin_url"].set(database=target))
+        assert _restored_head(target_url) == revision
+        assert _index_count(target_url, expected_indexes) == len(expected_indexes)
+    finally:
+        _drop_database(admin_engine, target)
+        _drop_database(admin_engine, source)
+
+
+def test_restore_rejects_unknown_revision(
+    pg_tools, admin_engine, tmp_path
+):
+    source, source_url = _create_source(pg_tools, admin_engine, "hub_55a_unknown", REVISION_0004)
+    target = _database_name("hub_55a_unknown_dst")
+    try:
+        _execute_sql(source_url, "UPDATE alembic_version SET version_num='9999_unknown'")
+        backup = _dump_database(pg_tools, source, tmp_path, "unknown")
+        result = _restore_with(pg_tools, backup, target)
+        assert result.returncode != 0
+        assert "unsupported Alembic revision" in (result.stdout + result.stderr)
+    finally:
+        _drop_database(admin_engine, target)
+        _drop_database(admin_engine, source)
+
+
+def test_restore_rejects_missing_revision(
+    pg_tools, admin_engine, tmp_path
+):
+    source, source_url = _create_source(pg_tools, admin_engine, "hub_55a_missing", REVISION_0004)
+    target = _database_name("hub_55a_missing_dst")
+    try:
+        _execute_sql(source_url, "DELETE FROM alembic_version")
+        backup = _dump_database(pg_tools, source, tmp_path, "missing")
+        result = _restore_with(pg_tools, backup, target)
+        assert result.returncode != 0
+        assert "revision is missing" in (result.stdout + result.stderr)
+    finally:
+        _drop_database(admin_engine, target)
+        _drop_database(admin_engine, source)
+
+
+def test_restore_rejects_ambiguous_revision(
+    pg_tools, admin_engine, tmp_path
+):
+    source, source_url = _create_source(pg_tools, admin_engine, "hub_55a_ambiguous", REVISION_0004)
+    target = _database_name("hub_55a_ambiguous_dst")
+    try:
+        _execute_sql(
+            source_url,
+            "INSERT INTO alembic_version (version_num) VALUES ('0002_add_last_city')",
+        )
+        backup = _dump_database(pg_tools, source, tmp_path, "ambiguous")
+        result = _restore_with(pg_tools, backup, target)
+        assert result.returncode != 0
+        assert "exactly one Alembic revision" in (result.stdout + result.stderr)
+    finally:
+        _drop_database(admin_engine, target)
+        _drop_database(admin_engine, source)
+
+
+def test_restore_rejects_missing_required_index(
+    pg_tools, admin_engine, tmp_path
+):
+    source, source_url = _create_source(pg_tools, admin_engine, "hub_55a_noindex", REVISION_0004)
+    target = _database_name("hub_55a_noindex_dst")
+    try:
+        _execute_sql(source_url, "DROP INDEX uq_focus_sessions_user_client")
+        backup = _dump_database(pg_tools, source, tmp_path, "noindex")
+        result = _restore_with(pg_tools, backup, target, REVISION_0004)
+        assert result.returncode != 0
+        assert "missing required index" in (result.stdout + result.stderr)
+        assert "uq_focus_sessions_user_client" in (result.stdout + result.stderr)
+    finally:
+        _drop_database(admin_engine, target)
+        _drop_database(admin_engine, source)
+
+
+def test_restore_rejects_missing_required_table(
+    pg_tools, admin_engine, tmp_path
+):
+    source, source_url = _create_source(pg_tools, admin_engine, "hub_55a_notable", REVISION_0004)
+    target = _database_name("hub_55a_notable_dst")
+    try:
+        _execute_sql(source_url, "DROP TABLE community_foods")
+        backup = _dump_database(pg_tools, source, tmp_path, "notable")
+        result = _restore_with(pg_tools, backup, target, REVISION_0004)
+        assert result.returncode != 0
+        assert "missing required table" in (result.stdout + result.stderr)
+        assert "community_foods" in (result.stdout + result.stderr)
+    finally:
+        _drop_database(admin_engine, target)
+        _drop_database(admin_engine, source)
+
+
+def test_restore_0002_rejects_missing_base_index(
+    pg_tools, admin_engine, tmp_path
+):
+    source, source_url = _create_source(pg_tools, admin_engine, "hub_55a_0002_noindex", REVISION_0002)
+    target = _database_name("hub_55a_0002_noindex_dst")
+    try:
+        _execute_sql(source_url, "DROP INDEX ix_notes_user_updated")
+        backup = _dump_database(pg_tools, source, tmp_path, "0002-noindex")
+        result = _restore_with(pg_tools, backup, target, REVISION_0002)
+        assert result.returncode != 0
+        assert "missing required index" in (result.stdout + result.stderr)
+        assert "ix_notes_user_updated" in (result.stdout + result.stderr)
+    finally:
+        _drop_database(admin_engine, target)
+        _drop_database(admin_engine, source)

@@ -72,7 +72,7 @@ explicitly:
 
 ```bash
 export RESTORE_CONFIRM=hub_restore_20261115
-export EXPECTED_ALEMBIC_HEAD=0004_focus_session_client_id
+export EXPECTED_ALEMBIC_HEAD=0004_focus_session_client_id  # or 0002_add_last_city
 export PGMAINTENANCE_DB=postgres
 
 bash scripts/restore-postgres.sh \
@@ -88,11 +88,36 @@ The script:
 - validates the archive before creating anything;
 - creates a **new** database with `createdb`;
 - restores with `pg_restore --exit-on-error --no-owner --no-privileges`;
-- verifies core tables, core indexes and exactly one Alembic head;
+- reads `alembic_version` and applies the schema contract for that exact
+  revision; unknown, missing or multiple revisions are rejected;
+- verifies required tables and indexes for the recorded revision (see below);
+- never applies migrations, never downgrades and never changes the schema;
 - never drops or renames a database.
 
 If verification fails, the new database is left for inspection. No source
 database is modified.
+
+### Schema-aware verification
+
+The contract follows the revision stored in the backup, not the current
+repository head. Extra tables/indexes are allowed, so a database created by an
+older `create_all()` with a richer schema still verifies at `0002`.
+
+| Revision | Required tables | Required core indexes |
+|---|---|---|
+| `0002_add_last_city` | `users`, `notes`, `tasks`, `focus_sessions`, `alembic_version` | `ix_users_telegram_id`, `ix_notes_user_updated`, `ix_tasks_user_completed`, `ix_focus_user_finished` |
+| `0003_nutrition_schema` | all `0002` tables plus `meal_entries`, `saved_recipes`, `community_foods` | all `0002` indexes plus `ix_meals_user_day`, `ix_recipes_user_name`, `ix_community_foods_barcode` |
+| `0004_focus_session_client_id` | same as `0003` | all `0003` indexes plus `uq_focus_sessions_user_client` |
+
+A `0002` backup legitimately does **not** contain
+`uq_focus_sessions_user_client`: that index is added by
+`0004_focus_session_client_id`. Restoring a `0002` backup leaves the database at
+`0002`; it does not apply `0003` or `0004`. Plan and approve migrations
+separately after the restore.
+
+If `EXPECTED_ALEMBIC_HEAD` is set, the restored revision must also match it.
+Unknown, missing or ambiguous revisions, missing required tables and missing
+required indexes all fail the restore verification with a non-zero exit code.
 
 ## 4. Verify data in the temporary database
 

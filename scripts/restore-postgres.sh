@@ -14,6 +14,9 @@ Usage: RESTORE_CONFIRM=<new_db> [EXPECTED_ALEMBIC_HEAD=<rev>] \
        scripts/restore-postgres.sh <backup.dump> <new_db>
 
 The target database must not exist. Connection parameters use libpq PG* env.
+Supported Alembic revisions: 0002_add_last_city, 0003_nutrition_schema,
+0004_focus_session_client_id. The verification is schema-aware and never runs
+migrations.
 Set ALLOW_PRODUCTION_RESTORE=YES only after an explicit change approval.
 EOF
 }
@@ -81,32 +84,78 @@ if ! pg_restore --exit-on-error --no-owner --no-privileges --dbname="$target" "$
     exit 1
 fi
 
-tables="$(psql --dbname="$target" --tuples-only --no-align \
-    --command="SELECT count(*) FROM information_schema.tables WHERE table_schema='public' AND table_name IN ('users','notes','tasks','focus_sessions','meal_entries','saved_recipes','community_foods','alembic_version')" \
-    | tr -d '\r' | tr -d '[:space:]')"
-if [ "$tables" != "8" ]; then
-    echo "Restore verification failed: expected 8 core tables, found $tables" >&2
+head_rows=""
+if ! head_rows="$(psql --dbname="$target" --tuples-only --no-align \
+    --command="SELECT version_num FROM alembic_version")"; then
+    echo "Restore verification failed: alembic_version is missing or unreadable" >&2
     exit 1
 fi
-
-indexes="$(psql --dbname="$target" --tuples-only --no-align \
-    --command="SELECT count(*) FROM pg_indexes WHERE schemaname='public' AND indexname IN ('ix_users_telegram_id','ix_notes_user_updated','ix_tasks_user_completed','ix_focus_user_finished','uq_focus_sessions_user_client','ix_meals_user_day','ix_recipes_user_name','ix_community_foods_barcode')" \
-    | tr -d '\r' | tr -d '[:space:]')"
-if [ "$indexes" != "8" ]; then
-    echo "Restore verification failed: expected 8 core indexes, found $indexes" >&2
+head_rows="$(printf '%s\n' "$head_rows" | tr -d '\r' | sed '/^[[:space:]]*$/d')"
+head_count="$(printf '%s\n' "$head_rows" | sed '/^[[:space:]]*$/d' | wc -l | tr -d '[:space:]')"
+if [ "$head_count" -eq 0 ]; then
+    echo "Restore verification failed: Alembic revision is missing from alembic_version" >&2
     exit 1
 fi
-
-head="$(psql --dbname="$target" --tuples-only --no-align \
-    --command="SELECT version_num FROM alembic_version" | tr -d '\r')"
-head_lines="$(printf '%s\n' "$head" | sed '/^[[:space:]]*$/d' | wc -l | tr -d '[:space:]')"
-head="$(printf '%s\n' "$head" | sed '/^[[:space:]]*$/d')"
-if [ "$head_lines" != "1" ] || [ -z "$head" ]; then
-    echo "Restore verification failed: expected exactly one Alembic head" >&2
+if [ "$head_count" -ne 1 ]; then
+    echo "Restore verification failed: expected exactly one Alembic revision, found $head_count" >&2
     exit 1
 fi
+head="$head_rows"
 if [ -n "${EXPECTED_ALEMBIC_HEAD:-}" ] && [ "$head" != "$EXPECTED_ALEMBIC_HEAD" ]; then
     echo "Restore verification failed: Alembic head is $head, expected $EXPECTED_ALEMBIC_HEAD" >&2
+    exit 1
+fi
+
+# Every supported revision has an explicit expected schema. 0002 is the
+# pre-Nutrition baseline; 0003 reconciles Nutrition; 0004 adds the Focus
+# idempotency index. Extra tables/indexes are allowed, so a database created by
+# an older create_all() with a richer schema still verifies at 0002.
+case "$head" in
+    0002_add_last_city)
+        required_tables="users notes tasks focus_sessions alembic_version"
+        required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished"
+        ;;
+    0003_nutrition_schema)
+        required_tables="users notes tasks focus_sessions meal_entries saved_recipes community_foods alembic_version"
+        required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished meal_entries:ix_meals_user_day saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode"
+        ;;
+    0004_focus_session_client_id)
+        required_tables="users notes tasks focus_sessions meal_entries saved_recipes community_foods alembic_version"
+        required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished meal_entries:ix_meals_user_day saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode focus_sessions:uq_focus_sessions_user_client"
+        ;;
+    *)
+        echo "Restore verification failed: unsupported Alembic revision '$head' (supported: 0002_add_last_city, 0003_nutrition_schema, 0004_focus_session_client_id)" >&2
+        exit 1
+        ;;
+esac
+
+missing_tables=""
+for table in $required_tables; do
+    present="$(psql --dbname="$target" --tuples-only --no-align \
+        --command="SELECT to_regclass('public.$table') IS NOT NULL" \
+        | tr -d '\r' | tr -d '[:space:]')"
+    if [ "$present" != "t" ]; then
+        missing_tables="$missing_tables $table"
+    fi
+done
+if [ -n "$missing_tables" ]; then
+    echo "Restore verification failed for $head: missing required table(s):$missing_tables" >&2
+    exit 1
+fi
+
+missing_indexes=""
+for pair in $required_indexes; do
+    table="${pair%%:*}"
+    index="${pair#*:}"
+    present="$(psql --dbname="$target" --tuples-only --no-align \
+        --command="SELECT count(*) FROM pg_indexes WHERE schemaname='public' AND tablename='$table' AND indexname='$index'" \
+        | tr -d '\r' | tr -d '[:space:]')"
+    if [ "$present" != "1" ]; then
+        missing_indexes="$missing_indexes $table:$index"
+    fi
+done
+if [ -n "$missing_indexes" ]; then
+    echo "Restore verification failed for $head: missing required index(es):$missing_indexes" >&2
     exit 1
 fi
 
