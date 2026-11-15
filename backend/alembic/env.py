@@ -3,6 +3,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 from app.database import Base
 from app.core.config import DATABASE_URL
+from app.core.migration_lock import migration_lock
 from app.models import models  # noqa: F401
 
 config = context.config
@@ -19,9 +20,13 @@ def run_migrations_offline():
 
 def run_migrations_online():
     connectable = engine_from_config(config.get_section(config.config_ini_section), prefix="sqlalchemy.", poolclass=pool.NullPool)
-    with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
-        with context.begin_transaction(): context.run_migrations()
+    # Use a dedicated connection for the advisory lock so the lock's implicit
+    # transaction cannot interfere with Alembic's migration transaction.
+    with connectable.connect() as lock_connection:
+        with migration_lock(lock_connection):
+            with connectable.connect() as connection:
+                context.configure(connection=connection, target_metadata=target_metadata)
+                with context.begin_transaction(): context.run_migrations()
 
 if context.is_offline_mode(): run_migrations_offline()
 else: run_migrations_online()

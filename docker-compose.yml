@@ -1,3 +1,7 @@
+x-backend: &backend
+  build: ./backend
+  image: telegram-personal-hub-backend
+
 services:
   db:
     image: postgres:16-alpine@sha256:f377d590e5474681d4d7838635031a2b50647923b7abfa803ce9b5ff35d5c663
@@ -22,8 +26,16 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+  migrate:
+    <<: *backend
+    restart: "no"
+    command: ["alembic", "-c", "/app/alembic.ini", "upgrade", "head"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://hub:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}@db:5432/hub
+    depends_on:
+      db: {condition: service_healthy}
   backend:
-    build: ./backend
+    <<: *backend
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql+psycopg://hub:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}@db:5432/hub
@@ -34,6 +46,7 @@ services:
     depends_on:
       db: {condition: service_healthy}
       redis: {condition: service_healthy}
+      migrate: {condition: service_completed_successfully}
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 10s
@@ -45,7 +58,8 @@ services:
     environment:
       BOT_TOKEN: ${BOT_TOKEN:?Set BOT_TOKEN in .env}
       WEBAPP_URL: ${WEBAPP_URL:?WEBAPP_URL must be set}
-    depends_on: [backend]
+    depends_on:
+      backend: {condition: service_healthy}
   frontend:
     build: ./frontend
     restart: unless-stopped

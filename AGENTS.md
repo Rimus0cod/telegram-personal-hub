@@ -2,7 +2,8 @@
 
 ## Project shape
 
-- Three separate applications, with no root task runner or JS workspace: FastAPI in `backend/` (`app.main:app`), React/Vite in `frontend/`, and an aiogram polling bot in `bot/main.py`. The bot only launches the Mini App; Compose also runs PostgreSQL, Redis for API rate limiting, and an Nginx-served frontend.
+- Three separate applications, with no root task runner or JS workspace: FastAPI in `backend/` (`app.main:app`), React/Vite in `frontend/`, and an aiogram polling bot in `bot/main.py`. The bot only launches the Mini App; Compose also runs PostgreSQL, Redis for API rate limiting, a one-shot Alembic `migrate` service, and an Nginx-served frontend.
+- The backend container runs only Uvicorn. Compose's `migrate` service applies `alembic upgrade head` before the backend starts; the backend is not started if migration fails. The compose database is PostgreSQL 16.
 - Backend routers are registered in `backend/app/main.py` under `/api/v1`; `/health` is deliberately outside that prefix. Nutrition is split into `app/api/nutrition.py` and `frontend/src/Nutrition.tsx`; the other screens and the shared frontend `request` helper live in `frontend/src/App.tsx`.
 - The frontend sends raw Telegram `initData` as `Authorization: tma <initData>`. Resolve users with `app/dependencies/auth.py::current_user` and scope private queries by `user.id`; there is intentionally no mock-auth mode for a plain browser preview.
 - Production same-origin proxying is in `frontend/nginx.conf`. Vite has no API proxy: for separate local frontend/backend servers, set `VITE_API_URL` to the backend origin or requests will go to the Vite origin.
@@ -35,7 +36,7 @@ For local Python processes, configuration comes from process environment variabl
 
 ## Schema and runtime gotchas
 
-- Schema changes are applied **only** by Alembic. The backend container runs `alembic upgrade head` before Uvicorn, and importing `app.main` must never create or patch tables. `alembic/versions/0001_initial.py` still builds from the current model metadata, while `0003_nutrition_schema.py` reconciles pre-Nutrition, partially patched, and already-current databases stamped `0002`. When changing models, add an explicit revision and, if older installations may lack the change, reconcile their state the same way. `0003_nutrition_schema` is forward-only: never use `alembic downgrade base` as a rollback; restore a verified backup instead.
+- Schema changes are applied **only** by Alembic. The one-shot `migrate` service runs `alembic upgrade head` before the backend starts; the backend container runs only Uvicorn. Importing `app.main` must never create or patch tables. `alembic/versions/0001_initial.py` still builds from the current model metadata, while `0003_nutrition_schema.py` reconciles pre-Nutrition, partially patched, and already-current databases stamped `0002`. When changing models, add an explicit revision and, if older installations may lack the change, reconcile their state the same way. `0003_nutrition_schema` is forward-only: never use `alembic downgrade base` as a rollback; restore a verified backup instead.
 - Weather and food-catalog endpoints make live calls to Open-Meteo and Open Food Facts. Nutrition OCR loads Tesseract.js from jsDelivr at runtime, and camera scanning relies on the browser's `BarcodeDetector`; these features have dependencies beyond the Compose services.
 
 ## Development rules and safety

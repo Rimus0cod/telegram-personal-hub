@@ -7,7 +7,7 @@ A Telegram Mini App with personal weather, notes, tasks, and a focus timer. The 
 - `frontend/`: React, TypeScript, Vite, TanStack Query, Telegram WebApp initData.
 - `backend/`: FastAPI, SQLAlchemy 2, Pydantic, Open-Meteo integration.
 - `bot/`: aiogram 3 `/start` and `/help` commands.
-- `docker-compose.yml`: PostgreSQL, Redis, API, bot, and Nginx-served frontend.
+- `docker-compose.yml`: PostgreSQL, Redis, a one-shot Alembic `migrate` service, API, bot, and Nginx-served frontend.
 
 The API verifies Telegram's HMAC signature and `auth_date` before creating/loading a user. Every private resource query filters by that database user's ID. `BOT_TOKEN` stays in server containers.
 
@@ -24,9 +24,11 @@ Docker Compose v2 is recommended. For local development: Python 3.12+, Node.js 2
 ## Configure and run with Docker
 
 1. Copy `.env.example` to `.env` and set `BOT_TOKEN`, a strong `POSTGRES_PASSWORD`, and the public HTTPS `WEBAPP_URL`.
-2. Start everything with `docker compose up --build`.
+2. Start everything with `docker compose up --build`. The one-shot `migrate` service applies Alembic before the backend starts; if it fails, the backend is not started.
 3. Open `http://localhost:8080` for local preview, or configure an HTTPS reverse proxy and set that public URL as the bot's Mini App URL with BotFather.
 4. Send `/start` to your bot and tap **Open Personal Hub**.
+
+Take a verified PostgreSQL backup before every migration or upgrade; see `docs/BACKUP_RESTORE.md`.
 
 The API is served on the same origin under `/api/v1`; `/health` is the health endpoint and `/docs` is available on the backend container at port 8000 (publish it locally if needed).
 
@@ -75,7 +77,9 @@ Create a bot with `/newbot` in BotFather and keep its token private. Configure `
 
 ## Database migrations
 
-The application no longer creates or patches tables at import time. The backend container runs `alembic upgrade head` before Uvicorn; for a local backend, run it manually from `backend/` before starting the API. Revision `0003_nutrition_schema` reconciles fresh databases, databases still at `0002_add_last_city`, and databases that were partially patched by older startup DDL, without dropping user tables. It is forward-only: use a verified PostgreSQL backup rather than `alembic downgrade` for rollback. Back up PostgreSQL before production upgrades.
+The backend container runs only Uvicorn. Compose has a one-shot `migrate` service that executes `alembic upgrade head`; the backend starts only after it exits successfully. The service is safe to run repeatedly, and a PostgreSQL advisory lock serializes concurrent migration jobs. For local development, run `alembic upgrade head` manually from `backend/`.
+
+Revision `0003_nutrition_schema` reconciles fresh databases, databases still at `0002_add_last_city`, and databases that were partially patched by older startup DDL, without dropping user tables. `0004_focus_session_client_id` adds the Focus idempotency key. Migrations are forward-only: use a verified PostgreSQL backup rather than `alembic downgrade` for rollback. PostgreSQL 16 is the version used by Compose and verified by the migration tests. See `docs/MIGRATIONS.md` for the frozen-revision policy and `docs/BACKUP_RESTORE.md` for backup, verification and restore.
 
 ## Tests and build
 
@@ -89,7 +93,9 @@ npm test
 npm run build
 ```
 
-`docker compose up --build` builds all three application images.
+`docker compose up --build` builds all three application images and runs the one-shot migration service.
+
+PostgreSQL migration tests use `TEST_POSTGRES_URL` and are intended for PostgreSQL 16. `TEST_POSTGRES_URL` must point at a disposable test database whose name contains `test`; do not point it at production.
 
 ## Common issues
 

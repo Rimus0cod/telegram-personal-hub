@@ -9,4 +9,6 @@ frontend/*.tsbuildinfo
 backend/*.db
 *.py[cod]
 *.log
+backups/
+*.dump
 .vscode/
