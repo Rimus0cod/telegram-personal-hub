@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.dependencies.auth import current_user
@@ -15,6 +15,15 @@ class TaskInput(BaseModel):
 class TaskPatch(BaseModel):
     title:str|None=Field(default=None,min_length=1,max_length=200); description:str|None=Field(default=None,max_length=10000)
     completed:bool|None=None; priority:str|None=None; due_date:datetime|None=None
+
+    @field_validator("title", "description", "completed", "priority", mode="before")
+    @classmethod
+    def reject_explicit_null(cls, value):
+        # Only due_date is nullable in the model. An explicit null for the
+        # other fields must be a 422, not a NOT NULL failure in the database.
+        if value is None:
+            raise ValueError("field cannot be null")
+        return value
 def output(t): return {"id":t.id,"title":t.title,"description":t.description,"completed":t.completed,"priority":t.priority,"due_date":t.due_date,"created_at":t.created_at,"updated_at":t.updated_at}
 @router.get("")
 def list_tasks(status:str=Query("all",pattern="^(all|active|completed)$"),sort:str=Query("created",pattern="^(created|due)$"),db:Session=Depends(get_db),user:User=Depends(current_user)):

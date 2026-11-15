@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.dependencies.auth import current_user
@@ -13,6 +13,15 @@ class NoteInput(BaseModel):
 class NotePatch(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=200)
     content: str | None = Field(default=None, max_length=20000)
+
+    @field_validator("title", "content", mode="before")
+    @classmethod
+    def reject_explicit_null(cls, value):
+        # An omitted field keeps its default; an explicit null would write NULL
+        # into a NOT NULL column, so it is a validation error.
+        if value is None:
+            raise ValueError("field cannot be null")
+        return value
 def output(n): return {"id":n.id,"title":n.title,"content":n.content,"created_at":n.created_at,"updated_at":n.updated_at}
 @router.get("")
 def list_notes(q: str | None = Query(default=None, max_length=100), db: Session = Depends(get_db), user: User = Depends(current_user)):

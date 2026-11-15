@@ -2,13 +2,114 @@ from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+import httpx
 
 from app.database import get_db
 from app.dependencies.auth import current_user
-from app.models.models import MealEntry, SavedRecipe, User
+from app.models.models import CommunityFood, MealEntry, SavedRecipe, User
 
 router = APIRouter(prefix="/nutrition", tags=["nutrition"])
+
+
+class CatalogFoodInput(BaseModel):
+    barcode: str = Field(pattern=r"^\d{8,14}$")
+    name: str = Field(min_length=1, max_length=200)
+    brand: str = Field(default="", max_length=120)
+    kcal: float = Field(ge=0, le=1000)
+    protein: float = Field(ge=0, le=100)
+    carbs: float = Field(ge=0, le=100)
+    fat: float = Field(ge=0, le=100)
+
+
+def catalog_food(row: CommunityFood):
+    return {"found": True, "source": "community", "product": {
+        "code": row.barcode, "product_name": row.name, "brands": row.brand,
+        "nutriments": {"energy-kcal_100g": row.kcal, "proteins_100g": row.protein,
+                       "carbohydrates_100g": row.carbs, "fat_100g": row.fat}}}
+
+
+@router.get("/catalog/{barcode}")
+def lookup_catalog_food(barcode: str, db: Session = Depends(get_db), user: User = Depends(current_user)):
+    code = "".join(ch for ch in barcode if ch.isdigit())
+    if not 8 <= len(code) <= 14:
+        raise HTTPException(422, "Enter a barcode with 8 to 14 digits")
+    # Variable-measure EAN-13 (prefix 2): first seven digits identify the PLU;
+    # the remaining digits encode weight/price and the check digit.
+    weighted = len(code) == 13 and code.startswith("2")
+    if weighted:
+        row = db.query(CommunityFood).filter(CommunityFood.barcode_prefix == code[:7]).first()
+        if row:
+            result = catalog_food(row)
+            result["matched_by"] = "weight_prefix"
+            return result
+    row = db.query(CommunityFood).filter(CommunityFood.barcode == code).first()
+    if row:
+        return catalog_food(row)
+    try:
+        response = httpx.get(
+            f"https://world.openfoodfacts.org/api/v2/product/{code}.json",
+            params={"fields": "code,product_name,product_name_ru,brands,nutriments"},
+            headers={"User-Agent": "TelegramPersonalHub/1.0 (food barcode lookup)"}, timeout=8.0)
+        response.raise_for_status()
+        result = response.json()
+    except (httpx.HTTPError, ValueError):
+        raise HTTPException(502, "Open Food Facts is temporarily unavailable")
+    if result.get("status") != 1 or not result.get("product"):
+        return {"found": False, "source": "openfoodfacts", "barcode": code,
+                "weighted": weighted, "barcode_prefix": code[:7] if weighted else None}
+    product = result["product"]
+    product["source"] = "openfoodfacts"
+    return {"found": True, "source": "openfoodfacts", "product": product,
+            "weighted": weighted, "barcode_prefix": code[:7] if weighted else None}
+
+
+@router.post("/catalog", status_code=201)
+def add_catalog_food(payload: CatalogFoodInput, db: Session = Depends(get_db), user: User = Depends(current_user)):
+    barcode = payload.barcode
+    prefix = barcode[:7] if len(barcode) == 13 and barcode.startswith("2") else None
+    row = db.query(CommunityFood).filter(CommunityFood.barcode == barcode).first()
+    if row:
+        if row.submitted_by != user.id:
+            raise HTTPException(409, "This barcode is already in the shared catalog")
+        for field in ("name", "brand", "kcal", "protein", "carbs", "fat"):
+            setattr(row, field, getattr(payload, field))
+        db.commit()
+        db.refresh(row)
+        return catalog_food(row)
+
+    row = CommunityFood(barcode=barcode, barcode_prefix=prefix, name=payload.name.strip(),
+                        brand=payload.brand.strip(), kcal=payload.kcal, protein=payload.protein,
+                        carbs=payload.carbs, fat=payload.fat, submitted_by=user.id)
+    db.add(row)
+    try:
+        db.commit()
+    except IntegrityError:
+        # Another user may have inserted the same barcode between the lookup
+        # and the commit. Only a confirmed duplicate is a 409; any other
+        # constraint failure stays visible.
+        db.rollback()
+        existing = db.query(CommunityFood).filter(CommunityFood.barcode == barcode).first()
+        if existing is None:
+            raise
+        raise HTTPException(409, "This barcode is already in the shared catalog") from None
+    db.refresh(row)
+    return catalog_food(row)
+
+
+@router.get("/catalog-search")
+def search_food_catalog(q: str = Query(min_length=2, max_length=80), user: User = Depends(current_user)):
+    try:
+        response = httpx.get("https://world.openfoodfacts.org/api/v2/search",
+                             params={"search_terms": q, "page_size": 20,
+                                     "fields": "code,product_name,product_name_ru,brands,nutriments"},
+                             headers={"User-Agent": "TelegramPersonalHub/1.0 (food search)"}, timeout=8.0)
+        response.raise_for_status()
+        data = response.json()
+    except (httpx.HTTPError, ValueError):
+        raise HTTPException(502, "Open Food Facts search is temporarily unavailable")
+    return [{"source": "openfoodfacts", **product} for product in data.get("products", [])]
 
 
 class MealInput(BaseModel):
@@ -65,7 +166,9 @@ def add_meal(payload: MealInput, db: Session = Depends(get_db), user: User = Dep
     row = MealEntry(user_id=user.id, day=payload.day.isoformat(), meal_type=payload.meal_type,
                     name=payload.name.strip(), calories=payload.calories, protein=payload.protein,
                     carbs=payload.carbs, fat=payload.fat, ingredients=payload.ingredients,
-                    serving_grams=payload.serving_grams)
+                    serving_grams=payload.serving_grams, base_serving_grams=payload.serving_grams,
+                    base_calories=payload.calories, base_protein=payload.protein,
+                    base_carbs=payload.carbs, base_fat=payload.fat)
     db.add(row)
     db.commit()
     db.refresh(row)
@@ -77,11 +180,11 @@ def update_portion(meal_id: int, payload: PortionInput, db: Session = Depends(ge
     row = db.query(MealEntry).filter(MealEntry.id == meal_id, MealEntry.user_id == user.id).first()
     if row is None:
         raise HTTPException(404, "Meal not found")
-    ratio = payload.serving_grams / max(row.serving_grams, 1)
-    row.calories = round(row.calories * ratio)
-    row.protein = round(row.protein * ratio, 1)
-    row.carbs = round(row.carbs * ratio, 1)
-    row.fat = round(row.fat * ratio, 1)
+    ratio = payload.serving_grams / max(row.base_serving_grams, 1)
+    row.calories = round(row.base_calories * ratio)
+    row.protein = round(row.base_protein * ratio, 1)
+    row.carbs = round(row.base_carbs * ratio, 1)
+    row.fat = round(row.base_fat * ratio, 1)
     row.serving_grams = payload.serving_grams
     db.commit()
     db.refresh(row)
@@ -95,6 +198,28 @@ def delete_meal(meal_id: int, db: Session = Depends(get_db), user: User = Depend
         raise HTTPException(404, "Meal not found")
     db.delete(row)
     db.commit()
+
+
+class CopyDayInput(BaseModel):
+    source_day: date
+    target_day: date
+
+
+@router.post("/copy-day", status_code=201)
+def copy_day(payload: CopyDayInput, db: Session = Depends(get_db), user: User = Depends(current_user)):
+    if payload.source_day == payload.target_day:
+        raise HTTPException(400, "Choose a different destination day")
+    source = db.query(MealEntry).filter(MealEntry.user_id == user.id, MealEntry.day == payload.source_day.isoformat()).all()
+    if not source:
+        raise HTTPException(404, "No meals found on the source day")
+    copied = [MealEntry(user_id=user.id, day=payload.target_day.isoformat(), meal_type=m.meal_type,
+                        name=m.name, calories=m.calories, protein=m.protein, carbs=m.carbs,
+                        fat=m.fat, ingredients=m.ingredients, serving_grams=m.serving_grams,
+                        base_serving_grams=m.base_serving_grams, base_calories=m.base_calories,
+                        base_protein=m.base_protein, base_carbs=m.base_carbs, base_fat=m.base_fat) for m in source]
+    db.add_all(copied)
+    db.commit()
+    return {"copied": len(copied), "day": payload.target_day.isoformat()}
 
 
 @router.get("/recipes")

@@ -1,10 +1,10 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:16-alpine@sha256:f377d590e5474681d4d7838635031a2b50647923b7abfa803ce9b5ff35d5c663
     restart: unless-stopped
     environment:
       POSTGRES_USER: hub
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hub-local}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
       POSTGRES_DB: hub
     volumes: ["postgres_data:/var/lib/postgresql/data"]
     healthcheck:
@@ -12,15 +12,28 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+  redis:
+    image: redis:7-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    # Rate-limit counters are ephemeral; losing them on restart is acceptable.
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
   backend:
     build: ./backend
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql+psycopg://hub:${POSTGRES_PASSWORD:-hub-local}@db:5432/hub
+      DATABASE_URL: postgresql+psycopg://hub:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}@db:5432/hub
       BOT_TOKEN: ${BOT_TOKEN:-}
       INIT_DATA_MAX_AGE: ${INIT_DATA_MAX_AGE:-86400}
+      REDIS_URL: redis://redis:6379/0
+      REDIS_TIMEOUT_SECONDS: ${REDIS_TIMEOUT_SECONDS:-0.25}
     depends_on:
       db: {condition: service_healthy}
+      redis: {condition: service_healthy}
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 10s
@@ -31,7 +44,7 @@ services:
     restart: unless-stopped
     environment:
       BOT_TOKEN: ${BOT_TOKEN:?Set BOT_TOKEN in .env}
-      WEBAPP_URL: ${WEBAPP_URL:-https://your-domain.example}
+      WEBAPP_URL: ${WEBAPP_URL:?WEBAPP_URL must be set}
     depends_on: [backend]
   frontend:
     build: ./frontend
@@ -40,12 +53,12 @@ services:
     depends_on:
       backend: {condition: service_healthy}
   ngrok:
-    image: ngrok/ngrok:latest
+    image: ngrok/ngrok:latest@sha256:ff3b5c3674432d14a786349908b7bdf28ee56c25662637afcbe7180d471993ef
     profiles: ["tunnel"]
     restart: unless-stopped
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:-}
-    command: ["http", "frontend:80", "--url=${WEBAPP_URL:-https://your-domain.example}"]
+    command: ["http", "frontend:80", "--url=${WEBAPP_URL:?WEBAPP_URL must be set}"]
     depends_on: [frontend]
 volumes:
   postgres_data:

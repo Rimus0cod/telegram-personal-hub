@@ -6,7 +6,10 @@ from app.core.config import DATABASE_URL
 from app.models import models  # noqa: F401
 
 config = context.config
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+# ConfigParser interprets ``%`` in option values, while DATABASE_URL may contain
+# percent-encoded passwords or connection options. Escape it for the ini file;
+# ConfigParser returns the original value to engine_from_config().
+config.set_main_option("sqlalchemy.url", DATABASE_URL.replace("%", "%%"))
 if config.config_file_name: fileConfig(config.config_file_name)
 target_metadata = Base.metadata
 

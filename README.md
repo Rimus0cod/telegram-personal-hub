@@ -7,9 +7,15 @@ A Telegram Mini App with personal weather, notes, tasks, and a focus timer. The 
 - `frontend/`: React, TypeScript, Vite, TanStack Query, Telegram WebApp initData.
 - `backend/`: FastAPI, SQLAlchemy 2, Pydantic, Open-Meteo integration.
 - `bot/`: aiogram 3 `/start` and `/help` commands.
-- `docker-compose.yml`: PostgreSQL, API, bot, and Nginx-served frontend.
+- `docker-compose.yml`: PostgreSQL, Redis, API, bot, and Nginx-served frontend.
 
 The API verifies Telegram's HMAC signature and `auth_date` before creating/loading a user. Every private resource query filters by that database user's ID. `BOT_TOKEN` stays in server containers.
+
+## Rate limiting
+
+Authenticated `/api/v1` routes use per-user Redis token buckets: 120 requests/min generally, 60 writes/min, 30 weather/min, and shared limits for Open Food Facts (30/min plus 20 searches/min or 10 barcode lookups/min and 100/hour). Limits are checked atomically in Redis after authentication; `/health` is not user-limited.
+
+Compose starts an internal Redis service and configures `REDIS_URL`. For a backend run outside Compose, set `REDIS_URL` (for example `redis://localhost:6379/0`); when it is unset, rate limiting is disabled for local development. If Redis is configured but unavailable after startup, ordinary CRUD keeps working (fail-open), while Weather and Open Food Facts endpoints return `503` (fail-closed). Rate-limit counters are ephemeral and may be lost on restart.
 
 ## Requirements
 
@@ -33,11 +39,21 @@ Backend, from `backend/`:
 ```bash
 python -m venv .venv
 # activate the environment, then:
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
+alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
-Set `DATABASE_URL=sqlite:///./hub.db` and `BOT_TOKEN` in the environment for local use. Frontend, from `frontend/`:
+Runtime dependencies are locked with hashes in `requirements.txt`; `requirements-dev.txt` adds the test tooling and is the file to use for local development. Regenerate either lock from its `.in` file with the same command, for example:
+
+```bash
+uv pip compile requirements.in --universal --python-version 3.12 --generate-hashes --output-file requirements.txt
+uv pip compile requirements-dev.in --universal --python-version 3.12 --generate-hashes --output-file requirements-dev.txt
+```
+
+The bot has its own lock, `bot/requirements.txt`, generated from `bot/requirements.in` with the same options.
+
+Set `DATABASE_URL=sqlite:///./hub.db`, `BOT_TOKEN`, and optionally `REDIS_URL=redis://localhost:6379/0` in the environment for local use. Without `REDIS_URL`, rate limiting is disabled. Frontend, from `frontend/`:
 
 ```bash
 npm install
@@ -59,14 +75,17 @@ Create a bot with `/newbot` in BotFather and keep its token private. Configure `
 
 ## Database migrations
 
-The API currently creates tables from SQLAlchemy metadata at startup so the one-command compose setup works immediately. Alembic configuration and an initial schema revision are included; apply future revisions with `cd backend && alembic upgrade head`. For production, run migrations as a deployment step and then disable startup table creation. Back up PostgreSQL before upgrades.
+The application no longer creates or patches tables at import time. The backend container runs `alembic upgrade head` before Uvicorn; for a local backend, run it manually from `backend/` before starting the API. Revision `0003_nutrition_schema` reconciles fresh databases, databases still at `0002_add_last_city`, and databases that were partially patched by older startup DDL, without dropping user tables. It is forward-only: use a verified PostgreSQL backup rather than `alembic downgrade` for rollback. Back up PostgreSQL before production upgrades.
 
 ## Tests and build
 
 ```bash
 cd backend
+pip install -r requirements-dev.txt
 pytest
 cd ../frontend
+npm ci
+npm test
 npm run build
 ```
 
@@ -82,4 +101,4 @@ npm run build
 
 ## Current scope
 
-The included automated suite currently covers Telegram initData signature and expiry validation. Expand it with API isolation, CRUD, focus statistics, and mocked weather provider cases before production. Timer state is client-side; completed focus sessions are persisted when a timer reaches zero.
+The automated suite covers Telegram initData signature/expiry validation and forward SQLite migration scenarios (fresh, legacy `0002`, partially patched schema, repeated runs, and no import-time DDL). PostgreSQL migration coverage runs only when `TEST_POSTGRES_URL` points at a disposable test database whose name contains `test`. Expand it with API isolation, CRUD, focus statistics, and mocked weather provider cases before production. Timer state is client-side; completed focus sessions are persisted when a timer reaches zero.

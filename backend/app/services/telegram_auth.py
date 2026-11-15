@@ -20,5 +20,9 @@ def validate_init_data(init_data: str, bot_token: str | None = None) -> dict:
     except (KeyError, ValueError, TypeError): raise HTTPException(401, "Incomplete Telegram initData")
     age = int(time.time()) - auth_date
     if age < -60 or age > INIT_DATA_MAX_AGE: raise HTTPException(401, "Telegram initData expired")
-    if not isinstance(user.get("id"), int): raise HTTPException(401, "Invalid Telegram user")
+    if not isinstance(user, dict): raise HTTPException(401, "Invalid Telegram user")
+    user_id = user.get("id")
+    # ``bool`` is a subclass of ``int``; reject it explicitly. The upper bound
+    # keeps the PostgreSQL BIGINT column safe from a malformed signed payload.
+    if type(user_id) is not int or not 0 < user_id < 2**63: raise HTTPException(401, "Invalid Telegram user")
     return user
