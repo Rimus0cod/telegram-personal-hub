@@ -1,11 +1,21 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 x-backend: &backend
   build: ./backend
-  image: telegram-personal-hub-backend
+  image: ${COMPOSE_PROJECT_NAME:?Set COMPOSE_PROJECT_NAME in .env, for example telegram-personal-hub}-backend
 
 services:
   db:
     image: postgres:16-alpine@sha256:f377d590e5474681d4d7838635031a2b50647923b7abfa803ce9b5ff35d5c663
     restart: unless-stopped
+    mem_limit: 1g
+    cpus: "1.0"
+    stop_grace_period: 60s
+    logging: *default-logging
     environment:
       POSTGRES_USER: hub
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
@@ -19,6 +29,9 @@ services:
   redis:
     image: redis:7-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
     restart: unless-stopped
+    mem_limit: 256m
+    cpus: "0.25"
+    logging: *default-logging
     # Rate-limit counters are ephemeral; losing them on restart is acceptable.
     command: ["redis-server", "--save", "", "--appendonly", "no"]
     healthcheck:
@@ -30,6 +43,9 @@ services:
     <<: *backend
     restart: "no"
     command: ["alembic", "-c", "/app/alembic.ini", "upgrade", "head"]
+    logging: *default-logging
+    security_opt:
+      - no-new-privileges:true
     environment:
       DATABASE_URL: postgresql+psycopg://hub:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}@db:5432/hub
     depends_on:
@@ -37,6 +53,12 @@ services:
   backend:
     <<: *backend
     restart: unless-stopped
+    mem_limit: 512m
+    cpus: "1.0"
+    stop_grace_period: 30s
+    logging: *default-logging
+    security_opt:
+      - no-new-privileges:true
     environment:
       DATABASE_URL: postgresql+psycopg://hub:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}@db:5432/hub
       BOT_TOKEN: ${BOT_TOKEN:-}
@@ -54,7 +76,14 @@ services:
       retries: 5
   bot:
     build: ./bot
+    image: ${COMPOSE_PROJECT_NAME:?Set COMPOSE_PROJECT_NAME in .env, for example telegram-personal-hub}-bot
     restart: unless-stopped
+    mem_limit: 256m
+    cpus: "0.5"
+    stop_grace_period: 15s
+    logging: *default-logging
+    security_opt:
+      - no-new-privileges:true
     environment:
       BOT_TOKEN: ${BOT_TOKEN:?Set BOT_TOKEN in .env}
       WEBAPP_URL: ${WEBAPP_URL:?WEBAPP_URL must be set}
@@ -62,7 +91,11 @@ services:
       backend: {condition: service_healthy}
   frontend:
     build: ./frontend
+    image: ${COMPOSE_PROJECT_NAME:?Set COMPOSE_PROJECT_NAME in .env, for example telegram-personal-hub}-frontend
     restart: unless-stopped
+    mem_limit: 128m
+    cpus: "0.5"
+    logging: *default-logging
     ports: ["${PORT:-8080}:80"]
     depends_on:
       backend: {condition: service_healthy}
@@ -70,6 +103,9 @@ services:
     image: ngrok/ngrok:latest@sha256:ff3b5c3674432d14a786349908b7bdf28ee56c25662637afcbe7180d471993ef
     profiles: ["tunnel"]
     restart: unless-stopped
+    mem_limit: 128m
+    cpus: "0.25"
+    logging: *default-logging
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:-}
     command: ["http", "frontend:80", "--url=${WEBAPP_URL:?WEBAPP_URL must be set}"]

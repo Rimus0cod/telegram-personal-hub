@@ -24,7 +24,7 @@ Docker Compose v2 is recommended. For local development: Python 3.12+, Node.js 2
 ## Configure and run with Docker
 
 1. Copy `.env.example` to `.env` and set `BOT_TOKEN`, a strong `POSTGRES_PASSWORD`, and the public HTTPS `WEBAPP_URL`.
-2. Start everything with `docker compose up --build`. The one-shot `migrate` service applies Alembic before the backend starts; if it fails, the backend is not started.
+2. Start everything with `docker compose up --build`. The one-shot `migrate` service applies Alembic before the backend starts; if it fails, the backend is not started. Images are named `<COMPOSE_PROJECT_NAME>-backend`, `-bot` and `-frontend` from `.env`; use a different `COMPOSE_PROJECT_NAME` and port for a separate stack so images, volumes and containers do not collide.
 3. Open `http://localhost:8080` for local preview, or configure an HTTPS reverse proxy and set that public URL as the bot's Mini App URL with BotFather.
 4. Send `/start` to your bot and tap **Open Personal Hub**.
 
@@ -33,6 +33,14 @@ Take a verified PostgreSQL backup before every migration or upgrade; see `docs/B
 The API is served on the same origin under `/api/v1`; `/health` is the health endpoint and `/docs` is available on the backend container at port 8000 (publish it locally if needed).
 
 To host the ngrok tunnel inside Docker as well, add your ngrok account authtoken to `NGROK_AUTHTOKEN` in `.env`, then start the tunnel profile with `docker compose --profile tunnel up -d ngrok`. The tunnel targets the frontend service on the Compose network.
+
+## Production hardening
+
+Backend and bot images run as non-root UID/GID 10001 with bytecode writes disabled; the frontend Nginx image keeps its upstream root master process and drops workers to `nginx`. Compose applies per-service memory/CPU limits, stop grace periods for application containers, `no-new-privileges` for backend/bot/migrate, and `json-file` log rotation (`10m` × `3`). PostgreSQL is limited to 1 GiB and Redis to 256 MiB; raise these only after measuring real usage.
+
+PostgreSQL, Redis and the backend are not published outside the Compose network; only the frontend port is exposed. The one-shot migration service has no resource limit, so migrations and restores are not throttled by an arbitrary low cap.
+
+For the complete first-deployment sequence (read-only audit, backup verification, build, migrations, switch, health checks, rollback), see `docs/DEPLOYMENT.md`.
 
 ## Local development
 
@@ -93,7 +101,7 @@ npm test
 npm run build
 ```
 
-`docker compose up --build` builds all three application images and runs the one-shot migration service.
+`docker compose up --build` builds all three application images (named from `COMPOSE_PROJECT_NAME`) and runs the one-shot migration service. Use a different `COMPOSE_PROJECT_NAME` (and port) to run an isolated stack without touching another project's images or volumes.
 
 PostgreSQL migration tests use `TEST_POSTGRES_URL` and are intended for PostgreSQL 16. `TEST_POSTGRES_URL` must point at a disposable test database whose name contains `test`; do not point it at production.
 

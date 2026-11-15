@@ -14,6 +14,16 @@
   `DATABASE_URL`.
 - On Windows, run the bash scripts through Git Bash/Cygwin and put the
   PostgreSQL 16 `bin` directory on `PATH`.
+- If the host has no PostgreSQL 16 client tools, run the unmodified scripts in a
+  temporary `postgres:16-alpine` client container attached to the Compose
+  network, mounting `scripts/` read-only and the backup directory read/write for
+  that container only. This was verified during the Docker runtime audit. It is
+  a client-container workflow, not a replacement script.
+
+For the deployment sequence that this runbook supports (audit, backup, verify,
+build, migrate, switch, health checks, rollback), see `docs/DEPLOYMENT.md`. The
+backup is step 2 and verification is step 3; do not build or migrate before the
+verified backup exists.
 
 The scripts are in `scripts/` and are invoked with `bash` so they also work
 when the executable bit is not set:
@@ -99,7 +109,10 @@ Alembic head is the version the application expects.
 ## 5. Manual switch (separate, approved step)
 
 The application database name is fixed in Compose (`hub`). The safe switch is
-manual and must be done during a maintenance window:
+manual and must be done during a maintenance window. Run Compose from the
+deployment directory so `.env` supplies the same `COMPOSE_PROJECT_NAME` (and
+therefore the same project, images and volume) as the running stack; see
+`docs/DEPLOYMENT.md`.
 
 1. Stop writers:
 
@@ -124,7 +137,8 @@ manual and must be done during a maintenance window:
    ```
 
    The one-shot `migrate` service runs before the backend. Confirm:
-   `docker compose ps`, backend `/health`, and `docker compose exec backend alembic current`.
+   `docker compose ps`, backend `/health`, and
+   `docker compose exec backend alembic current`.
 
 6. Keep `hub_before_restore_20261115` until the restored data is verified and
    the incident is closed.

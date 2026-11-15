@@ -43,6 +43,11 @@ project after a verified backup. It is not part of the current policy.
 
 ## Required workflow for a schema change
 
+This section is for routine schema development. For the ordering of a first or
+upgrade deployment (audit, backup, build, migration, switch, health checks,
+rollback), follow `docs/DEPLOYMENT.md`; migrations are one step in that sequence,
+never the first action on a live installation.
+
 1. Take a verified PostgreSQL backup (`docs/BACKUP_RESTORE.md`).
 2. Create a new revision:
 
@@ -82,6 +87,14 @@ To apply pending migrations without starting the rest of the stack:
 ```bash
 docker compose run --rm migrate
 ```
+
+Compose reads the deployment's `COMPOSE_PROJECT_NAME` from `.env`, so the same
+command selects the same project, images, volumes and database as the rest of
+the stack. `-p` alone does not rename images; do not mix a `-p` value with a
+different `COMPOSE_PROJECT_NAME`. The `migrate` service reuses the backend image
+(`<COMPOSE_PROJECT_NAME>-backend`), so a migration can never run against a
+different application build than the backend it precedes. The full deployment
+ordering is in `docs/DEPLOYMENT.md`.
 
 ### Local development
 
@@ -137,7 +150,8 @@ Before deploying:
 - `backend/tests/test_migration_governance.py` passes (frozen files, single head,
   one-shot service, advisory lock);
 - a fresh database and a legacy database both reach the head;
-- `docs/BACKUP_RESTORE.md` has a current, verified backup.
+- `docs/BACKUP_RESTORE.md` has a current, verified backup;
+- the deployment follows the sequence in `docs/DEPLOYMENT.md`.
 
 PostgreSQL 16 is the supported compose version; CI should run migration tests on
 16 rather than relying only on SQLite.

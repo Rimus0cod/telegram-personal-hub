@@ -4,6 +4,7 @@
 
 - Three separate applications, with no root task runner or JS workspace: FastAPI in `backend/` (`app.main:app`), React/Vite in `frontend/`, and an aiogram polling bot in `bot/main.py`. The bot only launches the Mini App; Compose also runs PostgreSQL, Redis for API rate limiting, a one-shot Alembic `migrate` service, and an Nginx-served frontend.
 - The backend container runs only Uvicorn. Compose's `migrate` service applies `alembic upgrade head` before the backend starts; the backend is not started if migration fails. The compose database is PostgreSQL 16.
+- Images are named `<COMPOSE_PROJECT_NAME>-backend`, `-bot` and `-frontend`; `COMPOSE_PROJECT_NAME` is required in `.env` so the Compose project name and image names always match. Parallel projects must use a different value; `-p` alone does not rename images. Backend and bot run as UID/GID 10001; frontend Nginx keeps its upstream root master and drops workers to `nginx`. Compose applies memory/CPU limits and json-file log rotation.
 - Backend routers are registered in `backend/app/main.py` under `/api/v1`; `/health` is deliberately outside that prefix. Nutrition is split into `app/api/nutrition.py` and `frontend/src/Nutrition.tsx`; the other screens and the shared frontend `request` helper live in `frontend/src/App.tsx`.
 - The frontend sends raw Telegram `initData` as `Authorization: tma <initData>`. Resolve users with `app/dependencies/auth.py::current_user` and scope private queries by `user.id`; there is intentionally no mock-auth mode for a plain browser preview.
 - Production same-origin proxying is in `frontend/nginx.conf`. Vite has no API proxy: for separate local frontend/backend servers, set `VITE_API_URL` to the backend origin or requests will go to the Vite origin.
@@ -30,7 +31,7 @@ docker compose up --build
 docker compose --profile tunnel up -d ngrok
 ```
 
-`npm run build` is the only configured frontend verification command; there are no frontend test or lint scripts. The current pytest suite only exercises Telegram signature/expiry logic and needs neither PostgreSQL nor a real bot token.
+`npm run build` and `npm test` are the configured frontend verification commands; there is no frontend lint script. The backend pytest suite covers auth, migrations, API isolation/CRUD, Focus and rate limiting; PostgreSQL and Redis integration tests run only when their environment variables point at disposable test services.
 
 For local Python processes, configuration comes from process environment variables via `os.getenv`; neither `uvicorn` nor `bot/main.py` auto-loads the repo `.env` files. The backend defaults to `sqlite:///./hub.db`, but authenticated requests still require `BOT_TOKEN`. Docker Compose reads the root `.env` and requires `BOT_TOKEN` for the bot service.
 
@@ -79,7 +80,7 @@ For local Python processes, configuration comes from process environment variabl
 After each meaningful change:
 
 1. Run relevant backend tests.
-2. Run `npm run build` from `frontend/`.
+2. Run `npm run build` and `npm test` from `frontend/`.
 3. Validate database migrations against a test database.
 4. Check that user data remains isolated between different Telegram accounts.
 5. Report exactly which checks passed and which were not executed.
