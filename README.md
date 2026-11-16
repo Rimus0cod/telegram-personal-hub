@@ -1,6 +1,6 @@
 # Telegram Personal Hub
 
-#### Video Demo: <URL>
+#### Video Demo: https://youtu.be/RMdwVAtyoWU
 
 Telegram Personal Hub is a CS50x Final Project and personal portfolio project: a private Telegram Mini App that brings daily weather, notes, tasks, a Focus Timer, and nutrition tracking with macros (КБЖУ) into one place. It is built as three cooperating applications: a React/Vite Mini App, a FastAPI backend, and an aiogram bot that launches the Mini App.
 
@@ -170,7 +170,7 @@ Vitest covers timer state transitions, timer persistence and delivery queues, an
 
 The application is implemented, tested, and running as a private personal deployment. The main features are usable end to end: Telegram authentication, notes, tasks, weather, Focus Timer, nutrition, recipes, food catalog, and the bot entry point.
 
-Remaining work is limited to the CS50x submission process: recording the video demo, adding its URL above, and a final submission review. The tracked repository is intentionally self-contained and does not include deployment secrets or user data.
+Remaining work is the official CS50 submission: the video form, `submit50 cs50/problems/2026/x/project`, and the Gradebook/certificate check. The tracked repository is intentionally self-contained and does not include deployment secrets or user data.
 
 ## AI assistance
 
