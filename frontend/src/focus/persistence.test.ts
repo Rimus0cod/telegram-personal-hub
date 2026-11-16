@@ -81,7 +81,7 @@ describe('serialization', () => {
     const stored = persistedOf(state, T0 + 2_000);
 
     expect(stored).toMatchObject({
-      version: 2,
+      version: 3,
       mode: 'focus',
       status: 'running',
       remainingMs: FOCUS_MS - 2_000,
@@ -595,9 +595,10 @@ describe('client id persistence', () => {
     expect(pending.requiresManualRetry).toBe(true);
     expect(isAutoDeliverable(pending)).toBe(false);
 
-    // Saving the restored state upgrades the record to v2, still without a key.
+    // Saving the restored state upgrades the record to v3, still without
+    // a key.
     const migrated = JSON.parse(serializeTimerState(restored.state, T0 + FOCUS_MS + 2_000));
-    expect(migrated.version).toBe(2);
+    expect(migrated.version).toBe(3);
     expect(migrated.pending[0].clientId).toBeNull();
   });
 
@@ -654,5 +655,30 @@ describe('client id persistence', () => {
 
     expect(saved.pending).toHaveLength(1);
     expect(saved.pending[0].session.clientId).toBe(CLIENT_B);
+  });
+});
+
+describe('custom duration persistence', () => {
+  it('restores a v3 custom duration', () => {
+    const raw = serializeTimerState(createTimerState('focus', 40 * 60_000), T0);
+    const restored = expectRestored(parseTimerState(raw, T0 + 1_000));
+    expect(restored.state.durationMs).toBe(40 * 60_000);
+    expect(restored.state.remainingMs).toBe(40 * 60_000);
+  });
+
+  it('keeps v2 records readable with the standard mode duration', () => {
+    const stored = persistedOf(startFocus());
+    stored.version = 2;
+    delete stored.durationMs;
+    const restored = expectRestored(parseTimerState(JSON.stringify(stored), T0 + 1_000));
+    expect(restored.state.durationMs).toBe(25 * 60_000);
+  });
+
+  it('rejects an invalid duration in a v3 record', () => {
+    const stored = persistedOf(createTimerState('focus', 40 * 60_000));
+    stored.durationMs = 12.5;
+    expectError(parseTimerState(JSON.stringify(stored), T0));
+    stored.durationMs = 181 * 60_000;
+    expectError(parseTimerState(JSON.stringify(stored), T0));
   });
 });

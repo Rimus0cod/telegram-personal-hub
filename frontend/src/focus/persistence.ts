@@ -11,11 +11,12 @@ import {
 
 /** Versioned key, so a future schema can migrate instead of guessing. */
 export const FOCUS_STORAGE_KEY = 'focus.timer.v1';
-/** v2 adds the backend idempotency key (client_id). v1 remains readable. */
-export const FOCUS_STORAGE_VERSION = 2;
-export const FOCUS_STORAGE_LEGACY_VERSIONS = [1] as const;
+/** v2 adds the backend idempotency key (client_id); v3 adds custom duration. */
+export const FOCUS_STORAGE_VERSION = 3;
+export const FOCUS_STORAGE_LEGACY_VERSIONS = [1, 2] as const;
 
 /** Mirrors the backend constraint for a single recorded session. */
+const MIN_SESSION_MINUTES = 1;
 const MAX_SESSION_MINUTES = 180;
 
 export interface StorageLike {
@@ -43,6 +44,7 @@ interface PersistedTimerState {
   savedAt: number;
   mode: FocusMode;
   status: TimerStatus;
+  durationMs: number;
   remainingMs: number;
   deadlineAt: number | null;
   startedAt: number | null;
@@ -82,6 +84,7 @@ export function serializeTimerState(state: TimerState, savedAt: number = Date.no
     savedAt,
     mode: state.mode,
     status: state.status,
+    durationMs: state.durationMs,
     remainingMs,
     deadlineAt: state.deadlineAt,
     startedAt: state.startedAt,
@@ -110,6 +113,7 @@ export function persistenceSignature(state: TimerState): string {
   return JSON.stringify([
     state.mode,
     state.status,
+    state.durationMs,
     state.status === 'running' ? null : state.remainingMs,
     state.deadlineAt,
     state.startedAt,
@@ -140,18 +144,28 @@ export function parseTimerState(raw: string | null | undefined, now: number): Lo
   }
   if (!isRecord(value)) return fail('Некорректный формат сохранённых данных.');
   const schemaVersion = value.version;
-  if (schemaVersion !== FOCUS_STORAGE_VERSION && schemaVersion !== 1) {
+  if (
+    schemaVersion !== 1 &&
+    schemaVersion !== 2 &&
+    schemaVersion !== FOCUS_STORAGE_VERSION
+  ) {
     return fail('Неизвестная версия сохранённых данных таймера.');
   }
-  // v1 predates client_id. It stays readable, but its pending sessions can
-  // never be treated as protected from duplicates.
-  const currentSchema = schemaVersion === FOCUS_STORAGE_VERSION;
-  const storedSessionClientId = currentSchema
+  // v1 predates client_id. v2 and v3 keep it. A v1 pending session can never be
+  // treated as protected from duplicates.
+  const hasClientIdSchema = schemaVersion === 2 || schemaVersion === FOCUS_STORAGE_VERSION;
+  const storedSessionClientId = hasClientIdSchema
     ? readNullableUuid(value.sessionClientId)
     : null;
 
   if (!isFocusMode(value.mode)) return fail('Некорректный режим таймера.');
   if (!isTimerStatus(value.status)) return fail('Некорректный статус таймера.');
+  const mode = value.mode;
+  const durationMs =
+    schemaVersion === FOCUS_STORAGE_VERSION
+      ? readDurationMs(value.durationMs)
+      : modeDurationMs(mode);
+  if (durationMs === null) return fail('Некорректная длительность таймера.');
 
   const savedAt = readNonNegative(value.savedAt);
   if (savedAt === null) return fail('Некорректная метка сохранения.');
@@ -166,7 +180,7 @@ export function parseTimerState(raw: string | null | undefined, now: number): Lo
 
   if (!Array.isArray(value.pending)) return fail('Некорректная очередь несохранённых сессий.');
   const storedPending = value.pending.map((item) =>
-    readPendingSession(item, currentSchema),
+    readPendingSession(item, hasClientIdSchema),
   );
   if (storedPending.some((item) => item === null)) {
     return fail('Некорректная несохранённая сессия в очереди.');
@@ -179,8 +193,6 @@ export function parseTimerState(raw: string | null | undefined, now: number): Lo
     requiresManualRetry: true,
   }));
 
-  const mode = value.mode;
-  const durationMs = modeDurationMs(mode);
   const clampRemaining = (valueMs: number) => Math.min(durationMs, Math.max(0, valueMs));
   // A legacy (v1) active timer never had a key, but no POST exists for it yet:
   // assigning one now is safe and keeps its future completion protected.
@@ -285,7 +297,7 @@ export function parseTimerState(raw: string | null | undefined, now: number): Lo
       break;
     }
     case 'idle': {
-      state = { ...createTimerState(mode), pending };
+      state = { ...createTimerState(mode, durationMs), pending };
       break;
     }
   }
@@ -408,6 +420,15 @@ function readNonNegative(value: unknown): number | null {
 function readInteger(value: unknown): number | null {
   const number = readNumber(value);
   return number !== null && Number.isInteger(number) ? number : null;
+}
+
+function readDurationMs(value: unknown): number | null {
+  const durationMs = readInteger(value);
+  if (durationMs === null) return null;
+  if (durationMs < MIN_SESSION_MINUTES * 60_000 || durationMs > MAX_SESSION_MINUTES * 60_000) {
+    return null;
+  }
+  return durationMs % 60_000 === 0 ? durationMs : null;
 }
 
 function readNullableTimestamp(value: unknown): number | null | undefined {

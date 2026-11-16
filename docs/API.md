@@ -24,9 +24,11 @@ OpenAPI UI is available at `/docs` on the FastAPI container; it is not exposed t
 | Method | Route | Request / response |
 |---|---|---|
 | GET | `/weather/search?city=...` | Geocoding results from Open-Meteo. `city` length 2–100. |
-| GET | `/weather?city=...` | Current weather and five-day forecast; saves the selected city on the user. |
-| GET | `/weather?latitude=...&longitude=...` | Forecast for coordinates. Latitude and longitude must be supplied together and be in valid ranges. |
-| GET | `/weather` | Uses the user's saved `last_city` when no city or coordinates are supplied. |
+| GET | `/weather?city=...` | Current weather and five-day forecast; saves the selected city on the user and returns `location_source: "manual"`. |
+| GET | `/weather?latitude=...&longitude=...` | Forecast for coordinates. Latitude and longitude must be supplied together and be in valid ranges. The response includes a reverse-geocoded `city` when available and `location_source: "geolocation"`; a failed lookup falls back to “Моё местоположение”. |
+| GET | `/weather` | Uses the user's saved `last_city` when no city or coordinates are supplied and returns `location_source: "saved"`. |
+
+Responses include `city` and `location_source` (`manual`, `saved`, or `geolocation`); coordinate requests do not overwrite the saved city.
 
 Errors: `400` when no location is available, `404` when a city is not found, `422` for invalid coordinates/city, `502` when Open-Meteo is unavailable.
 

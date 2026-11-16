@@ -1,4 +1,4 @@
-import { DEFAULT_MODE, modeDurationMs, type FocusMode } from './modes';
+import { DEFAULT_MODE, MAX_CUSTOM_MINUTES, modeDurationMs, type FocusMode } from './modes';
 
 export type TimerStatus = 'idle' | 'running' | 'paused' | 'completed' | 'error';
 
@@ -57,6 +57,7 @@ export type TimerEvent =
   | { type: 'resume'; now: number }
   | { type: 'reset'; now: number }
   | { type: 'set_mode'; mode: FocusMode; now: number }
+  | { type: 'set_duration'; durationMs: number; now: number }
   | { type: 'tick'; now: number }
   | { type: 'saved'; key: string }
   | { type: 'fail'; key: string; errorKind?: DeliveryErrorKind; message?: string | null }
@@ -109,13 +110,18 @@ export function createClientId(): string {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
-export function createTimerState(mode: FocusMode = DEFAULT_MODE): TimerState {
-  const durationMs = modeDurationMs(mode);
+export function createTimerState(
+  mode: FocusMode = DEFAULT_MODE,
+  durationMs: number = modeDurationMs(mode),
+): TimerState {
+  const safeDurationMs = Number.isFinite(durationMs) && durationMs > 0
+    ? Math.min(durationMs, MAX_CUSTOM_MINUTES * 60_000)
+    : modeDurationMs(mode);
   return {
     mode,
     status: 'idle',
-    durationMs,
-    remainingMs: durationMs,
+    durationMs: safeDurationMs,
+    remainingMs: safeDurationMs,
     deadlineAt: null,
     startedAt: null,
     completedAt: null,
@@ -181,6 +187,12 @@ export function timerReducer(state: TimerState, event: TimerEvent): TimerState {
       return { ...createTimerState(state.mode), pending: state.pending };
     case 'set_mode':
       return { ...createTimerState(event.mode), pending: state.pending };
+    case 'set_duration': {
+      // Changing the length mid-session would silently move the deadline.
+      // The UI disables this control while running or paused.
+      if (state.status === 'running' || state.status === 'paused') return state;
+      return { ...createTimerState(state.mode, event.durationMs), pending: state.pending };
+    }
     case 'tick': {
       if (state.status !== 'running' || state.deadlineAt === null) return state;
       const remainingMs = state.deadlineAt - event.now;

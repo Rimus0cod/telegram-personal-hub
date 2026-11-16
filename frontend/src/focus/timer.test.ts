@@ -44,7 +44,7 @@ describe('focus modes', () => {
     expect(modeDurationMs('short_break')).toBe(SHORT_MS);
     expect(modeDurationMs('long_break')).toBe(LONG_MS);
     expect(DEFAULT_MODE).toBe('focus');
-    expect(getMode('short_break').label).toBe('Short break');
+    expect(getMode('short_break').label).toBe('Короткий перерыв');
   });
 });
 

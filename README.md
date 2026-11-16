@@ -32,29 +32,37 @@ The frontend sends Telegram's original `initData` as `Authorization: tma <initDa
 
 The API verifies Telegram's Web App HMAC construction and rejects invalid, tampered, or expired `initData`. The resolved user is loaded or created server-side. The frontend never supplies an authoritative user ID, and private resources are always queried with the authenticated user's database ID.
 
+### Interface
+
+The Mini App uses a compact mobile-first layout with one primary action per screen and progressive disclosure for secondary settings. The home screen shows a weather summary and four quick destinations; the note composer, profile menu, weather search, Focus settings, nutrition goals, recipes, food search, barcode and OCR tools open only when needed. Shared spacing, typography, buttons, inputs and bottom sheets live in `style.css`; screen-specific styles stay in their own stylesheets.
+
 ### Notes and tasks
 
-Notes support create, read, update, delete, search, and Markdown rendering. Tasks support create, read, update, delete, completion toggling, priorities, due dates, filtering by status, and sorting by creation or due date. Updates reject explicit `null` values for non-nullable fields instead of turning them into database errors. Notes and tasks are isolated between Telegram accounts.
+Notes support create, read, update, delete, search, and Markdown rendering. After a successful create or update the form clears and returns to create mode, while a failed save keeps the entered text. Tasks support create, read, update, delete, completion toggling, priorities, due dates, filtering by status, and sorting by creation or due date. Updates reject explicit `null` values for non-nullable fields instead of turning them into database errors. Notes and tasks are isolated between Telegram accounts.
 
 ### Focus Timer
 
-The Focus Timer supports focus, short-break, and long-break modes. The countdown is driven by an absolute deadline rather than by counting interval callbacks, so switching tabs, sleeping a device, or reloading the page does not silently lose time.
+The Focus Timer supports focus, short-break, and long-break modes with their recommended durations. The countdown is driven by an absolute deadline rather than by counting interval callbacks, so switching tabs, sleeping a device, or reloading the page does not silently lose time. The main screen keeps only the mode, clock and Start/Pause/Reset controls; custom duration and sound live in a compact “Настройки” section. Before a session starts, the user can enter a custom duration from 1 to 180 minutes; the recommended value stays visible, changing the mode restores that mode's standard duration, and the duration cannot change while a session is running or paused.
 
 Completed sessions are stored through the API with duration, mode, start/finish timestamps, and a client-generated idempotency key. The frontend keeps unsaved sessions in a local pending queue, lets the user retry them explicitly, and preserves completed sessions across reloads. The backend normalizes timestamps to UTC, validates session windows, detects races with a unique `(user_id, client_id)` index, and returns `409` when the same `client_id` is reused with a different payload. The Focus statistics endpoint reports completed focus sessions and total focus minutes.
 
+A short Web Audio signal plays once when a session actually completes; pausing or resetting does not play it. The sound can be disabled with a persisted toggle, and a completed-session message remains visible if the browser blocks autoplay. Timer persistence is version 3 (`focus.timer.v1`) and still reads the earlier v1/v2 records; older records use the standard duration for their mode.
+
 ### Weather
 
-Weather uses Open-Meteo for city geocoding and a five-day forecast. Users can search for a city or use browser geolocation; the last chosen city is saved on the user record. The backend merges multilingual geocoding results, validates coordinates, and returns clear `400`, `404`, `422`, or `502` errors when input or the external provider fails.
+Weather uses Open-Meteo for city geocoding and a five-day forecast. Users can search for a city or use browser geolocation; the last chosen city is saved on the user record. For coordinates, the backend reverse-geocodes a place name through OpenStreetMap Nominatim and marks the response as `geolocation`, `manual`, or `saved`; if reverse geocoding fails, the forecast still loads with the neutral fallback “Моё местоположение”. The frontend shows the resolved place and the location source, persists the last auto/manual selection in `weather.location.v1`, and restores it when the Mini App reopens instead of silently replacing a manual city. The backend merges multilingual geocoding results, validates coordinates, and returns clear `400`, `404`, `422`, or `502` errors when input or the external provider fails.
 
 ### Nutrition and КБЖУ
 
 Nutrition tracks meals by day, meal type, calories, protein, carbohydrates, and fat (КБЖУ). Each meal stores its current serving size together with the original base serving and base macros. Changing the serving recalculates calories and macros from the base values, so repeatedly resizing a meal does not compound rounding errors or destroy the original nutrition data.
 
-The Nutrition screen also supports daily calorie and macro targets, copying a day's meals to another day, CSV export, saved recipes, a shared community food catalog, barcode lookup, and optional OCR of nutrition labels. Camera and OCR features are optional; manual entry remains available.
+The Nutrition screen keeps the day selector, calorie and macro summary, meal log and one “Добавить еду” action in view. Goals, macro percentages, saved recipes, CSV export and copy-day live in compact expandable sections. Adding food opens a bottom sheet with search, “Все / Блюда / Продукты”, category chips, a serving-size field and a live calorie/macro preview before the user confirms. The sheet distinguishes prepared meals from ingredients and keeps barcode, photo/OCR and recipe composition behind secondary tools.
+
+Targets can be entered directly or derived from the calorie goal with a configurable macro split. The calculator uses 4 kcal/g for protein and carbohydrates and 9 kcal/g for fat, defaults to 30% protein / 40% carbohydrates / 30% fat as a starting point rather than a medical recommendation, rounds each macro once to whole grams, and shows the calorie total recalculated from those rounded grams. Editing a macro manually switches the calculator to manual mode so later calorie or percentage changes do not silently overwrite it. The calculator itself is not stored server-side; it only fills the existing target fields, which are saved as before.
 
 ### Recipes and food catalog
 
-Saved recipes are private to the authenticated user and can be reused on a selected day. The community food catalog supports barcode lookup and user-contributed foods. It protects existing entries from being overwritten by another user, handles race conditions on duplicate barcodes, and supports weighted EAN-13 prefixes used by variable-measure products. Open Food Facts is used as an external fallback when a barcode is not in the local catalog.
+Saved recipes are private to the authenticated user and can be reused on a selected day. The built-in catalog is a single normalized list with `id`, `type` (`ingredient` or `prepared_meal`), per-100-g calories and macros, serving metadata and a preparation state where applicable. Prepared meals use documented composite recipes and are explicitly marked approximate; basic cooked values follow USDA FoodData Central. The list is deduplicated by normalized name, prepared dishes are shown first, and search understands everyday synonyms such as “картошка”, “отварной” and “запечённая”. The community food catalog still supports barcode lookup and user-contributed foods. It protects existing entries from being overwritten by another user, handles race conditions on duplicate barcodes, and supports weighted EAN-13 prefixes used by variable-measure products. Open Food Facts is used as an external fallback when a barcode is not in the local catalog, and manual entry remains available.
 
 ### Telegram bot
 
@@ -73,10 +81,14 @@ The aiogram bot provides `/start` and `/help` and opens the Mini App. It intenti
 | `backend/app/core/migration_lock.py` | PostgreSQL advisory lock for serialized migrations. |
 | `backend/alembic/` | Forward-only schema migrations, including Nutrition reconciliation and Focus idempotency. |
 | `backend/tests/` | Auth, user isolation, CRUD, Focus, rate-limit, migration, and backup/restore tests. |
-| `frontend/src/App.tsx` | Main Mini App shell, notes, tasks, weather, home screen, and API helper. |
-| `frontend/src/Nutrition.tsx` | Nutrition UI, meals, targets, recipes, catalog, barcode, OCR, copy-day, and CSV export. |
-| `frontend/src/focus/` | Timer state machine, persistence, delivery queue, hooks, modes, and UI tests. |
-| `frontend/src/food-catalog.ts`, `food-search.ts` | Food normalization and remote catalog search helpers. |
+| `frontend/src/App.tsx` | Main Mini App shell, notes, tasks, weather, profile control, home screen, and API helper. |
+| `frontend/src/Nutrition.tsx` | Compact nutrition screen, add-food sheet, meals, targets, recipes, catalog, barcode, OCR, copy-day, and CSV export. |
+| `frontend/src/focus/` | Timer state machine, persistence, delivery queue, hooks, modes, settings UI, and UI tests. |
+| `frontend/src/food-catalog.ts`, `food-search.ts` | Normalized ingredient/prepared-meal catalog, metadata, and multilingual search helpers. |
+| `frontend/src/nutrition-macros.ts` | Pure calorie-to-macro calculator and validation used by the Nutrition targets. |
+| `frontend/src/nutrition-serving.ts` | Pure per-serving calorie and macro recalculation for the food catalog. |
+| `frontend/src/weather-location.ts` | Persists the last automatic or manual weather selection across reloads. |
+| `frontend/src/focus/sound.ts` | Web Audio completion signal and persisted sound preference. |
 | `frontend/src/csv.ts` | CSV generation for nutrition export. |
 | `frontend/nginx.conf` | Same-origin production proxy from the frontend to the API. |
 | `bot/main.py`, `bot/config.py` | aiogram bot commands and Mini App URL configuration. |

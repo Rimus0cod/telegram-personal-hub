@@ -1,6 +1,8 @@
-import { Pause, Play, RefreshCw, RotateCcw, SkipForward, Trash2, X } from 'lucide-react';
-import { FOCUS_MODES, modeLabel } from './modes';
+import { useEffect, useRef, useState } from 'react';
+import { Pause, Play, RefreshCw, RotateCcw, Settings2, SkipForward, Trash2, Volume2, VolumeX, X } from 'lucide-react';
+import { FOCUS_MODES, isValidDurationMinutes, modeLabel } from './modes';
 import { formatClock, sessionKey, type CompletedSession, type PendingSession } from './timer';
+import { newCompletionKeys, playCompletionSound, readSoundEnabled, writeSoundEnabled } from './sound';
 import type { FocusTimerController } from './useFocusTimer';
 import './FocusTimer.css';
 
@@ -69,8 +71,25 @@ export default function FocusTimer({
   saveError,
   saving = false,
 }: FocusTimerProps) {
-  const primaryLabel = timer.isRunning ? 'Pause' : timer.isPaused ? 'Resume' : 'Start';
+  const primaryLabel = timer.isRunning ? 'Пауза' : timer.isPaused ? 'Продолжить' : 'Старт';
   const notice = timer.restoreNotice;
+  const [durationInput, setDurationInput] = useState(String(timer.durationMinutes));
+  const [durationError, setDurationError] = useState<string | null>(null);
+  const [soundEnabled, setSoundEnabled] = useState(() => readSoundEnabled());
+  const knownPendingRef = useRef<Set<string>>(
+    new Set(timer.pending.map((item) => sessionKey(item.session))),
+  );
+
+  useEffect(() => {
+    setDurationInput(String(timer.durationMinutes));
+    setDurationError(null);
+  }, [timer.mode, timer.durationMinutes]);
+
+  useEffect(() => {
+    const fresh = newCompletionKeys(knownPendingRef.current, timer.pending);
+    for (const key of fresh) knownPendingRef.current.add(key);
+    if (fresh.length > 0 && soundEnabled) playCompletionSound();
+  }, [timer.pending, soundEnabled]);
 
   function handlePrimary() {
     if (timer.isRunning) timer.pause();
@@ -78,35 +97,108 @@ export default function FocusTimer({
     else timer.start();
   }
 
+  function applyDuration() {
+    if (timer.isRunning || timer.isPaused) {
+      setDurationError('Сначала завершите или сбросьте текущую сессию.');
+      return;
+    }
+    const minutes = Number(durationInput);
+    if (!isValidDurationMinutes(minutes)) {
+      setDurationError('Введите целое число от 1 до 180 минут.');
+      return;
+    }
+    if (!timer.setDuration(minutes)) {
+      setDurationError('Не удалось изменить длительность.');
+      return;
+    }
+    setDurationError(null);
+  }
+
+  function toggleSound() {
+    const next = !soundEnabled;
+    setSoundEnabled(next);
+    writeSoundEnabled(next);
+  }
+
   return (
-    <section className="card timer">
-      <div className="quick modes">
+    <section className="timer">
+      <div className="segmented modes">
         {FOCUS_MODES.map((mode) => (
           <button
             key={mode.id}
-            className={timer.mode === mode.id ? 'selected' : ''}
+            className={timer.mode === mode.id ? 'active' : ''}
             onClick={() => timer.setMode(mode.id)}
           >
             {mode.label}
           </button>
         ))}
       </div>
-      <span>{modeLabel(timer.mode).toUpperCase()}</span>
-      <div className="clock">{formatClock(timer.remainingSeconds)}</div>
-      <div className="controls">
-        <button onClick={handlePrimary}>
+      <div className="timer-mode">
+        {modeLabel(timer.mode)} · {timer.durationMinutes} мин
+      </div>
+      <div className="timer-clock">{formatClock(timer.remainingSeconds)}</div>
+      <div className="timer-controls">
+        <button className="primary-button timer-primary" onClick={handlePrimary}>
           {timer.isRunning ? <Pause /> : <Play />}
           {primaryLabel}
         </button>
-        <button className="icon" onClick={() => timer.reset()} aria-label="Reset">
+        <button className="icon timer-reset" onClick={() => timer.reset()} aria-label="Сбросить таймер">
           <RotateCcw />
         </button>
       </div>
+      {timer.status === 'completed' && (
+        <p className="timer-complete" role="status">
+          Таймер завершён.
+        </p>
+      )}
+      <details className="timer-settings">
+        <summary><Settings2 size={15} />Настройки</summary>
+        <div className="timer-settings-body">
+          <div className="timer-setting-row">
+            <label htmlFor="focus-duration">Длительность</label>
+            <div className="timer-duration-field">
+              <input
+                id="focus-duration"
+                type="number"
+                min="1"
+                max="180"
+                step="1"
+                inputMode="numeric"
+                value={durationInput}
+                disabled={timer.isRunning || timer.isPaused}
+                onChange={(event) => setDurationInput(event.target.value)}
+                onBlur={applyDuration}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                    applyDuration();
+                  }
+                  if (event.key === 'Escape') {
+                    setDurationInput(String(timer.durationMinutes));
+                    setDurationError(null);
+                  }
+                }}
+                aria-label="Своя длительность в минутах"
+              />
+              <span>мин</span>
+            </div>
+          </div>
+          <small className="timer-recommended">
+            Рекомендуется: {timer.recommendedMinutes} мин
+            {timer.isCustomDuration ? ' · сейчас своя' : ''}
+          </small>
+          {durationError && <span className="error">{durationError}</span>}
+          <button className="sound-toggle" onClick={toggleSound} type="button">
+            {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+            {soundEnabled ? 'Звук завершения включён' : 'Звук завершения выключен'}
+          </button>
+        </div>
+      </details>
       {statsError ? (
         <p className="error">Не удалось загрузить статистику: {statsError}</p>
       ) : (
-        <p>
-          {stats?.sessions ?? 0} completed sessions · {stats?.focus_minutes ?? 0} focus minutes
+        <p className="timer-stats">
+          {stats?.sessions ?? 0} сессий · {stats?.focus_minutes ?? 0} минут
         </p>
       )}
       {notice &&

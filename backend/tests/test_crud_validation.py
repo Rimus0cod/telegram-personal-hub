@@ -312,3 +312,78 @@ def test_health_reports_503_without_leaking_details(api, monkeypatch):
     assert "secret" not in body
     assert "select" not in body
     assert "postgres" not in body
+
+
+# ---------------------------------------------------------------------------
+# Weather location source and reverse geocoding
+# ---------------------------------------------------------------------------
+
+
+def test_weather_coordinates_return_reverse_geocoded_city(api, monkeypatch):
+    async def reverse(latitude, longitude):
+        return "Test City"
+
+    monkeypatch.setattr(weather_api, "_reverse_geocode", reverse)
+    monkeypatch.setattr(weather_api.httpx, "AsyncClient", _FakeAsyncClient)
+
+    response = api.client.get(
+        f"{PREFIX}/weather", params={"latitude": 50.45, "longitude": 30.52}
+    )
+
+    assert response.status_code == 200, response.text
+    body = response.json()
+    assert body["city"] == "Test City"
+    assert body["location_source"] == "geolocation"
+    api.db.refresh(api.user1)
+    assert api.user1.last_city is None
+
+
+def test_weather_coordinates_fall_back_when_reverse_geocoding_fails(api, monkeypatch):
+    async def reverse(latitude, longitude):
+        return None
+
+    monkeypatch.setattr(weather_api, "_reverse_geocode", reverse)
+    monkeypatch.setattr(weather_api.httpx, "AsyncClient", _FakeAsyncClient)
+
+    response = api.client.get(
+        f"{PREFIX}/weather", params={"latitude": 50.45, "longitude": 30.52}
+    )
+
+    assert response.status_code == 200, response.text
+    assert response.json()["city"] == "Моё местоположение"
+    assert response.json()["location_source"] == "geolocation"
+
+
+def test_weather_manual_city_is_saved_and_marked_manual(api, monkeypatch):
+    async def geocode(name, count=8):
+        return [{"name": name, "latitude": 50.45, "longitude": 30.52, "id": 1}]
+
+    monkeypatch.setattr(weather_api, "_geocode", geocode)
+    monkeypatch.setattr(weather_api.httpx, "AsyncClient", _FakeAsyncClient)
+
+    response = api.client.get(f"{PREFIX}/weather", params={"city": "Manual City"})
+
+    assert response.status_code == 200, response.text
+    assert response.json()["city"] == "Manual City"
+    assert response.json()["location_source"] == "manual"
+    api.db.refresh(api.user1)
+    assert api.user1.last_city == "Manual City"
+
+
+def test_weather_saved_city_is_used_without_overwriting_it(api, monkeypatch):
+    api.user1.last_city = "Saved City"
+    api.db.commit()
+
+    async def geocode(name, count=8):
+        return [{"name": name, "latitude": 50.45, "longitude": 30.52, "id": 1}]
+
+    monkeypatch.setattr(weather_api, "_geocode", geocode)
+    monkeypatch.setattr(weather_api.httpx, "AsyncClient", _FakeAsyncClient)
+
+    response = api.client.get(f"{PREFIX}/weather")
+
+    assert response.status_code == 200, response.text
+    assert response.json()["city"] == "Saved City"
+    assert response.json()["location_source"] == "saved"
+    api.db.refresh(api.user1)
+    assert api.user1.last_city == "Saved City"

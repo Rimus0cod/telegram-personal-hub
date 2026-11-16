@@ -1,93 +1,178 @@
-.timer .pending {
-  margin-top: 12px;
-}
-
-.timer .pending-list {
-  list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
+.timer {
   display: grid;
-  gap: 8px;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  text-align: center;
 }
 
-.timer .pending-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
-  border: 1px solid #e5e8ee;
-  border-radius: 12px;
-  background: var(--tg-theme-bg-color, #fff);
-}
+.timer .segmented.modes { margin-bottom: 2px; }
 
-.timer .pending-item > div:first-child {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-
-.timer .pending-item b {
-  font-size: 13px;
-}
-
-.timer .pending-item small {
-  color: #858d9a;
+.timer-mode {
+  color: var(--muted);
   font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
 }
 
-.timer .pending-item .error {
-  margin: 2px 0 0;
-  padding: 6px 8px;
-  font-size: 11px;
-  overflow-wrap: anywhere;
+.timer-clock {
+  margin: 2px 0;
+  font-size: clamp(54px, 16vw, 76px);
+  line-height: 1;
+  letter-spacing: -.07em;
+  font-weight: 600;
 }
 
-.timer .pending-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 6px;
-}
-
-.timer .pending-actions button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 7px 10px;
-  border: 1px solid #e4e7ec;
-  border-radius: 10px;
-  background: transparent;
-  color: #526db8;
-  font-size: 12px;
-}
-
-.timer .pending-actions button.danger {
-  border-color: #f0d3cf;
-  color: #a04d45;
-}
-
-.timer .pending-actions svg {
-  width: 14px;
-  height: 14px;
-}
-
-.timer .pending-summary {
-  display: flex;
-  margin-top: 10px;
-}
-
-.timer .pending-summary button {
-  flex: 1;
+.timer-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 11px;
-  border: 0;
+  gap: 8px;
+}
+
+.timer-primary {
+  min-width: 120px;
+  min-height: 44px;
   border-radius: 12px;
-  background: #e9efff;
-  color: #435eae;
-  font-size: 13px;
+}
+
+.timer-reset {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.timer-complete {
+  color: var(--ok);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.timer-settings {
+  margin-top: 2px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.timer-settings summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  color: var(--muted);
+  font-size: 12px;
   font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.timer-settings summary::-webkit-details-marker { display: none; }
+
+.timer-settings-body {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+}
+
+.timer-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.timer-setting-row > label { color: var(--muted); }
+
+.timer-duration-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+}
+
+.timer-duration-field input {
+  width: 46px;
+  min-height: 0;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 12px;
+}
+
+.timer-duration-field span { color: var(--muted); font-size: 10px; }
+.timer-duration-field input:disabled { opacity: .55; }
+.timer-recommended { font-size: 10px; }
+
+.sound-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 7px 9px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.timer-stats { margin-top: 2px; color: var(--muted); font-size: 11px; }
+
+.timer .pending {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.timer .pending > p { margin: 0 0 6px; color: var(--muted); font-size: 11px; }
+.timer .pending-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.timer .pending-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 9px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.timer .pending-item > div:first-child { display: grid; gap: 1px; min-width: 0; }
+.timer .pending-item b { font-size: 12px; }
+.timer .pending-item small { font-size: 10px; }
+.timer .pending-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+.timer .pending-actions button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--accent-strong);
+  font-size: 10px;
+}
+.timer .pending-actions button.danger { color: var(--danger); }
+.timer .pending-actions svg { width: 12px; height: 12px; }
+.timer .pending-summary { display: flex; margin-top: 6px; }
+.timer .pending-summary button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+@media (max-width: 380px) {
+  .timer-clock { font-size: 58px; }
+  .timer-primary { min-width: 104px; }
 }

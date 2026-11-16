@@ -1,4 +1,112 @@
-export type CatalogFood={name:string,category:string,kcal:number,p:number,c:number,f:number};
+export type FoodType = 'ingredient' | 'prepared_meal';
+export type ServingUnit = 'g' | 'ml' | 'piece';
+export type PreparationState =
+  | 'raw'
+  | 'dry'
+  | 'boiled'
+  | 'baked'
+  | 'fried'
+  | 'stewed'
+  | 'steamed'
+  | 'ready'
+  | 'canned';
+
+export type CatalogFood = {
+  name: string;
+  category: string;
+  kcal: number;
+  p: number;
+  c: number;
+  f: number;
+  id?: string;
+  type?: FoodType;
+  servingSize?: number;
+  servingUnit?: ServingUnit;
+  preparationState?: PreparationState;
+  approximate?: boolean;
+  source?: string;
+};
+
+export type CatalogFoodItem = CatalogFood & {
+  id: string;
+  type: FoodType;
+  servingSize: number;
+  servingUnit: ServingUnit;
+};
+
+const normalizeCatalogName = (value: string) =>
+  value
+    .toLocaleLowerCase('ru-RU')
+    .replace(/ё/g, 'е')
+    .replace(/[^a-zа-я0-9]+/gi, ' ')
+    .trim();
+
+function catalogSlug(value: string): string {
+  return normalizeCatalogName(value).replace(/\s+/g, '-');
+}
+
+export function inferFoodType(
+  food: Pick<CatalogFood, 'name' | 'category' | 'type'>,
+): FoodType {
+  if (food.type) return food.type;
+  const category = food.category.toLocaleLowerCase('ru-RU');
+  const name = food.name.toLocaleLowerCase('ru-RU');
+  if (
+    category.includes('готов') ||
+    category.includes('суп') ||
+    category.includes('приготовлен')
+  ) {
+    return 'prepared_meal';
+  }
+  // Sausages are processed products sold as ingredients, even when the name
+  // contains "варёная"; keep them in the ingredient filter.
+  if (category.includes('колбас')) return 'ingredient';
+  if (/(варён|отварн|запечён|жарен|тушён|готов|на пару|приготовлен)/.test(name)) {
+    return 'prepared_meal';
+  }
+  return 'ingredient';
+}
+
+export function inferPreparationState(name: string): PreparationState | undefined {
+  const value = name.toLocaleLowerCase('ru-RU');
+  if (/сух(ой|ая|ие|их)/.test(value)) return 'dry';
+  if (/сыр(ой|ая|ые|ое)/.test(value)) return 'raw';
+  if (/варён|отварн/.test(value)) return 'boiled';
+  if (/запечён/.test(value)) return 'baked';
+  if (/жарен/.test(value)) return 'fried';
+  if (/тушён/.test(value)) return 'stewed';
+  if (/на пару/.test(value)) return 'steamed';
+  if (/консерв|тунец.*воде/.test(value)) return 'canned';
+  if (/готов/.test(value)) return 'ready';
+  return undefined;
+}
+
+export function enrichFood(food: CatalogFood): CatalogFoodItem {
+  const type = inferFoodType(food);
+  return {
+    ...food,
+    id: food.id ?? `${type}:${catalogSlug(food.category)}:${catalogSlug(food.name)}`,
+    type,
+    servingSize: food.servingSize ?? 100,
+    servingUnit: food.servingUnit ?? 'g',
+    preparationState: food.preparationState ?? inferPreparationState(food.name),
+  };
+}
+
+/** Keep the first entry for every normalized name; no silent data rewriting. */
+export function uniqueFoods<T extends CatalogFood>(foods: T[]): T[] {
+  const seen = new Set<string>();
+  return foods.filter((food) => {
+    const key = normalizeCatalogName(food.name);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+export function enrichFoods(foods: CatalogFood[]): CatalogFoodItem[] {
+  return uniqueFoods(foods).map(enrichFood);
+}
 
 const meatCuts:[string,number,number,number][]=[
  ['Куриное бедро без кожи',177,24,8],['Куриное бедро с кожей',215,18,15],['Куриная голень',172,28,6],['Куриное крыло',203,30,8],['Куриное филе',110,23,2],['Куриная печень',119,17,5],['Куриные сердечки',153,16,9],['Куриные желудки',94,18,2],['Утка грудка без кожи',140,25,4],['Утка с кожей',337,19,28],['Индейка грудка',114,24,2],['Индейка бедро',144,20,7],['Говяжья вырезка',150,22,7],['Говяжий стейк рибай',250,24,17],['Говяжий стриплойн',210,25,12],['Говяжья лопатка',190,20,12],['Говяжья грудинка',280,18,23],['Говяжья голяшка',170,22,8],['Говяжий фарш 5%',137,21,5],['Говяжий фарш 15%',215,18,15],['Говяжий язык',224,16,17],['Говяжье сердце',112,17,4],['Говяжья печень',135,20,4],['Свиной карбонад',145,22,6],['Свиная вырезка',143,21,6],['Свиная корейка',196,20,12],['Свиная шея',290,17,25],['Свиная лопатка',235,18,17],['Свиная грудинка',518,9,53],['Свиные рёбра',277,17,23],['Свиной фарш',263,17,21],['Свиной язык',208,16,15],['Баранина корейка',294,25,21],['Баранина лопатка',238,20,17],['Фарш бараний',282,17,23],['Кролик филе',136,21,6],['Оленина',158,30,3],['Конина',167,28,6],
@@ -46,5 +154,93 @@ const driedFruitFoods:CatalogFood[]=[
  ['Курага',241,3.4,63,0.5],['Чернослив',240,2.2,64,0.4],['Изюм',299,3.1,79,0.5],['Финики сушёные',282,2.5,75,0.4],['Инжир сушёный',249,3.3,63,0.9],
 ].map(([name,kcal,p,c,f])=>({name:String(name),category:'Сухофрукты',kcal:Number(kcal),p:Number(p),c:Number(c),f:Number(f)}));
 
+// Everyday foods that are easy to miss when the list is sorted by category.
+// Values are rounded USDA FoodData Central reference values per 100 g, and the
+// name states whether the food is raw, cooked, canned or ready to eat. They are
+// approximate, not a medical recommendation.
+export const commonFoods:CatalogFood[]=[
+ {name:'Овсянка на воде — готовая',category:'Крупы и хлеб',kcal:71,p:2.5,c:12,f:1.5},
+ {name:'Макароны — отварные',category:'Крупы и хлеб',kcal:131,p:5,c:25,f:1.1},
+ {name:'Хлеб ржаной',category:'Крупы и хлеб',kcal:259,p:8.5,c:48,f:3.3},
+ {name:'Куриная грудка — отварная',category:'Мясо и рыба',kcal:151,p:29,c:0,f:3},
+ {name:'Индейка — запечённая',category:'Мясо и рыба',kcal:147,p:30,c:0,f:2.1},
+ {name:'Говядина — тушёная',category:'Мясо и рыба',kcal:250,p:26,c:0,f:15},
+ {name:'Свинина — запечённая',category:'Мясо и рыба',kcal:248,p:27,c:0,f:14.7},
+ {name:'Лосось — запечённый',category:'Мясо и рыба',kcal:206,p:22,c:0,f:12},
+ {name:'Тунец в воде',category:'Мясо и рыба',kcal:116,p:26,c:0,f:0.8},
+ {name:'Йогурт натуральный 2%',category:'Молочное',kcal:73,p:3.5,c:4.7,f:2},
+ {name:'Грецкие орехи',category:'Орехи',kcal:654,p:15,c:14,f:65},
+];
+
 export const expandedFoods:CatalogFood[]=[...meatFoods,...fishFoods,...extras,...soups,...homemadeSoups,...fruitFoods,...driedFruitFoods];
 
+
+
+export const baseFoods:CatalogFood[]=[
+ {name:'Куриная грудка',category:'Мясо и рыба',kcal:120,p:23,c:0,f:3},{name:'Индейка',category:'Мясо и рыба',kcal:135,p:29,c:0,f:2},{name:'Говядина постная',category:'Мясо и рыба',kcal:187,p:26,c:0,f:9},{name:'Лосось',category:'Мясо и рыба',kcal:208,p:20,c:0,f:13},{name:'Тунец',category:'Мясо и рыба',kcal:132,p:29,c:0,f:1},{name:'Яйцо',category:'Мясо и рыба',kcal:143,p:13,c:1,f:10},{name:'Творог 5%',category:'Молочное',kcal:121,p:17,c:3,f:5},{name:'Греческий йогурт',category:'Молочное',kcal:73,p:10,c:4,f:2},{name:'Молоко 2.5%',category:'Молочное',kcal:52,p:3,c:5,f:3},{name:'Сыр твёрдый',category:'Молочное',kcal:350,p:25,c:2,f:27},{name:'Рис сухой',category:'Крупы и хлеб',kcal:360,p:7,c:80,f:1},{name:'Гречка сухая',category:'Крупы и хлеб',kcal:343,p:13,c:72,f:3},{name:'Овсянка сухая',category:'Крупы и хлеб',kcal:370,p:13,c:62,f:7},{name:'Макароны сухие',category:'Крупы и хлеб',kcal:350,p:12,c:72,f:2},{name:'Хлеб цельнозерновой',category:'Крупы и хлеб',kcal:247,p:13,c:41,f:4},{name:'Картофель',category:'Овощи',kcal:77,p:2,c:17,f:0},{name:'Помидор',category:'Овощи',kcal:18,p:1,c:4,f:0},{name:'Огурец',category:'Овощи',kcal:15,p:1,c:4,f:0},{name:'Брокколи',category:'Овощи',kcal:34,p:3,c:7,f:0},{name:'Авокадо',category:'Овощи',kcal:160,p:2,c:9,f:15},{name:'Банан',category:'Фрукты',kcal:89,p:1,c:23,f:0},{name:'Яблоко',category:'Фрукты',kcal:52,p:0,c:14,f:0},{name:'Ягоды',category:'Фрукты',kcal:50,p:1,c:12,f:0},{name:'Оливковое масло',category:'Другое',kcal:884,p:0,c:0,f:100},{name:'Арахисовая паста',category:'Другое',kcal:588,p:25,c:20,f:50},{name:'Миндаль',category:'Другое',kcal:579,p:21,c:22,f:50},{name:'Мёд',category:'Другое',kcal:304,p:0,c:82,f:0},{name:'Шоколад тёмный',category:'Другое',kcal:546,p:5,c:61,f:31},
+ {name:'Колбаса варёная',category:'Колбасы',kcal:260,p:12,c:2,f:23},{name:'Колбаса докторская',category:'Колбасы',kcal:257,p:13,c:1,f:22},{name:'Колбаса копчёная',category:'Колбасы',kcal:420,p:17,c:2,f:39},{name:'Салями',category:'Колбасы',kcal:420,p:22,c:1,f:36},{name:'Сосиски молочные',category:'Колбасы',kcal:266,p:11,c:2,f:24},{name:'Сардельки',category:'Колбасы',kcal:270,p:11,c:2,f:24},{name:'Ветчина',category:'Колбасы',kcal:145,p:16,c:2,f:6},{name:'Бекон',category:'Колбасы',kcal:450,p:15,c:1,f:43},{name:'Кефир 2.5%',category:'Молочное',kcal:53,p:3,c:4,f:3},{name:'Сметана 15%',category:'Молочное',kcal:162,p:3,c:4,f:15},{name:'Масло сливочное',category:'Молочное',kcal:748,p:1,c:1,f:82},{name:'Моцарелла',category:'Молочное',kcal:280,p:28,c:3,f:17},{name:'Ряженка 2.5%',category:'Молочное',kcal:54,p:3,c:4,f:3},{name:'Пельмени',category:'Готовые блюда',kcal:250,p:10,c:30,f:10},{name:'Вареники с картофелем',category:'Готовые блюда',kcal:180,p:5,c:35,f:3},{name:'Пицца',category:'Готовые блюда',kcal:266,p:11,c:33,f:10},{name:'Шаурма с курицей',category:'Готовые блюда',kcal:215,p:12,c:22,f:9},{name:'Суши с лососем',category:'Готовые блюда',kcal:170,p:8,c:25,f:4},{name:'Гранола',category:'Крупы и хлеб',kcal:450,p:10,c:64,f:16},{name:'Рис варёный',category:'Крупы и хлеб',kcal:130,p:3,c:28,f:0},{name:'Гречка варёная',category:'Крупы и хлеб',kcal:110,p:4,c:21,f:1},{name:'Лаваш',category:'Крупы и хлеб',kcal:275,p:9,c:56,f:1},{name:'Морковь',category:'Овощи',kcal:41,p:1,c:10,f:0},{name:'Перец сладкий',category:'Овощи',kcal:31,p:1,c:6,f:0},{name:'Лук репчатый',category:'Овощи',kcal:40,p:1,c:9,f:0},{name:'Грибы шампиньоны',category:'Овощи',kcal:22,p:3,c:3,f:0},{name:'Апельсин',category:'Фрукты',kcal:47,p:1,c:12,f:0},{name:'Груша',category:'Фрукты',kcal:57,p:0,c:15,f:0},{name:'Виноград',category:'Фрукты',kcal:69,p:1,c:18,f:0},{name:'Сок апельсиновый',category:'Напитки',kcal:45,p:1,c:10,f:0},{name:'Кола',category:'Напитки',kcal:42,p:0,c:11,f:0},{name:'Майонез',category:'Соусы',kcal:680,p:1,c:2,f:75},{name:'Кетчуп',category:'Соусы',kcal:100,p:1,c:24,f:0},{name:'Соевый соус',category:'Соусы',kcal:53,p:8,c:5,f:0},
+];
+
+// Prepared meals use documented composite recipes and rounded reference values.
+// Every value is per 100 g of the ready dish; oil, milk and other ingredients are
+// included in the estimate. These are deliberately approximate because recipes
+// vary by household, cut of meat and portion size.
+export const preparedMeals: CatalogFoodItem[] = enrichFoods([
+  { name: 'Картофельное пюре на молоке', category: 'Гарниры', kcal: 90, p: 2, c: 14, f: 3, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Картофельное пюре с маслом', category: 'Гарниры', kcal: 110, p: 2, c: 14, f: 5, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Картофель по-деревенски', category: 'Гарниры', kcal: 160, p: 2, c: 25, f: 6, type: 'prepared_meal', preparationState: 'baked', approximate: true, source: 'recipe estimate' },
+  { name: 'Овсяная каша на молоке', category: 'Завтраки', kcal: 110, p: 3, c: 17, f: 3, type: 'prepared_meal', preparationState: 'boiled', approximate: true, source: 'recipe estimate' },
+  { name: 'Гречневая каша с молоком', category: 'Завтраки', kcal: 120, p: 4, c: 20, f: 3, type: 'prepared_meal', preparationState: 'boiled', approximate: true, source: 'recipe estimate' },
+  { name: 'Овсянка с бананом', category: 'Завтраки', kcal: 110, p: 3, c: 20, f: 2, type: 'prepared_meal', preparationState: 'boiled', approximate: true, source: 'recipe estimate' },
+  { name: 'Куриная грудка запечённая', category: 'Мясные блюда', kcal: 165, p: 31, c: 0, f: 3.6, type: 'prepared_meal', preparationState: 'baked', approximate: false, source: 'USDA FoodData Central' },
+  { name: 'Куриное бедро запечённое', category: 'Мясные блюда', kcal: 209, p: 26, c: 0, f: 11, type: 'prepared_meal', preparationState: 'baked', approximate: false, source: 'USDA FoodData Central' },
+  { name: 'Курица тушёная', category: 'Мясные блюда', kcal: 180, p: 24, c: 2, f: 8, type: 'prepared_meal', preparationState: 'stewed', approximate: true, source: 'recipe estimate' },
+  { name: 'Котлеты куриные', category: 'Мясные блюда', kcal: 220, p: 18, c: 8, f: 12, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Котлеты свиные', category: 'Мясные блюда', kcal: 280, p: 17, c: 6, f: 22, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Котлеты говяжьи', category: 'Мясные блюда', kcal: 260, p: 18, c: 8, f: 20, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Тефтели', category: 'Мясные блюда', kcal: 240, p: 16, c: 14, f: 12, type: 'prepared_meal', preparationState: 'stewed', approximate: true, source: 'recipe estimate' },
+  { name: 'Гуляш', category: 'Мясные блюда', kcal: 190, p: 16, c: 8, f: 12, type: 'prepared_meal', preparationState: 'stewed', approximate: true, source: 'recipe estimate' },
+  { name: 'Плов', category: 'Мясные блюда', kcal: 190, p: 7, c: 25, f: 7, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Рыба запечённая', category: 'Рыбные блюда', kcal: 130, p: 20, c: 0, f: 5, type: 'prepared_meal', preparationState: 'baked', approximate: true, source: 'recipe estimate' },
+  { name: 'Рыба жареная', category: 'Рыбные блюда', kcal: 200, p: 19, c: 5, f: 12, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Рыба тушёная', category: 'Рыбные блюда', kcal: 130, p: 18, c: 3, f: 5, type: 'prepared_meal', preparationState: 'stewed', approximate: true, source: 'recipe estimate' },
+  { name: 'Рыбные котлеты', category: 'Рыбные блюда', kcal: 190, p: 14, c: 8, f: 11, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Рыба на пару', category: 'Рыбные блюда', kcal: 110, p: 21, c: 0, f: 2, type: 'prepared_meal', preparationState: 'steamed', approximate: true, source: 'recipe estimate' },
+  { name: 'Борщ', category: 'Супы', kcal: 60, p: 3, c: 7, f: 2, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Куриный суп', category: 'Супы', kcal: 50, p: 4, c: 5, f: 2, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Суп с фрикадельками', category: 'Супы', kcal: 60, p: 4, c: 5, f: 2, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Гороховый суп', category: 'Супы', kcal: 70, p: 4, c: 10, f: 2, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Рассольник', category: 'Супы', kcal: 50, p: 3, c: 6, f: 2, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Суп с лапшой', category: 'Супы', kcal: 55, p: 3, c: 7, f: 2, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Солянка', category: 'Супы', kcal: 75, p: 5, c: 5, f: 4, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Омлет', category: 'Завтраки', kcal: 154, p: 11, c: 1, f: 11, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'USDA / recipe estimate' },
+  { name: 'Яичница', category: 'Завтраки', kcal: 196, p: 14, c: 1, f: 15, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'USDA / recipe estimate' },
+  { name: 'Варёные яйца', category: 'Завтраки', kcal: 155, p: 13, c: 1, f: 11, type: 'prepared_meal', preparationState: 'boiled', approximate: false, source: 'USDA FoodData Central' },
+  { name: 'Сырники', category: 'Завтраки', kcal: 220, p: 14, c: 24, f: 8, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Блины', category: 'Завтраки', kcal: 230, p: 6, c: 30, f: 9, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Оладьи', category: 'Завтраки', kcal: 250, p: 6, c: 34, f: 10, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Творожная запеканка', category: 'Завтраки', kcal: 180, p: 12, c: 18, f: 7, type: 'prepared_meal', preparationState: 'baked', approximate: true, source: 'recipe estimate' },
+  { name: 'Винегрет', category: 'Салаты', kcal: 90, p: 2, c: 12, f: 4, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Оливье', category: 'Салаты', kcal: 200, p: 4, c: 12, f: 15, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Греческий салат', category: 'Салаты', kcal: 130, p: 3, c: 5, f: 11, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Салат из овощей', category: 'Салаты', kcal: 70, p: 1, c: 7, f: 4, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Салат из капусты', category: 'Салаты', kcal: 60, p: 1, c: 7, f: 3, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Тушёные овощи', category: 'Домашние блюда', kcal: 80, p: 2, c: 9, f: 4, type: 'prepared_meal', preparationState: 'stewed', approximate: true, source: 'recipe estimate' },
+  { name: 'Овощное рагу', category: 'Домашние блюда', kcal: 75, p: 2, c: 10, f: 3, type: 'prepared_meal', preparationState: 'stewed', approximate: true, source: 'recipe estimate' },
+  { name: 'Кабачковые оладьи', category: 'Домашние блюда', kcal: 150, p: 4, c: 15, f: 9, type: 'prepared_meal', preparationState: 'fried', approximate: true, source: 'recipe estimate' },
+  { name: 'Голубцы', category: 'Домашние блюда', kcal: 120, p: 7, c: 10, f: 6, type: 'prepared_meal', preparationState: 'stewed', approximate: true, source: 'recipe estimate' },
+  { name: 'Вареники с творогом', category: 'Домашние блюда', kcal: 220, p: 10, c: 28, f: 7, type: 'prepared_meal', preparationState: 'boiled', approximate: true, source: 'recipe estimate' },
+  { name: 'Макароны с фаршем', category: 'Домашние блюда', kcal: 190, p: 9, c: 22, f: 8, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Запеканка картофельная', category: 'Домашние блюда', kcal: 150, p: 5, c: 18, f: 6, type: 'prepared_meal', preparationState: 'baked', approximate: true, source: 'recipe estimate' },
+  { name: 'Фаршированный перец', category: 'Домашние блюда', kcal: 110, p: 6, c: 10, f: 5, type: 'prepared_meal', preparationState: 'baked', approximate: true, source: 'recipe estimate' },
+  { name: 'Гречка с мясом', category: 'Домашние блюда', kcal: 180, p: 10, c: 20, f: 7, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Рис с курицей', category: 'Домашние блюда', kcal: 170, p: 9, c: 21, f: 5, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+  { name: 'Творог с фруктами', category: 'Домашние блюда', kcal: 130, p: 9, c: 15, f: 4, type: 'prepared_meal', preparationState: 'ready', approximate: true, source: 'recipe estimate' },
+]);
+
+export const allFoods: CatalogFoodItem[] = enrichFoods([
+  ...preparedMeals,
+  ...commonFoods,
+  ...baseFoods,
+  ...expandedFoods,
+]);

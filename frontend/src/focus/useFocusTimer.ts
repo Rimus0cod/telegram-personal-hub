@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import type { FocusMode } from './modes';
 import {
+  durationMsFromMinutes,
+  getMode,
+  isValidDurationMinutes,
+  modeDurationMs,
+} from './modes';
+import {
   loadTimerState,
   persistenceSignature,
   saveTimerState,
@@ -47,6 +53,10 @@ export interface FocusTimerController {
   remainingMs: number;
   remainingSeconds: number;
   durationMs: number;
+  durationMinutes: number;
+  recommendedMinutes: number;
+  isCustomDuration: boolean;
+  setDuration: (minutes: number) => boolean;
   isRunning: boolean;
   isPaused: boolean;
   /** Finished sessions that still need to be saved, oldest first. */
@@ -204,6 +214,16 @@ export function useFocusTimer({ onComplete }: UseFocusTimerOptions = {}): FocusT
     (mode: FocusMode) => dispatch({ type: 'set_mode', mode, now: Date.now() }),
     [],
   );
+  const setDuration = useCallback((minutes: number) => {
+    if (state.status === 'running' || state.status === 'paused') return false;
+    if (!isValidDurationMinutes(minutes)) return false;
+    dispatch({
+      type: 'set_duration',
+      durationMs: durationMsFromMinutes(minutes),
+      now: Date.now(),
+    });
+    return true;
+  }, [state.status]);
   const retryPending = useCallback(
     (session?: CompletedSession) => {
       // One POST per user action: no timers, no automatic retry loops.
@@ -267,6 +287,10 @@ export function useFocusTimer({ onComplete }: UseFocusTimerOptions = {}): FocusT
       remainingMs: state.remainingMs,
       remainingSeconds: displaySeconds(state.remainingMs),
       durationMs: state.durationMs,
+      durationMinutes: Math.round(state.durationMs / 60_000),
+      recommendedMinutes: getMode(state.mode).minutes,
+      isCustomDuration: state.durationMs !== modeDurationMs(state.mode),
+      setDuration,
       isRunning: state.status === 'running',
       isPaused: state.status === 'paused',
       pending: state.pending,
@@ -303,6 +327,7 @@ export function useFocusTimer({ onComplete }: UseFocusTimerOptions = {}): FocusT
       resume,
       reset,
       setMode,
+      setDuration,
       retryPending,
       retryAllPending,
       retryNextPending,
