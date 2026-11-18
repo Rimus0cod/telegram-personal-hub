@@ -16,7 +16,7 @@ import pytest
 
 
 BACKEND_DIR = Path(__file__).resolve().parents[1]
-HEAD = "0004_focus_session_client_id"
+HEAD = "0009_recipe_composition"
 LEGACY_REVISION = "0002_add_last_city"
 
 
@@ -905,6 +905,7 @@ _EXPECTED_SCHEMA = {
             "barcode": ("VARCHAR(14)", False, None),
             "barcode_prefix": ("VARCHAR(7)", True, None),
             "name": ("VARCHAR(200)", False, None),
+            "normalized_name": ("VARCHAR(200)", True, None),
             "brand": ("VARCHAR(120)", False, None),
             "kcal": ("DOUBLE", False, None),
             "protein": ("DOUBLE", False, None),
@@ -917,10 +918,49 @@ _EXPECTED_SCHEMA = {
         "indexes": {
             "ix_community_foods_barcode": (("barcode",), True),
             "ix_community_foods_barcode_prefix": (("barcode_prefix",), False),
+            "ix_community_foods_normalized": (("normalized_name",), False),
+            "ix_community_foods_normalized_prefix": (("normalized_name",), False),
             "ix_community_foods_prefix": (("barcode_prefix",), False),
             "ix_community_foods_submitted_by": (("submitted_by",), False),
         },
     },
+    "catalog_foods": {
+        "columns": {
+            "id": ("INTEGER", False, None),
+            "source": ("VARCHAR(32)", False, None),
+            "source_id": ("VARCHAR(200)", True, None),
+            "name": ("VARCHAR(200)", False, None),
+            "name_original": ("VARCHAR(200)", True, None),
+            "name_ru": ("VARCHAR(200)", True, None),
+            "name_uk": ("VARCHAR(200)", True, None),
+            "category": ("VARCHAR(80)", False, None),
+            "type": ("VARCHAR(16)", False, None),
+            "kcal": ("DOUBLE", False, None),
+            "protein": ("DOUBLE", False, None),
+            "carbs": ("DOUBLE", False, None),
+            "fat": ("DOUBLE", False, None),
+            "serving_size": ("DOUBLE", False, None),
+            "serving_unit": ("VARCHAR(8)", False, None),
+            "preparation_state": ("VARCHAR(16)", True, None),
+            "approximate": ("BOOLEAN", False, None),
+            "source_url": ("VARCHAR(500)", True, None),
+            "is_active": ("BOOLEAN", False, None),
+            "created_at": ("DATETIME", False, None),
+            "updated_at": ("DATETIME", False, None),
+        },
+        "indexes": {
+            "uq_catalog_foods_source_source_id": (("source", "source_id"), True),
+            "ix_catalog_foods_type_name": (("type", "name"), False),
+            "ix_catalog_foods_category": (("category",), False),
+            "ix_catalog_foods_active": (("is_active",), False),
+        },
+    },
+}
+
+GLOBAL_CATALOG_TABLES = {
+    "food_sources", "food_translations", "food_aliases",
+    "nutrient_profiles", "food_servings", "food_barcodes",
+    "recipe_ingredients", "food_search_terms", "recipe_details",
 }
 
 
@@ -953,10 +993,158 @@ def test_fresh_schema_matches_frozen_snapshot(tmp_path):
     _upgrade(database)
 
     actual = _schema_snapshot(database)
+    actual = {name: value for name, value in actual.items()
+              if name not in GLOBAL_CATALOG_TABLES}
     assert set(actual) == set(_EXPECTED_SCHEMA)
     for table, expected in _EXPECTED_SCHEMA.items():
         assert actual[table]["columns"] == expected["columns"], table
         assert actual[table]["indexes"] == expected["indexes"], table
+
+
+def test_global_catalog_foundation_schema(tmp_path):
+    database = tmp_path / "global-parity.db"
+
+    _upgrade(database)
+
+    assert GLOBAL_CATALOG_TABLES <= _tables(database)
+    assert {
+        "code", "name", "license", "storage_permission",
+        "translation_permission", "redistribution_permission",
+        "approval_status",
+    } <= _columns(database, "food_sources")
+    assert {
+        "food_id", "language", "name", "translation_source",
+        "translation_status", "review_status", "is_primary",
+    } <= _columns(database, "food_translations")
+    assert {
+        "food_id", "reference_amount", "reference_unit", "kcal",
+        "protein", "carbs", "fat", "fiber", "sugar", "sodium",
+        "source_code", "source_record_id", "dataset_version", "is_primary",
+    } <= _columns(database, "nutrient_profiles")
+    assert {
+        "food_id", "barcode", "packaging_variant", "source_code",
+    } <= _columns(database, "food_barcodes")
+    assert {
+        "recipe_food_id", "ingredient_food_id", "ingredient_name",
+        "amount", "unit", "grams", "position",
+    } <= _columns(database, "recipe_ingredients")
+    assert {
+        "uq_food_translations_food_language",
+        "uq_food_barcodes_barcode",
+        "ix_nutrient_profiles_primary",
+    } <= _indexes(database)
+
+
+_SEARCH_LEGACY_SQL = """
+INSERT INTO users (id, telegram_id, first_name, created_at)
+VALUES (1, 501, 'Search', CURRENT_TIMESTAMP);
+INSERT INTO community_foods
+    (id, barcode, name, brand, kcal, protein, carbs, fat, source, submitted_by, created_at)
+VALUES (1, '12345678', 'Café au lait', '', 50, 2, 6, 2, 'community', 1, CURRENT_TIMESTAMP);
+INSERT INTO catalog_foods
+    (id, source, source_id, name, name_original, name_ru, name_uk, category, type,
+     kcal, protein, carbs, fat, serving_size, serving_unit, approximate, is_active,
+     created_at, updated_at)
+VALUES (1, 'usda', 'fdc:1', 'Potato', 'Potato', 'Картофель', 'Картопля', 'Овощи',
+        'ingredient', 77, 2, 17, 0, 100, 'g', FALSE, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO food_translations
+    (id, food_id, language, name, translation_source, translation_status,
+     review_status, is_primary, created_at)
+VALUES (1, 1, 'ru', 'Картофель', 'manual', 'verified', 'approved', TRUE, CURRENT_TIMESTAMP),
+       (2, 1, 'uk', 'Картопля', 'manual', 'verified', 'approved', FALSE, CURRENT_TIMESTAMP);
+INSERT INTO food_aliases (id, food_id, language, alias, alias_type, created_at)
+VALUES (1, 1, 'ru', 'картошка', 'search', CURRENT_TIMESTAMP);
+"""
+
+
+def _assert_search_backfill(database):
+    assert "food_search_terms" in _tables(database)
+    assert "normalized_name" in _columns(database, "community_foods")
+    assert _query(
+        database, "SELECT normalized_name FROM community_foods WHERE id = 1"
+    ) == [("cafe au lait",)]
+    terms = {
+        (row[0], row[1], row[2])
+        for row in _query(
+            database,
+            "SELECT language, term_type, normalized FROM food_search_terms WHERE food_id = 1",
+        )
+    }
+    assert ("und", "canonical", "potato") in terms
+    assert ("ru", "translation", "картофель") in terms
+    assert ("uk", "translation", "картопля") in terms
+    assert ("ru", "alias", "картошка") in terms
+    normalized = {row[2] for row in terms}
+    assert "kartofel" in normalized
+    assert "kartoshka" in normalized
+    assert "kartoplia" in normalized and "kartoplya" in normalized
+    indexes = _indexes(database)
+    assert {
+        "uq_food_search_terms",
+        "ix_food_search_terms_normalized",
+        "ix_food_search_terms_normalized_prefix",
+        "ix_community_foods_normalized",
+    } <= indexes
+
+
+def test_multilingual_search_schema_and_backfill(tmp_path):
+    database = tmp_path / "search.db"
+    _assert_ok(_run_alembic(_sqlite_url(database), "upgrade", "0007_catalog_cleanup"))
+
+    # Emulate a database created before 0008, then add legacy catalog rows.
+    _execute_script(database, """
+DROP TABLE food_search_terms;
+DROP INDEX IF EXISTS ix_community_foods_normalized;
+DROP INDEX IF EXISTS ix_community_foods_normalized_prefix;
+ALTER TABLE community_foods DROP COLUMN normalized_name;
+""" + _SEARCH_LEGACY_SQL)
+
+    _assert_ok(_run_alembic(_sqlite_url(database), "upgrade", "head"))
+
+    assert _version(database) == HEAD
+    _assert_search_backfill(database)
+
+
+def test_recipe_composition_schema(tmp_path):
+    database = tmp_path / "recipe-schema.db"
+
+    _upgrade(database)
+
+    assert "recipe_details" in _tables(database)
+    assert {
+        "preparation_state", "edible_portion", "nutrient_snapshot",
+    } <= _columns(database, "recipe_ingredients")
+    assert {
+        "food_id", "cooked_weight_grams", "uncooked_weight_grams",
+        "portion_count", "quality", "calculation_method", "dataset_version",
+    } <= _columns(database, "recipe_details")
+
+
+def test_catalog_cleanup_drops_duplicate_indexes_and_clarifies_builtin(tmp_path):
+    database = tmp_path / "cleanup-parity.db"
+
+    _upgrade(database)
+
+    indexes = _indexes(database)
+    assert {
+        "ix_food_barcodes_food_id",
+        "ix_food_servings_food_id",
+        "ix_nutrient_profiles_food_id",
+    } <= indexes
+    assert not {
+        "ix_food_barcodes_food",
+        "ix_food_servings_food",
+        "ix_nutrient_profiles_food",
+    } & indexes
+
+    rows = _query(
+        database,
+        "SELECT license, limitations FROM food_sources WHERE code = 'builtin'",
+    )
+    assert len(rows) == 1
+    license_text, limitations = rows[0]
+    assert "CC0" in license_text
+    assert "origin" in limitations.lower()
 
 
 # ---------------------------------------------------------------------------
@@ -1505,6 +1693,7 @@ _PG_EXPECTED_SCHEMA = {
             "barcode": ("VARCHAR(14)", False, None),
             "barcode_prefix": ("VARCHAR(7)", True, None),
             "name": ("VARCHAR(200)", False, None),
+            "normalized_name": ("VARCHAR(200)", True, None),
             "brand": ("VARCHAR(120)", False, None),
             "kcal": ("DOUBLE PRECISION", False, None),
             "protein": ("DOUBLE PRECISION", False, None),
@@ -1517,8 +1706,41 @@ _PG_EXPECTED_SCHEMA = {
         "indexes": {
             "ix_community_foods_barcode": (("barcode",), True),
             "ix_community_foods_barcode_prefix": (("barcode_prefix",), False),
+            "ix_community_foods_normalized": (("normalized_name",), False),
+            "ix_community_foods_normalized_prefix": (("normalized_name",), False),
             "ix_community_foods_prefix": (("barcode_prefix",), False),
             "ix_community_foods_submitted_by": (("submitted_by",), False),
+        },
+    },
+    "catalog_foods": {
+        "columns": {
+            "id": ("INTEGER", False, "<sequence>"),
+            "source": ("VARCHAR(32)", False, None),
+            "source_id": ("VARCHAR(200)", True, None),
+            "name": ("VARCHAR(200)", False, None),
+            "name_original": ("VARCHAR(200)", True, None),
+            "name_ru": ("VARCHAR(200)", True, None),
+            "name_uk": ("VARCHAR(200)", True, None),
+            "category": ("VARCHAR(80)", False, None),
+            "type": ("VARCHAR(16)", False, None),
+            "kcal": ("DOUBLE PRECISION", False, None),
+            "protein": ("DOUBLE PRECISION", False, None),
+            "carbs": ("DOUBLE PRECISION", False, None),
+            "fat": ("DOUBLE PRECISION", False, None),
+            "serving_size": ("DOUBLE PRECISION", False, None),
+            "serving_unit": ("VARCHAR(8)", False, None),
+            "preparation_state": ("VARCHAR(16)", True, None),
+            "approximate": ("BOOLEAN", False, None),
+            "source_url": ("VARCHAR(500)", True, None),
+            "is_active": ("BOOLEAN", False, None),
+            "created_at": ("TIMESTAMP WITH TIME ZONE", False, None),
+            "updated_at": ("TIMESTAMP WITH TIME ZONE", False, None),
+        },
+        "indexes": {
+            "uq_catalog_foods_source_source_id": (("source", "source_id"), True),
+            "ix_catalog_foods_type_name": (("type", "name"), False),
+            "ix_catalog_foods_category": (("category",), False),
+            "ix_catalog_foods_active": (("is_active",), False),
         },
     },
 }
@@ -1565,10 +1787,139 @@ def test_postgres_fresh_upgrade_matches_frozen_snapshot(postgres_schema):
 
     assert _pg_version(engine, schema) == HEAD
     actual = _pg_schema_snapshot(engine, schema)
+    actual = {
+        name: {
+            **value,
+            # pg_trgm indexes are optional and extension-dependent; they are
+            # asserted by the dedicated search schema test instead.
+            "indexes": {
+                index: definition
+                for index, definition in value["indexes"].items()
+                if not index.endswith("_trgm")
+            },
+        }
+        for name, value in actual.items()
+        if name not in GLOBAL_CATALOG_TABLES
+    }
     assert set(actual) == set(_PG_EXPECTED_SCHEMA)
     for table, expected in _PG_EXPECTED_SCHEMA.items():
         assert actual[table]["columns"] == expected["columns"], table
         assert actual[table]["indexes"] == expected["indexes"], table
+
+
+def test_postgres_global_catalog_foundation_schema(postgres_schema):
+    url, schema, engine = postgres_schema
+
+    result = _pg_run(url, schema, "upgrade", "head")
+    _assert_ok(result)
+
+    assert _pg_version(engine, schema) == HEAD
+    tables = _pg_tables(engine, schema)
+    assert GLOBAL_CATALOG_TABLES <= tables
+    assert {
+        "code", "license", "storage_permission", "translation_permission",
+        "redistribution_permission", "approval_status",
+    } <= _pg_columns(engine, schema, "food_sources")
+    assert {
+        "food_id", "language", "name", "translation_status",
+        "review_status", "is_primary",
+    } <= _pg_columns(engine, schema, "food_translations")
+    assert {
+        "food_id", "reference_amount", "reference_unit", "kcal",
+        "protein", "carbs", "fat", "fiber", "sugar", "sodium",
+        "source_code", "source_record_id", "dataset_version", "is_primary",
+    } <= _pg_columns(engine, schema, "nutrient_profiles")
+    assert "food_barcodes" in tables
+    assert "recipe_ingredients" in tables
+    assert _pg_indexes(engine, schema, "food_translations")[
+        "uq_food_translations_food_language"][1] is True
+    assert _pg_indexes(engine, schema, "food_barcodes")[
+        "uq_food_barcodes_barcode"][1] is True
+
+
+def test_postgres_catalog_cleanup_schema(postgres_schema):
+    url, schema, engine = postgres_schema
+
+    _assert_ok(_pg_run(url, schema, "upgrade", "head"))
+
+    assert _pg_version(engine, schema) == HEAD
+    for table in ("food_barcodes", "food_servings", "nutrient_profiles"):
+        indexes = set(_pg_indexes(engine, schema, table))
+        assert f"ix_{table}_food_id" in indexes, table
+        assert f"ix_{table}_food" not in indexes, table
+
+    builtin = _pg_query_one(
+        engine, schema,
+        "SELECT license, limitations FROM food_sources WHERE code = 'builtin'",
+    )
+    assert "CC0" in builtin[0]
+    assert "origin" in builtin[1].lower()
+
+
+def test_postgres_multilingual_search_schema_and_backfill(postgres_schema):
+    url, schema, engine = postgres_schema
+    _assert_ok(_pg_run(url, schema, "upgrade", "0007_catalog_cleanup"))
+
+    statements = [
+        "DROP TABLE food_search_terms",
+        "ALTER TABLE community_foods DROP COLUMN normalized_name",
+    ] + [part.strip() for part in _SEARCH_LEGACY_SQL.split(";") if part.strip()]
+    _pg_exec(engine, schema, *statements)
+
+    _assert_ok(_pg_run(url, schema, "upgrade", "head"))
+    assert _pg_version(engine, schema) == HEAD
+
+    assert "food_search_terms" in _pg_tables(engine, schema)
+    assert "normalized_name" in _pg_columns(engine, schema, "community_foods")
+    assert _pg_query_one(
+        engine, schema,
+        "SELECT normalized_name FROM community_foods WHERE id = 1",
+    ) == ("cafe au lait",)
+    terms = set(_pg_query_all(
+        engine, schema,
+        "SELECT language, term_type, normalized FROM food_search_terms WHERE food_id = 1",
+    ))
+    assert ("und", "canonical", "potato") in terms
+    assert ("ru", "translation", "картофель") in terms
+    assert ("uk", "translation", "картопля") in terms
+    assert ("ru", "alias", "картошка") in terms
+    normalized = {row[2] for row in terms}
+    assert {"kartofel", "kartoshka", "kartoplia", "kartoplya"} <= normalized
+
+    assert {
+        "uq_food_search_terms",
+        "ix_food_search_terms_normalized",
+        "ix_food_search_terms_normalized_prefix",
+    } <= set(_pg_indexes(engine, schema, "food_search_terms"))
+    assert "ix_community_foods_normalized" in _pg_indexes(
+        engine, schema, "community_foods"
+    )
+    if _pg_scalar(
+        engine, schema,
+        "SELECT count(*) FROM pg_available_extensions WHERE name = 'pg_trgm'",
+    ):
+        assert "ix_food_search_terms_normalized_trgm" in _pg_indexes(
+            engine, schema, "food_search_terms"
+        )
+        assert "ix_community_foods_normalized_trgm" in _pg_indexes(
+            engine, schema, "community_foods"
+        )
+
+
+def test_postgres_recipe_composition_schema(postgres_schema):
+    url, schema, engine = postgres_schema
+
+    _assert_ok(_pg_run(url, schema, "upgrade", "head"))
+
+    assert _pg_version(engine, schema) == HEAD
+    assert "recipe_details" in _pg_tables(engine, schema)
+    assert {
+        "preparation_state", "edible_portion", "nutrient_snapshot",
+    } <= _pg_columns(engine, schema, "recipe_ingredients")
+    assert {
+        "food_id", "cooked_weight_grams", "uncooked_weight_grams",
+        "portion_count", "quality", "calculation_method",
+    } <= _pg_columns(engine, schema, "recipe_details")
 
 
 def test_postgres_legacy_migration_preserves_data(postgres_schema):

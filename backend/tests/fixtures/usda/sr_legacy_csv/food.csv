@@ -1,0 +1,6 @@
+"fdc_id","data_type","description","food_category_id","publication_date"
+"2001","sr_legacy_food","Butter, salted","1","4/1/2019"
+"2002","sr_legacy_food","Cake, chocolate","18","4/1/2019"
+"2003","sr_legacy_food","Milk, whole","1","4/1/2019"
+"2004","branded_food","Branded thing","19","4/1/2019"
+"2005","sr_legacy_food","Broken row","1","4/1/2019"

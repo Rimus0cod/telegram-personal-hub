@@ -1,0 +1,164 @@
+{
+  "FoundationFoods": [
+    {
+      "fdcId": 1001,
+      "dataType": "Foundation",
+      "description": "Chicken, breast, raw",
+      "foodCategory": {"description": "Poultry Products"},
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 120.0, "dataPoints": 6,
+         "nutrient": {"id": 1008, "number": "208", "name": "Energy", "unitName": "kcal"}},
+        {"type": "FoodNutrient", "amount": 22.0, "dataPoints": 1,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 23.1, "dataPoints": 5,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 1.5, "dataPoints": 5,
+         "nutrient": {"id": 1004, "number": "204", "name": "Total lipid (fat)", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.0, "dataPoints": 5,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.0, "dataPoints": 5,
+         "nutrient": {"id": 1079, "number": "291", "name": "Fiber, total dietary", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 45.0, "dataPoints": 5,
+         "nutrient": {"id": 1093, "number": "307", "name": "Sodium, Na", "unitName": "mg"}},
+        {"type": "FoodNutrient", "amount": 0.5, "dataPoints": 5,
+         "nutrient": {"id": 1258, "number": "606", "name": "Fatty acids, total saturated", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 3.0, "dataPoints": 1,
+         "nutrient": {"id": 9999, "number": "999", "name": "Unknown vitamin", "unitName": "mg"}}
+      ],
+      "foodPortions": [
+        {"amount": 1.0, "gramWeight": 140.0, "modifier": "1 cup",
+         "measureUnit": {"name": "cup", "abbreviation": "cup"}},
+        {"amount": 1.0, "gramWeight": 85.0, "modifier": "RACC",
+         "measureUnit": {"name": "RACC", "abbreviation": "RACC"}},
+        {"amount": 1.0, "gramWeight": 0.0, "modifier": "invalid",
+         "measureUnit": {"name": "cup", "abbreviation": "cup"}}
+      ]
+    },
+    {
+      "fdcId": 1002,
+      "dataType": "Foundation",
+      "description": "Rice, white, cooked",
+      "foodCategory": {"description": "Cereal Grains and Pasta"},
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 460.0, "dataPoints": 3,
+         "nutrient": {"id": 1062, "number": "268", "name": "Energy", "unitName": "kJ"}},
+        {"type": "FoodNutrient", "amount": 2.7, "dataPoints": 3,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 28.2, "dataPoints": 3,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.3, "dataPoints": 3,
+         "nutrient": {"id": 1004, "number": "204", "name": "Total lipid (fat)", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.001, "dataPoints": 3,
+         "nutrient": {"id": 1093, "number": "307", "name": "Sodium, Na", "unitName": "g"}}
+      ],
+      "foodPortions": [
+        {"amount": 1.0, "gramWeight": 158.0, "modifier": "1 cup",
+         "measureUnit": {"name": "cup", "abbreviation": "cup"}}
+      ]
+    },
+    {
+      "fdcId": 1003,
+      "dataType": "Foundation",
+      "description": "Mystery, missing fat",
+      "foodCategory": {"description": "Other"},
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 50.0, "dataPoints": 1,
+         "nutrient": {"id": 1008, "number": "208", "name": "Energy", "unitName": "kcal"}},
+        {"type": "FoodNutrient", "amount": 1.0, "dataPoints": 1,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 9.0, "dataPoints": 1,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}}
+      ]
+    },
+    {
+      "fdcId": 1004,
+      "dataType": "Foundation",
+      "description": "Impossible energy food",
+      "foodCategory": {"description": "Snacks"},
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 5000.0, "dataPoints": 1,
+         "nutrient": {"id": 1008, "number": "208", "name": "Energy", "unitName": "kcal"}},
+        {"type": "FoodNutrient", "amount": 1.0, "dataPoints": 1,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 1.0, "dataPoints": 1,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 1.0, "dataPoints": 1,
+         "nutrient": {"id": 1004, "number": "204", "name": "Total lipid (fat)", "unitName": "g"}}
+      ]
+    },
+    {
+      "fdcId": 1005,
+      "dataType": "Foundation",
+      "description": "Almond milk, unsweetened",
+      "foodCategory": {"description": "Beverages"},
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 15.0, "dataPoints": 2,
+         "nutrient": {"id": 1008, "number": "208", "name": "Energy", "unitName": "kcal"}},
+        {"type": "FoodNutrient", "amount": 0.6, "dataPoints": 2,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.6, "dataPoints": 2,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 1.2, "dataPoints": 2,
+         "nutrient": {"id": 1004, "number": "204", "name": "Total lipid (fat)", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.0, "dataPoints": 2,
+         "nutrient": {"id": 1063, "number": "269.3", "name": "Sugars, Total", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.3, "dataPoints": 2,
+         "nutrient": {"id": 1079, "number": "291", "name": "Fiber, total dietary", "unitName": "g"}}
+      ],
+      "foodPortions": [
+        {"amount": 1.0, "gramWeight": 240.0, "modifier": "1 cup",
+         "measureUnit": {"name": "cup", "abbreviation": "cup"}}
+      ]
+    },
+    {
+      "fdcId": 1006,
+      "dataType": "Foundation",
+      "description": "Tomatoes, grape, raw",
+      "foodCategory": {"description": "Vegetables and Vegetable Products"},
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 18.0, "dataPoints": 4,
+         "nutrient": {"id": 1008, "number": "208", "name": "Energy", "unitName": "kcal"}},
+        {"type": "FoodNutrient", "amount": 0.8, "dataPoints": 4,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 3.9, "dataPoints": 4,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.2, "dataPoints": 4,
+         "nutrient": {"id": 1004, "number": "204", "name": "Total lipid (fat)", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 5000.0, "dataPoints": 2,
+         "nutrient": {"id": 1093, "number": "307", "name": "Sodium, Na", "unitName": "µg"}}
+      ]
+    },
+    {
+      "fdcId": 1007,
+      "dataType": "Foundation",
+      "description": "  Oats,\u00a0dry   ",
+      "foodCategory": {"description": "Cereal Grains and Pasta"},
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 389.0, "dataPoints": 1,
+         "nutrient": {"id": 1008, "number": "208", "name": "Energy", "unitName": "kcal"}},
+        {"type": "FoodNutrient", "amount": 16.9, "dataPoints": 1,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 66.3, "dataPoints": 1,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 6.9, "dataPoints": 1,
+         "nutrient": {"id": 1004, "number": "204", "name": "Total lipid (fat)", "unitName": "g"}}
+      ]
+    },
+    {
+      "fdcId": 1001,
+      "dataType": "Foundation",
+      "description": "Chicken, breast, raw (duplicate id)",
+      "foodCategory": {"description": "Poultry Products"},
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 120.0, "dataPoints": 6,
+         "nutrient": {"id": 1008, "number": "208", "name": "Energy", "unitName": "kcal"}},
+        {"type": "FoodNutrient", "amount": 23.1, "dataPoints": 5,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 1.5, "dataPoints": 5,
+         "nutrient": {"id": 1004, "number": "204", "name": "Total lipid (fat)", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 0.0, "dataPoints": 5,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}}
+      ]
+    }
+  ]
+}

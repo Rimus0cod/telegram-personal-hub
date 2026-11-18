@@ -1,0 +1,3674 @@
+[
+  {
+    "source": "usda",
+    "source_id": "pilot:potato",
+    "type": "ingredient",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Potato",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Potato",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Картофель",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Картопля",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "картошка",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "potato",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 77,
+      "protein": 2,
+      "carbs": 17,
+      "fat": 0,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "piece",
+        "grams": 150,
+        "description": "1 medium potato",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:dry-white-rice",
+    "type": "ingredient",
+    "category": "Крупы и хлеб",
+    "original_language": "en",
+    "name_original": "Dry white rice",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Dry white rice",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рис сухой",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Рис сухой",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 360,
+      "protein": 7,
+      "carbs": 80,
+      "fat": 1,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "dry",
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:dry-buckwheat",
+    "type": "ingredient",
+    "category": "Крупы и хлеб",
+    "original_language": "en",
+    "name_original": "Dry buckwheat",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Dry buckwheat",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Гречка сухая",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Гречка сухая",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "гречка",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "buckwheat",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 343,
+      "protein": 13,
+      "carbs": 72,
+      "fat": 3,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "dry",
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:dry-oats",
+    "type": "ingredient",
+    "category": "Крупы и хлеб",
+    "original_language": "en",
+    "name_original": "Dry oats",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Dry oats",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Овсянка сухая",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Овсянка сухая",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "овсянка",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "oatmeal",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 370,
+      "protein": 13,
+      "carbs": 62,
+      "fat": 7,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "dry",
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:dry-pasta",
+    "type": "ingredient",
+    "category": "Крупы и хлеб",
+    "original_language": "en",
+    "name_original": "Dry pasta",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Dry pasta",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Макароны сухие",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Макароны сухие",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 350,
+      "protein": 12,
+      "carbs": 72,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "dry",
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:raw-chicken-breast",
+    "type": "ingredient",
+    "category": "Мясо и рыба",
+    "original_language": "en",
+    "name_original": "Raw chicken breast",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Raw chicken breast",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Куриная грудка",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Куриная грудка",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "курица",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "chicken breast",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 120,
+      "protein": 23,
+      "carbs": 0,
+      "fat": 3,
+      "fiber": null,
+      "sugar": 0,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:lean-beef",
+    "type": "ingredient",
+    "category": "Мясо и рыба",
+    "original_language": "en",
+    "name_original": "Lean beef",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Lean beef",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Говядина постная",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Говядина постная",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 187,
+      "protein": 26,
+      "carbs": 0,
+      "fat": 9,
+      "fiber": null,
+      "sugar": 0,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:olive-oil",
+    "type": "ingredient",
+    "category": "Другое",
+    "original_language": "en",
+    "name_original": "Olive oil",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Olive oil",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Оливковое масло",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Оливковое масло",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 884,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 100,
+      "fiber": null,
+      "sugar": 0,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:raw-salmon",
+    "type": "ingredient",
+    "category": "Мясо и рыба",
+    "original_language": "en",
+    "name_original": "Raw salmon",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Raw salmon",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Лосось",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Лосось",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 208,
+      "protein": 20,
+      "carbs": 0,
+      "fat": 13,
+      "fiber": null,
+      "sugar": 0,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:raw-tuna",
+    "type": "ingredient",
+    "category": "Мясо и рыба",
+    "original_language": "en",
+    "name_original": "Raw tuna",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Raw tuna",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Тунец",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Тунец",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 132,
+      "protein": 29,
+      "carbs": 0,
+      "fat": 1,
+      "fiber": null,
+      "sugar": 0,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:egg",
+    "type": "ingredient",
+    "category": "Мясо и рыба",
+    "original_language": "en",
+    "name_original": "Egg",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Egg",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Яйцо",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Яйцо",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 143,
+      "protein": 13,
+      "carbs": 1,
+      "fat": 10,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "piece",
+        "grams": 50,
+        "description": "1 egg",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:milk-2-5",
+    "type": "ingredient",
+    "category": "Молочное",
+    "original_language": "en",
+    "name_original": "Milk 2.5%",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Milk 2.5%",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Молоко 2.5%",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Молоко 2.5%",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "молоко",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "milk",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 52,
+      "protein": 3,
+      "carbs": 5,
+      "fat": 3,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "cup",
+        "grams": 250,
+        "description": "1 cup",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:cottage-cheese-5",
+    "type": "ingredient",
+    "category": "Молочное",
+    "original_language": "en",
+    "name_original": "Cottage cheese 5%",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Cottage cheese 5%",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Творог 5%",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Творог 5%",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "творог",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "cottage cheese",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 121,
+      "protein": 17,
+      "carbs": 3,
+      "fat": 5,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:hard-cheese",
+    "type": "ingredient",
+    "category": "Молочное",
+    "original_language": "en",
+    "name_original": "Hard cheese",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Hard cheese",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Сыр твёрдый",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Сыр твёрдый",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "сыр",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "cheese",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 350,
+      "protein": 25,
+      "carbs": 2,
+      "fat": 27,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:tomato",
+    "type": "ingredient",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Tomato",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Tomato",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Помидор",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Помидор",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "томат",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "tomato",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 18,
+      "protein": 1,
+      "carbs": 4,
+      "fat": 0,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:cucumber",
+    "type": "ingredient",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Cucumber",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Cucumber",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Огурец",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Огурец",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "огурчик",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "cucumber",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 15,
+      "protein": 1,
+      "carbs": 4,
+      "fat": 0,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:carrot",
+    "type": "ingredient",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Carrot",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Carrot",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Морковь",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Морковь",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 41,
+      "protein": 1,
+      "carbs": 10,
+      "fat": 0,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:white-cabbage",
+    "type": "ingredient",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "White cabbage",
+    "translations": [
+      {
+        "language": "en",
+        "name": "White cabbage",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Капуста белокочанная",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Капуста белокочанная",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 25,
+      "protein": 1,
+      "carbs": 6,
+      "fat": 0,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:broccoli",
+    "type": "ingredient",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Broccoli",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Broccoli",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Брокколи",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Брокколи",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 34,
+      "protein": 3,
+      "carbs": 7,
+      "fat": 0,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "usda",
+    "source_id": "pilot:apple",
+    "type": "ingredient",
+    "category": "Фрукты",
+    "original_language": "en",
+    "name_original": "Apple",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Apple",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Яблоко",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Яблоко",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "яблочко",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "apple",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 52,
+      "protein": 0,
+      "carbs": 14,
+      "fat": 0,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "piece",
+        "grams": 180,
+        "description": "1 medium apple",
+        "is_default": true
+      }
+    ],
+    "preparation_state": null,
+    "approximate": false,
+    "source_url": "https://fdc.nal.usda.gov/"
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:mashed-potatoes-with-milk",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Mashed potatoes with milk",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Mashed potatoes with milk",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Картофельное пюре на молоке",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Картопляне пюре на молоці",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 90,
+      "protein": 2,
+      "carbs": 14,
+      "fat": 3,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:mashed-potatoes-with-butter",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Mashed potatoes with butter",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Mashed potatoes with butter",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Картофельное пюре с маслом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Картопляне пюре з маслом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 110,
+      "protein": 2,
+      "carbs": 14,
+      "fat": 5,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:country-style-potatoes",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Country-style potatoes",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Country-style potatoes",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Картофель по-деревенски",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Картопля по-селянськи",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 160,
+      "protein": 2,
+      "carbs": 25,
+      "fat": 6,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "baked",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:milk-oatmeal",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Milk oatmeal",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Milk oatmeal",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Овсяная каша на молоке",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Вівсяна каша на молоці",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 110,
+      "protein": 3,
+      "carbs": 17,
+      "fat": 3,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "boiled",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:buckwheat-porridge-with-milk",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Buckwheat porridge with milk",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Buckwheat porridge with milk",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Гречневая каша с молоком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Гречана каша з молоком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 120,
+      "protein": 4,
+      "carbs": 20,
+      "fat": 3,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "boiled",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:oatmeal-with-banana",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Oatmeal with banana",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Oatmeal with banana",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Овсянка с бананом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Вівсянка з бананом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 110,
+      "protein": 3,
+      "carbs": 20,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "boiled",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:baked-chicken-breast",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Baked chicken breast",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Baked chicken breast",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Куриная грудка запечённая",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Куряча грудка запечена",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 165,
+      "protein": 31,
+      "carbs": 0,
+      "fat": 3.6,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "baked",
+    "approximate": false,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:baked-chicken-thigh",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Baked chicken thigh",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Baked chicken thigh",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Куриное бедро запечённое",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Куряче стегно запечене",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 209,
+      "protein": 26,
+      "carbs": 0,
+      "fat": 11,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "baked",
+    "approximate": false,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:stewed-chicken",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Stewed chicken",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Stewed chicken",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Курица тушёная",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Курка тушкована",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 180,
+      "protein": 24,
+      "carbs": 2,
+      "fat": 8,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "stewed",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:chicken-cutlets",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Chicken cutlets",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Chicken cutlets",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Котлеты куриные",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Котлети курячі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 220,
+      "protein": 18,
+      "carbs": 8,
+      "fat": 12,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:pork-cutlets",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Pork cutlets",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Pork cutlets",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Котлеты свиные",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Котлети свинячі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 280,
+      "protein": 17,
+      "carbs": 6,
+      "fat": 22,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:beef-cutlets",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Beef cutlets",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Beef cutlets",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Котлеты говяжьи",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Котлети яловичі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 260,
+      "protein": 18,
+      "carbs": 8,
+      "fat": 20,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:meatballs",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Meatballs",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Meatballs",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Тефтели",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Тефтелі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 240,
+      "protein": 16,
+      "carbs": 14,
+      "fat": 12,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "stewed",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:goulash",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Goulash",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Goulash",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Гуляш",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Гуляш",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 190,
+      "protein": 16,
+      "carbs": 8,
+      "fat": 12,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "stewed",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:pilaf",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Pilaf",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Pilaf",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Плов",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Плов",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 190,
+      "protein": 7,
+      "carbs": 25,
+      "fat": 7,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:baked-fish",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Baked fish",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Baked fish",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рыба запечённая",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Риба запечена",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 130,
+      "protein": 20,
+      "carbs": 0,
+      "fat": 5,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "baked",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:fried-fish",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Fried fish",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Fried fish",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рыба жареная",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Риба смажена",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 200,
+      "protein": 19,
+      "carbs": 5,
+      "fat": 12,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:stewed-fish",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Stewed fish",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Stewed fish",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рыба тушёная",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Риба тушкована",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 130,
+      "protein": 18,
+      "carbs": 3,
+      "fat": 5,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "stewed",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:fish-cutlets",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Fish cutlets",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Fish cutlets",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рыбные котлеты",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Рибні котлети",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 190,
+      "protein": 14,
+      "carbs": 8,
+      "fat": 11,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:steamed-fish",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Steamed fish",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Steamed fish",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рыба на пару",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Риба на парі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 110,
+      "protein": 21,
+      "carbs": 0,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "steamed",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:borscht",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Borscht",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Borscht",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Борщ",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Борщ",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "борщ",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "borscht",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 60,
+      "protein": 3,
+      "carbs": 7,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "bowl",
+        "grams": 300,
+        "description": "1 bowl",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:chicken-soup",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Chicken soup",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Chicken soup",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Куриный суп",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Курячий суп",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "куриный бульон",
+        "alias_type": "search"
+      },
+      {
+        "language": "en",
+        "alias": "chicken soup",
+        "alias_type": "search"
+      }
+    ],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 50,
+      "protein": 4,
+      "carbs": 5,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:meatball-soup",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Meatball soup",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Meatball soup",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Суп с фрикадельками",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Суп з фрикадельками",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 60,
+      "protein": 4,
+      "carbs": 5,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:pea-soup",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Pea soup",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Pea soup",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Гороховый суп",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Гороховий суп",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 70,
+      "protein": 4,
+      "carbs": 10,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:rassolnik",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Rassolnik",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Rassolnik",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рассольник",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Розсольник",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 50,
+      "protein": 3,
+      "carbs": 6,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:noodle-soup",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Noodle soup",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Noodle soup",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Суп с лапшой",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Суп з локшиною",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 55,
+      "protein": 3,
+      "carbs": 7,
+      "fat": 2,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:solyanka",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Solyanka",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Solyanka",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Солянка",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Солянка",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 75,
+      "protein": 5,
+      "carbs": 5,
+      "fat": 4,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:omelette",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Omelette",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Omelette",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Омлет",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Омлет",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 154,
+      "protein": 11,
+      "carbs": 1,
+      "fat": 11,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:fried-eggs",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Fried eggs",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Fried eggs",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Яичница",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Яєчня",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 196,
+      "protein": 14,
+      "carbs": 1,
+      "fat": 15,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:boiled-eggs",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Boiled eggs",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Boiled eggs",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Варёные яйца",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Варені яйця",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 155,
+      "protein": 13,
+      "carbs": 1,
+      "fat": 11,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "boiled",
+    "approximate": false,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:syrniki",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Syrniki",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Syrniki",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Сырники",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Сирники",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 220,
+      "protein": 14,
+      "carbs": 24,
+      "fat": 8,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:pancakes",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Pancakes",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Pancakes",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Блины",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Млинці",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 230,
+      "protein": 6,
+      "carbs": 30,
+      "fat": 9,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:fritters",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Fritters",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Fritters",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Оладьи",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Оладки",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 250,
+      "protein": 6,
+      "carbs": 34,
+      "fat": 10,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "fried",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:cottage-cheese-bake",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Cottage cheese bake",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Cottage cheese bake",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Творожная запеканка",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Сирна запіканка",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 180,
+      "protein": 12,
+      "carbs": 18,
+      "fat": 7,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "baked",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:vinaigrette-salad",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Vinaigrette salad",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Vinaigrette salad",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Винегрет",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Вінегрет",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 90,
+      "protein": 2,
+      "carbs": 12,
+      "fat": 4,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:olivier-salad",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Olivier salad",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Olivier salad",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Оливье",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Олів’є",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 200,
+      "protein": 4,
+      "carbs": 12,
+      "fat": 15,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:greek-salad",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Greek salad",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Greek salad",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Греческий салат",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Грецький салат",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 130,
+      "protein": 3,
+      "carbs": 5,
+      "fat": 11,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:vegetable-salad",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Vegetable salad",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Vegetable salad",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Салат из овощей",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Овочевий салат",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 70,
+      "protein": 1,
+      "carbs": 7,
+      "fat": 4,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:cabbage-salad",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Cabbage salad",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Cabbage salad",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Салат из капусты",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Салат з капусти",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 60,
+      "protein": 1,
+      "carbs": 7,
+      "fat": 3,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "ready",
+    "approximate": true,
+    "source_url": null
+  },
+  {
+    "source": "manual",
+    "source_id": "pilot:stewed-vegetables",
+    "type": "prepared_meal",
+    "category": "Домашние блюда",
+    "original_language": "en",
+    "name_original": "Stewed vegetables",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Stewed vegetables",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Тушёные овощи",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      },
+      {
+        "language": "uk",
+        "name": "Тушковані овочі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": false
+      }
+    ],
+    "aliases": [],
+    "nutrients": {
+      "reference_amount": 100,
+      "reference_unit": "g",
+      "kcal": 80,
+      "protein": 2,
+      "carbs": 9,
+      "fat": 4,
+      "fiber": null,
+      "sugar": null,
+      "sodium": null,
+      "saturated_fat": null
+    },
+    "servings": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "stewed",
+    "approximate": true,
+    "source_url": null
+  }
+]

@@ -21,7 +21,7 @@ from app.models.models import Note, User
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = BACKEND_DIR.parent
 SCRIPTS = REPO_ROOT / "scripts"
-EXPECTED_HEAD = "0004_focus_session_client_id"
+EXPECTED_HEAD = "0009_recipe_composition"
 
 
 def _bash_path(path: Path) -> str:

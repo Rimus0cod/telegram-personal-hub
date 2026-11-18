@@ -1,0 +1,42 @@
+{
+  "SurveyFoods": [
+    {
+      "fdcId": 5001,
+      "dataType": "Survey (FNDDS)",
+      "description": "Chicken noodle soup, canned",
+      "wweiaFoodCategory": {
+        "wweiaFoodCategoryDescription": "Soups, broth-based",
+        "wweiaFoodCategoryCode": 323001
+      },
+      "foodNutrients": [
+        {"type": "FoodNutrient", "amount": 45.0, "dataPoints": 2,
+         "nutrient": {"id": 1008, "number": "208", "name": "Energy", "unitName": "kcal"}},
+        {"type": "FoodNutrient", "amount": 1.8, "dataPoints": 2,
+         "nutrient": {"id": 1003, "number": "203", "name": "Protein", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 5.2, "dataPoints": 2,
+         "nutrient": {"id": 1005, "number": "205", "name": "Carbohydrate, by difference", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 1.6, "dataPoints": 2,
+         "nutrient": {"id": 1004, "number": "204", "name": "Total lipid (fat)", "unitName": "g"}},
+        {"type": "FoodNutrient", "amount": 342.0, "dataPoints": 2,
+         "nutrient": {"id": 1093, "number": "307", "name": "Sodium, Na", "unitName": "mg"}}
+      ],
+      "foodPortions": [
+        {"amount": 1.0, "gramWeight": 2.5, "modifier": "63480",
+         "portionDescription": "Guideline amount per fl oz of beverage",
+         "measureUnit": {"id": 9999, "name": "undetermined", "abbreviation": "undetermined"}},
+        {"amount": 1.0, "gramWeight": 245.0, "modifier": "10205",
+         "portionDescription": "1 cup",
+         "measureUnit": {"id": 9999, "name": "undetermined", "abbreviation": "undetermined"}},
+        {"amount": 1.0, "gramWeight": 30.5, "modifier": "30000",
+         "portionDescription": "1 fl oz",
+         "measureUnit": {"id": 9999, "name": "undetermined", "abbreviation": "undetermined"}},
+        {"amount": 1.0, "gramWeight": 245.0, "modifier": "90000",
+         "portionDescription": "Quantity not specified",
+         "measureUnit": {"id": 9999, "name": "undetermined", "abbreviation": "undetermined"}},
+        {"amount": 1.0, "gramWeight": 245.0, "modifier": "RACC",
+         "portionDescription": "1 RACC",
+         "measureUnit": {"id": 1121, "name": "RACC", "abbreviation": "RACC"}}
+      ]
+    }
+  ]
+}

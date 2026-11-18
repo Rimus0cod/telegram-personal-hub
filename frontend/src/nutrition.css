@@ -239,6 +239,9 @@
 .food-preview > label { display: flex; align-items: center; gap: 2px; color: var(--muted); font-size: 10px; }
 .food-preview > label input { width: 54px; min-height: 32px; padding: 3px; text-align: center; }
 .preview-macros { display: flex; flex-wrap: wrap; gap: 7px; grid-column: span 2; color: var(--muted); font-size: 10px; }
+.serving-chips { display: flex; flex-wrap: wrap; gap: 5px; grid-column: span 2; }
+.serving-chips button { min-height: 28px; padding: 3px 9px; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--muted); font-size: 10px; }
+.serving-chips button.active { border-color: var(--accent-strong); color: var(--accent-strong); background: var(--accent-soft); }
 .food-preview .primary-button { grid-column: span 2; min-height: 36px; font-size: 11px; }
 
 /* Recipe composer */

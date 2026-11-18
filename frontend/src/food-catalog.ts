@@ -25,6 +25,19 @@ export type CatalogFood = {
   preparationState?: PreparationState;
   approximate?: boolean;
   source?: string;
+  sourceId?: string;
+  barcode?: string;
+  brand?: string;
+  aliases?: string[];
+  searchTerms?: string[];
+  servings?: Array<{
+    amount: number;
+    unit: string;
+    grams: number | null;
+    description: string | null;
+    is_default: boolean;
+  }>;
+  fromCatalog?: boolean;
 };
 
 export type CatalogFoodItem = CatalogFood & {

@@ -1,3 +1,31 @@
+import type { CatalogFoodItem } from './food-catalog';
+
+export function dedupeSearchFoods<T extends { id?: string; name: string }>(foods: T[]): T[] {
+  const seenIds = new Set<string>();
+  const seenNames = new Set<string>();
+  return foods.filter((food) => {
+    if (food.id) {
+      if (seenIds.has(food.id)) return false;
+      seenIds.add(food.id);
+    }
+    const key = normalize(food.name);
+    if (seenNames.has(key)) return false;
+    seenNames.add(key);
+    return true;
+  });
+}
+
+export function mergeSearchFoods(
+  serverActive: boolean,
+  serverFoods: CatalogFoodItem[],
+  remoteFoods: CatalogFoodItem[],
+  localFoods: CatalogFoodItem[],
+): CatalogFoodItem[] {
+  return dedupeSearchFoods(
+    serverActive ? [...serverFoods, ...remoteFoods] : [...remoteFoods, ...localFoods],
+  );
+}
+
 const translations: [string, string[]][] = [
  ['мандарин', ['mandarin', 'mandarins', 'tangerine', 'tangerines', 'clementine', 'clementines', 'мандарины', 'мандарини']],
  ['яблоко', ['apple', 'apples', 'яблуко', 'яблука']], ['банан', ['banana', 'bananas', 'банан', 'банани']],
@@ -33,7 +61,7 @@ const translations: [string, string[]][] = [
  ['апельсиновый сок', ['orange juice', 'апельсиновий сік']], ['ккал', ['calories', 'calorie', 'kcal', 'калорії']],
 ];
 
-const normalize = (value: string) => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’']/g, '').replace(/ё/g, 'е').trim();
+const normalize = (value: string) => value.toLocaleLowerCase().normalize('NFKC').replace(/[’'`´]/g, '').replace(/[–—−‑]/g, ' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
 const aliasPairs = translations.flatMap(([canonical, aliases]) => aliases.map(alias => [normalize(alias), normalize(canonical)] as const)).sort((a, b) => b[0].length - a[0].length);
 const tokenStems: Record<string, string[]> = {
  'курица': ['кур'], 'говядина': ['говяж', 'говядин'], 'свинина': ['свин'], 'картофель': ['картоф'],
@@ -45,10 +73,10 @@ const tokenStems: Record<string, string[]> = {
  'мандарин': ['мандарин'], 'апельсин': ['апельсин'], 'яблоко': ['яблок'], 'банан': ['банан'], 'груша': ['груш'],
 };
 
-export function foodSearchMatches(name: string, category: string, rawQuery: string) {
+export function foodSearchMatches(name: string, category: string, rawQuery: string, extraTerms: string[] = []) {
  const query = normalize(rawQuery);
  if (!query) return true;
- const normalizedName = normalize(name), normalizedCategory = normalize(category);
+ const normalizedName = [name, ...extraTerms].map(normalize).join(' '), normalizedCategory = normalize(category);
  if (normalizedName.includes(query) || normalizedCategory.includes(query)) return true;
  let translated = ` ${query} `;
  for (const [alias, canonical] of aliasPairs) {

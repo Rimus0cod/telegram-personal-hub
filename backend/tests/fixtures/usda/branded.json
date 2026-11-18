@@ -1,0 +1,13 @@
+{
+  "BrandedFoods": [
+    {
+      "fdcId": 9001,
+      "dataType": "Branded",
+      "description": "Branded snack",
+      "brandOwner": "Example",
+      "foodNutrients": [
+        {"amount": 500.0, "nutrient": {"id": 1008, "name": "Energy", "unitName": "kcal"}}
+      ]
+    }
+  ]
+}

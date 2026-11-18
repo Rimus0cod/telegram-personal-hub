@@ -22,9 +22,19 @@ RESTORE = REPO_ROOT / "scripts" / "restore-postgres.sh"
 R0002 = "0002_add_last_city"
 R0003 = "0003_nutrition_schema"
 R0004 = "0004_focus_session_client_id"
+R0005 = "0005_catalog_foods"
+R0006 = "0006_global_catalog"
+R0007 = "0007_catalog_cleanup"
+R0008 = "0008_multilingual_search"
+R0009 = "0009_recipe_composition"
 
 BASE_TABLES = "users notes tasks focus_sessions alembic_version"
 NUTRITION_TABLES = f"{BASE_TABLES} meal_entries saved_recipes community_foods"
+CATALOG_TABLES = f"{NUTRITION_TABLES} catalog_foods"
+GLOBAL_TABLES = (
+    f"{CATALOG_TABLES} food_sources food_translations food_aliases "
+    "nutrient_profiles food_servings food_barcodes recipe_ingredients"
+)
 BASE_INDEXES = (
     "users:ix_users_telegram_id notes:ix_notes_user_updated "
     "tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished"
@@ -33,6 +43,25 @@ NUTRITION_INDEXES = (
     f"{BASE_INDEXES} meal_entries:ix_meals_user_day "
     "saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode"
 )
+CATALOG_INDEXES = (
+    f"{NUTRITION_INDEXES} catalog_foods:uq_catalog_foods_source_source_id"
+)
+GLOBAL_INDEXES = (
+    f"{CATALOG_INDEXES} food_translations:uq_food_translations_food_language "
+    "nutrient_profiles:ix_nutrient_profiles_primary "
+    "food_barcodes:uq_food_barcodes_barcode"
+)
+# 0007 drops the duplicate food_id indexes and changes no table or other index.
+CLEANUP_TABLES = GLOBAL_TABLES
+CLEANUP_INDEXES = GLOBAL_INDEXES
+# 0008 adds the derived search index and normalized community names.
+SEARCH_TABLES = f"{CLEANUP_TABLES} food_search_terms"
+SEARCH_INDEXES = (
+    f"{CLEANUP_INDEXES} community_foods:ix_community_foods_normalized "
+    "food_search_terms:uq_food_search_terms "
+    "food_search_terms:ix_food_search_terms_normalized"
+)
+RECIPE_TABLES = f"{SEARCH_TABLES} recipe_details"
 FOCUS_INDEX = "focus_sessions:uq_focus_sessions_user_client"
 
 
@@ -152,9 +181,9 @@ def _env(fake, **overrides):
             "PGDATABASE": "postgres",
             "RESTORE_CONFIRM": "stage55_restore",
             "PGMAINTENANCE_DB": "postgres",
-            "FAKE_HEAD": R0004,
-            "FAKE_TABLES": NUTRITION_TABLES,
-            "FAKE_INDEXES": f"{NUTRITION_INDEXES} {FOCUS_INDEX}",
+            "FAKE_HEAD": R0009,
+            "FAKE_TABLES": RECIPE_TABLES,
+            "FAKE_INDEXES": f"{SEARCH_INDEXES} {FOCUS_INDEX}",
             "FAKE_TARGET_EXISTS": "0",
             "FAKE_BAD_ARCHIVE": "0",
             "FAKE_RESTORE_FAIL": "0",
@@ -220,7 +249,62 @@ def test_0003_accepts_nutrition_schema(fake_restore):
 
 
 def test_0004_accepts_full_schema(fake_restore):
-    result = _run(fake_restore, EXPECTED_ALEMBIC_HEAD=R0004)
+    result = _run(
+        fake_restore,
+        FAKE_HEAD=R0004,
+        FAKE_TABLES=NUTRITION_TABLES,
+        FAKE_INDEXES=f"{NUTRITION_INDEXES} {FOCUS_INDEX}",
+        EXPECTED_ALEMBIC_HEAD=R0004,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_0005_accepts_catalog_schema(fake_restore):
+    result = _run(
+        fake_restore,
+        FAKE_HEAD=R0005,
+        FAKE_TABLES=CATALOG_TABLES,
+        FAKE_INDEXES=f"{CATALOG_INDEXES} {FOCUS_INDEX}",
+        EXPECTED_ALEMBIC_HEAD=R0005,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_0006_accepts_global_catalog_schema(fake_restore):
+    result = _run(
+        fake_restore, EXPECTED_ALEMBIC_HEAD=R0006, FAKE_HEAD=R0006,
+        FAKE_TABLES=GLOBAL_TABLES,
+        FAKE_INDEXES=f"{GLOBAL_INDEXES} {FOCUS_INDEX}",
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_0007_accepts_cleanup_schema(fake_restore):
+    result = _run(
+        fake_restore, EXPECTED_ALEMBIC_HEAD=R0007,
+        FAKE_HEAD=R0007,
+        FAKE_TABLES=CLEANUP_TABLES,
+        FAKE_INDEXES=f"{CLEANUP_INDEXES} {FOCUS_INDEX}",
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_0008_accepts_search_schema(fake_restore):
+    result = _run(
+        fake_restore, EXPECTED_ALEMBIC_HEAD=R0008,
+        FAKE_HEAD=R0008,
+        FAKE_TABLES=SEARCH_TABLES,
+        FAKE_INDEXES=f"{SEARCH_INDEXES} {FOCUS_INDEX}",
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_0009_accepts_recipe_schema(fake_restore):
+    result = _run(
+        fake_restore, EXPECTED_ALEMBIC_HEAD=R0009,
+        FAKE_TABLES=RECIPE_TABLES,
+        FAKE_INDEXES=f"{SEARCH_INDEXES} {FOCUS_INDEX}",
+    )
     assert result.returncode == 0, result.stdout + result.stderr
 
 
@@ -243,7 +327,7 @@ def test_empty_revision_is_rejected(fake_restore):
 
 
 def test_ambiguous_revision_is_rejected(fake_restore):
-    result = _run(fake_restore, FAKE_HEAD=f"{R0004}\n{R0002}")
+    result = _run(fake_restore, FAKE_HEAD=f"{R0009}\n{R0002}")
     assert result.returncode != 0
     assert "exactly one Alembic revision" in result.stdout + result.stderr
 

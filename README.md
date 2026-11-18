@@ -62,7 +62,52 @@ Targets can be entered directly or derived from the calorie goal with a configur
 
 ### Recipes and food catalog
 
-Saved recipes are private to the authenticated user and can be reused on a selected day. The built-in catalog is a single normalized list with `id`, `type` (`ingredient` or `prepared_meal`), per-100-g calories and macros, serving metadata and a preparation state where applicable. Prepared meals use documented composite recipes and are explicitly marked approximate; basic cooked values follow USDA FoodData Central. The list is deduplicated by normalized name, prepared dishes are shown first, and search understands everyday synonyms such as “картошка”, “отварной” and “запечённая”. The community food catalog still supports barcode lookup and user-contributed foods. It protects existing entries from being overwritten by another user, handles race conditions on duplicate barcodes, and supports weighted EAN-13 prefixes used by variable-measure products. Open Food Facts is used as an external fallback when a barcode is not in the local catalog, and manual entry remains available.
+Saved recipes are private to the authenticated user and can be reused on a selected day. The catalog is loaded from PostgreSQL through `GET /api/v1/nutrition/catalog-items?lang=...`, with the built-in frontend list kept as an offline fallback. `catalog_foods` is the canonical food identity table; `food_translations`, `food_aliases`, `nutrient_profiles`, `food_servings` and `food_barcodes` hold multilingual names, search terms, provenance-aware nutrients, servings and package variants. `recipe_ingredients` stores recipe composition, and `food_sources` is the licence/source registry. Barcode products live in the shared `community_foods` table. All these sources are merged without exposing submitter identities. Prepared meals use documented composite recipes and are explicitly marked approximate; basic cooked values follow USDA FoodData Central. Search uses localized names, aliases and everyday synonyms.
+
+Barcode flow: external lookup is only a preview. When the user confirms a product, the frontend POSTs it to `/nutrition/catalog`; the product is then read back from PostgreSQL on the next app open. Repeating a scan updates the same user's row and returns `409` for another user's unchanged barcode. Diary entries are independent snapshots, so later catalog changes never rewrite historical meals. Open Food Facts remains the external barcode fallback; a missing or failed lookup leaves manual entry available.
+
+Search is server-side: `GET /api/v1/nutrition/catalog/search?q=...&lang=...` matches canonical names, approved translations, aliases and generated Russian/Ukrainian transliterations, then ranks exact barcode/name/translation/alias, prefixes, partial matches and transliterations. The query language is only a ranking preference and a display choice, so `картофель`, `картопля` and `kartofel` all find the same canonical food. Search terms are derived data (`food_search_terms`), rebuilt by imports and by `python -m tools.catalog_import search reindex`. The browser keeps its local matcher as a fallback when the request fails or the server returns no matches.
+
+### Curated catalog import, USDA and FatSecret
+
+`backend/tools/catalog_import.py` is a local-only tool, never imported by the FastAPI runtime. It validates reviewed JSON, checks the source/licence registry, detects duplicates, creates canonical records plus translations, aliases, nutrient profiles, servings and barcodes, and supports dry-run or idempotent commit. `backend/data/catalog_pilot.json` is the approved pilot: 60 records, 20 ingredients, 40 prepared meals, 180 translations in English/Russian/Ukrainian, 24 aliases and 60 nutrient profiles. `docs/CATALOG.md` is the full architecture and source-matrix reference.
+
+`backend/tools/catalog_sources/usda.py` is the offline USDA FoodData Central adapter. It reads the official bulk downloads (Foundation Foods, SR Legacy, FNDDS) and maps USDA nutrient IDs to the catalog model with explicit unit conversion, documented variant priority, nullable optional values and provenance (`fdcId`, release version, source URL). Branded Foods is deliberately not importable yet. The adapter never runs in a request, so Nutrition keeps using PostgreSQL only.
+
+```bash
+# from backend/
+python -m tools.catalog_import import --input data/catalog_pilot.json --dry-run
+python -m tools.catalog_import import --input data/catalog_pilot.json --commit
+
+# prepared meals with real composition (ingredients + cooked yield)
+python -m tools.catalog_import import --input data/prepared_meals.json --dry-run
+python -m tools.catalog_import import --input data/prepared_meals.json --commit
+
+# USDA bulk import (download the official archive once, then stage locally)
+python -m tools.catalog_import usda stage \
+  --input FoodData_Central_foundation_food_json_2026-10-29.zip \
+  --dataset-version 2026-10-29 --limit 150 \
+  --out staging/usda_pilot.json --report staging/usda_report.json
+python -m tools.catalog_import import --input staging/usda_pilot.json --dry-run
+python -m tools.catalog_import import --input staging/usda_pilot.json --commit
+
+python -m tools.catalog_import fatsecret-search --query "borscht" --out /tmp/fatsecret-preview.json
+```
+
+Search terms and translations are maintained locally:
+
+```bash
+python -m tools.catalog_import search reindex --dry-run
+python -m tools.catalog_import search reindex --commit
+python -m tools.catalog_import translations export --language ru --out ru-review.json
+python -m tools.catalog_import translations import --input ru-review.json --commit
+```
+
+`translations import` enforces the review statuses: a `verified` translation must be `approved`, machine or draft records stay `pending` and out of search until reviewed, and an approved translation is never downgraded.
+
+FatSecret is supported only as a temporary preview source: the command writes a review file that must be deleted within 24 hours. FatSecret's Terms of Use allow only identifiers such as `food_id`/`serving_id` to be stored indefinitely; names and nutrition values require a separate written custom-storage permission. The importer therefore refuses to commit FatSecret records. A future catalog expansion should use the project's own recipes, public-domain USDA data, or a documented FatSecret storage agreement.
+
+The seed is idempotent: re-running it skips existing `(source, source_id)` records and duplicate normalized names. Similar names are reported for manual review and never merged automatically. Import does not modify user diary entries or community barcode products.
 
 ### Telegram bot
 
@@ -74,8 +119,9 @@ The aiogram bot provides `/start` and `/help` and opens the Mini App. It intenti
 |---|---|
 | `backend/app/main.py` | Creates the FastAPI app, registers `/api/v1` routers, applies the rate-limit dependency, and exposes `/health`. |
 | `backend/app/api/` | HTTP routes and request/response schemas for auth, notes, tasks, focus, weather, and nutrition. |
-| `backend/app/models/models.py` | SQLAlchemy models and indexes for users, notes, tasks, focus sessions, meals, recipes, and community foods. |
+| `backend/app/models/models.py` | SQLAlchemy models and indexes for users, notes, tasks, focus sessions, meals, recipes, community foods, canonical `catalog_foods`, translations, aliases, nutrient profiles, servings, barcodes, recipe ingredients and source registry. |
 | `backend/app/services/telegram_auth.py` | Telegram `initData` signature and expiry validation. |
+| `backend/app/services/food_search.py` | Query normalization, RU/UK transliteration, derived search terms and PostgreSQL ranking. |
 | `backend/app/dependencies/auth.py` | Resolves the authenticated database user and applies profile validation. |
 | `backend/app/core/rate_limit.py` | Per-user Redis token buckets, category limits, and failure policy. |
 | `backend/app/core/migration_lock.py` | PostgreSQL advisory lock for serialized migrations. |
@@ -84,9 +130,15 @@ The aiogram bot provides `/start` and `/help` and opens the Mini App. It intenti
 | `frontend/src/App.tsx` | Main Mini App shell, notes, tasks, weather, profile control, home screen, and API helper. |
 | `frontend/src/Nutrition.tsx` | Compact nutrition screen, add-food sheet, meals, targets, recipes, catalog, barcode, OCR, copy-day, and CSV export. |
 | `frontend/src/focus/` | Timer state machine, persistence, delivery queue, hooks, modes, settings UI, and UI tests. |
-| `frontend/src/food-catalog.ts`, `food-search.ts` | Normalized ingredient/prepared-meal catalog, metadata, and multilingual search helpers. |
+| `frontend/src/food-catalog.ts`, `food-search.ts` | Offline fallback catalog, normalization metadata, and multilingual/alias search helpers. |
 | `frontend/src/nutrition-macros.ts` | Pure calorie-to-macro calculator and validation used by the Nutrition targets. |
 | `frontend/src/nutrition-serving.ts` | Pure per-serving calorie and macro recalculation for the food catalog. |
+| `backend/tools/catalog_import.py` | Local-only curated import tooling, duplicate detection, validation, and FatSecret preview guard. |
+| `backend/tools/catalog_sources/usda.py` | Offline USDA FoodData Central adapter: bulk JSON/CSV parsing, nutrient mapping, unit conversion, provenance. |
+| `backend/data/catalog_pilot.json` | Approved 60-record pilot with multilingual translations, aliases, nutrients and servings. |
+| `backend/data/prepared_meals.json` | Curated 56-recipe prepared-meals pilot with ingredient composition and en/ru/uk translations. |
+| `backend/tools/recipes.py` | Recipe validation and per-100-g nutrient calculation from ingredient profiles and cooked yield. |
+| `docs/CATALOG.md` | Catalog architecture, source/licence matrix, import workflow and extension rules. |
 | `frontend/src/weather-location.ts` | Persists the last automatic or manual weather selection across reloads. |
 | `frontend/src/focus/sound.ts` | Web Audio completion signal and persisted sound preference. |
 | `frontend/src/csv.ts` | CSV generation for nutrition export. |
@@ -102,7 +154,7 @@ The aiogram bot provides `/start` and `/help` and opens the Mini App. It intenti
 - **Scope every private query by the authenticated user.** Object lookups combine the requested ID with the current user's database ID and return `404` when the resource is not owned. This avoids leaking whether another user's record exists.
 - **Make Focus session delivery idempotent.** A client-generated UUID plus a unique `(user_id, client_id)` index makes retries safe. Reusing a key with a different payload is a conflict, not a duplicate.
 - **Use atomic Redis token buckets.** A Lua script performs check-and-consume in one Redis operation, so multiple workers share one clock and budget. Ordinary CRUD fails open when Redis is unavailable, while external-provider endpoints fail closed.
-- **Use forward-only Alembic migrations.** Schema changes are applied by Alembic, not at application startup. `0003_nutrition_schema` reconciles older and partially patched Nutrition schemas without dropping user tables; `0004_focus_session_client_id` adds the Focus idempotency key. A PostgreSQL advisory lock and one-shot migration service keep deployment migrations serialized.
+- **Use forward-only Alembic migrations.** Schema changes are applied by Alembic, not at application startup. `0003_nutrition_schema` reconciles older and partially patched Nutrition schemas without dropping user tables; `0004_focus_session_client_id` adds the Focus idempotency key; `0005_catalog_foods` adds the canonical catalog; `0006_global_catalog` adds translations, aliases, nutrient profiles, servings, barcodes, recipe ingredients and the source registry; `0007_catalog_cleanup` removes duplicate `food_id` indexes and clarifies the `builtin` licence label; `0008_multilingual_search` adds the derived search-term index and normalized community names; `0009_recipe_composition` adds ingredient state/edible portion/snapshots and cooked-yield metadata. A PostgreSQL advisory lock and one-shot migration service keep deployment migrations serialized.
 - **Separate base nutrition values from the current serving.** Storing `base_*` macros and `serving_grams` lets the UI rescale a meal without repeatedly scaling already-scaled numbers.
 - **Harden the deployment boundary.** Backend and bot run as non-root, base images are pinned by digest, Compose applies resource and log limits, and backup/restore scripts verify archives before use. These measures protect user data and make recovery predictable.
 
@@ -165,7 +217,7 @@ pip install -r requirements-dev.txt
 pytest
 ```
 
-The backend suite covers Telegram authentication, user isolation, CRUD validation, Focus sessions and races, Redis rate limiting, migration reconciliation, and backup/restore. PostgreSQL integration tests run only when `TEST_POSTGRES_URL` points at a disposable test database whose name contains `test`; backup/restore integration tests use the additional environment described in `backend/tests/test_backup_restore.py`. Redis integration tests require a disposable Redis service.
+The backend suite covers Telegram authentication, user isolation, CRUD validation, Focus sessions and races, Redis rate limiting, migration reconciliation, catalog import validation, catalog API merging, and backup/restore. PostgreSQL integration tests run only when `TEST_POSTGRES_URL` points at a disposable test database whose name contains `test`; backup/restore integration tests use the additional environment described in `backend/tests/test_backup_restore.py`. Redis integration tests require a disposable Redis service.
 
 Frontend:
 

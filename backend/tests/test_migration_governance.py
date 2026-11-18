@@ -27,6 +27,11 @@ FROZEN_REVISIONS = {
     "0002_add_last_city.py": "f254f77e93b11cd52f2605593eacb71e34f6e205fcdb2333af13391234841773",
     "0003_nutrition_schema.py": "2a7c9b00f4711d96dbe108a9983e0056208d416840ad31e06afe77e3f4f7e313",
     "0004_focus_session_client_id.py": "373082f525617fba49e8885d64f9e2eda5e6688a676757193833118da2042253",
+    "0005_catalog_foods.py": "52227dca8e6bfb01d67a76a816572e8984863d35183f27313445e4aaa1fcdd58",
+    "0006_global_catalog.py": "b416f8d85663b5027f76601d3221126204bd2fb4a7238e2cea9bd4d2eab5ff8f",
+    "0007_catalog_cleanup.py": "9d42422945414cfc38e3a86b76ae1a3cd01efc4d0d82141d6ebd201e1427f45c",
+    "0008_multilingual_search.py": "2934956a075845bf67d4f8ef81cdb176f68a0f103c44b2b77384949ea7bf8214",
+    "0009_recipe_composition.py": "72ef1b6598ea6f9556005065b3638edf0e02f982b9b8400d5c93277439a21ba5",
 }
 
 EXPECTED_CHAIN = {
@@ -34,6 +39,11 @@ EXPECTED_CHAIN = {
     "0002_add_last_city": "0001_initial",
     "0003_nutrition_schema": "0002_add_last_city",
     "0004_focus_session_client_id": "0003_nutrition_schema",
+    "0005_catalog_foods": "0004_focus_session_client_id",
+    "0006_global_catalog": "0005_catalog_foods",
+    "0007_catalog_cleanup": "0006_global_catalog",
+    "0008_multilingual_search": "0007_catalog_cleanup",
+    "0009_recipe_composition": "0008_multilingual_search",
 }
 
 
@@ -52,7 +62,7 @@ def test_published_migrations_are_frozen():
 
 def test_exactly_one_head_and_a_linear_chain():
     script = _script_directory()
-    assert script.get_heads() == ["0004_focus_session_client_id"]
+    assert script.get_heads() == ["0009_recipe_composition"]
 
     revisions = {revision.revision: revision.down_revision for revision in script.walk_revisions()}
     assert revisions == EXPECTED_CHAIN
@@ -169,7 +179,7 @@ def test_concurrent_migrations_serialize_on_postgres():
                     text("SELECT version_num FROM alembic_version")
                 ).fetchall()
                 assert len(rows) == 1
-                assert rows[0][0] == "0004_focus_session_client_id"
+                assert rows[0][0] == "0009_recipe_composition"
         finally:
             engine.dispose()
     finally:

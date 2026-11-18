@@ -15,8 +15,9 @@ Usage: RESTORE_CONFIRM=<new_db> [EXPECTED_ALEMBIC_HEAD=<rev>] \
 
 The target database must not exist. Connection parameters use libpq PG* env.
 Supported Alembic revisions: 0002_add_last_city, 0003_nutrition_schema,
-0004_focus_session_client_id. The verification is schema-aware and never runs
-migrations.
+0004_focus_session_client_id, 0005_catalog_foods, 0006_global_catalog,
+0007_catalog_cleanup, 0008_multilingual_search, 0009_recipe_composition.
+The verification is schema-aware and never runs migrations.
 Set ALLOW_PRODUCTION_RESTORE=YES only after an explicit change approval.
 EOF
 }
@@ -123,8 +124,28 @@ case "$head" in
         required_tables="users notes tasks focus_sessions meal_entries saved_recipes community_foods alembic_version"
         required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished meal_entries:ix_meals_user_day saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode focus_sessions:uq_focus_sessions_user_client"
         ;;
+    0005_catalog_foods)
+        required_tables="users notes tasks focus_sessions meal_entries saved_recipes community_foods catalog_foods alembic_version"
+        required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished meal_entries:ix_meals_user_day saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode focus_sessions:uq_focus_sessions_user_client catalog_foods:uq_catalog_foods_source_source_id"
+        ;;
+    0006_global_catalog)
+        required_tables="users notes tasks focus_sessions meal_entries saved_recipes community_foods catalog_foods food_sources food_translations food_aliases nutrient_profiles food_servings food_barcodes recipe_ingredients alembic_version"
+        required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished meal_entries:ix_meals_user_day saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode focus_sessions:uq_focus_sessions_user_client catalog_foods:uq_catalog_foods_source_source_id food_translations:uq_food_translations_food_language nutrient_profiles:ix_nutrient_profiles_primary food_barcodes:uq_food_barcodes_barcode"
+        ;;
+    0007_catalog_cleanup)
+        required_tables="users notes tasks focus_sessions meal_entries saved_recipes community_foods catalog_foods food_sources food_translations food_aliases nutrient_profiles food_servings food_barcodes recipe_ingredients alembic_version"
+        required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished meal_entries:ix_meals_user_day saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode focus_sessions:uq_focus_sessions_user_client catalog_foods:uq_catalog_foods_source_source_id food_translations:uq_food_translations_food_language nutrient_profiles:ix_nutrient_profiles_primary food_barcodes:uq_food_barcodes_barcode"
+        ;;
+    0008_multilingual_search)
+        required_tables="users notes tasks focus_sessions meal_entries saved_recipes community_foods catalog_foods food_sources food_translations food_aliases nutrient_profiles food_servings food_barcodes recipe_ingredients food_search_terms alembic_version"
+        required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished meal_entries:ix_meals_user_day saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode community_foods:ix_community_foods_normalized focus_sessions:uq_focus_sessions_user_client catalog_foods:uq_catalog_foods_source_source_id food_translations:uq_food_translations_food_language nutrient_profiles:ix_nutrient_profiles_primary food_barcodes:uq_food_barcodes_barcode food_search_terms:uq_food_search_terms food_search_terms:ix_food_search_terms_normalized"
+        ;;
+    0009_recipe_composition)
+        required_tables="users notes tasks focus_sessions meal_entries saved_recipes community_foods catalog_foods food_sources food_translations food_aliases nutrient_profiles food_servings food_barcodes recipe_ingredients recipe_details food_search_terms alembic_version"
+        required_indexes="users:ix_users_telegram_id notes:ix_notes_user_updated tasks:ix_tasks_user_completed focus_sessions:ix_focus_user_finished meal_entries:ix_meals_user_day saved_recipes:ix_recipes_user_name community_foods:ix_community_foods_barcode community_foods:ix_community_foods_normalized focus_sessions:uq_focus_sessions_user_client catalog_foods:uq_catalog_foods_source_source_id food_translations:uq_food_translations_food_language nutrient_profiles:ix_nutrient_profiles_primary food_barcodes:uq_food_barcodes_barcode food_search_terms:uq_food_search_terms food_search_terms:ix_food_search_terms_normalized"
+        ;;
     *)
-        echo "Restore verification failed: unsupported Alembic revision '$head' (supported: 0002_add_last_city, 0003_nutrition_schema, 0004_focus_session_client_id)" >&2
+        echo "Restore verification failed: unsupported Alembic revision '$head' (supported: 0002_add_last_city, 0003_nutrition_schema, 0004_focus_session_client_id, 0005_catalog_foods, 0006_global_catalog, 0007_catalog_cleanup, 0008_multilingual_search, 0009_recipe_composition)" >&2
         exit 1
         ;;
 esac

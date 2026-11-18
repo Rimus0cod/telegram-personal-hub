@@ -1,0 +1,5 @@
+"id","fdc_id","seq_num","amount","measure_unit_id","portion_description","modifier","gram_weight","data_points","footnote","min_year_acquired"
+"1","2001","1","1","1001","1 tbsp","tbsp","14.2","0","",""
+"2","2002","1","1","1000","1 cup","cup","0","0","",""
+"3","2002","2","1","1002","1 piece","piece","95","0","",""
+"4","2003","1","1","1000","1 cup","cup","244","0","",""

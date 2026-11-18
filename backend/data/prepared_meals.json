@@ -1,0 +1,5504 @@
+[
+  {
+    "source": "manual",
+    "source_id": "recipe:borscht-with-beef",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Borscht with beef",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Borscht with beef",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Борщ с говядиной",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Борщ з яловичиною",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "борщ",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "борщ",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "bowl",
+        "grams": 300,
+        "description": "1 bowl",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 2000,
+      "portion_count": 6,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:lean-beef",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685576",
+          "grams": 300,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:white-cabbage",
+          "grams": 200,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 300,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 100,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685580",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:green-borscht",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Green borscht with egg",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Green borscht with egg",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Зелёный борщ с яйцом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Зелений борщ з яйцем",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "зелёный борщ",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "зелений борщ",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "bowl",
+        "grams": 300,
+        "description": "1 bowl",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1800,
+      "portion_count": 6,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 350,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1999633",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 80,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 80,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:chicken-noodle-soup",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Chicken soup with noodles",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Chicken soup with noodles",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Куриный суп с лапшой",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Курячий суп з локшиною",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "куриный суп",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "курячий суп",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "bowl",
+        "grams": 300,
+        "description": "1 bowl",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1800,
+      "portion_count": 6,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2646170",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 300,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 100,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346405",
+          "grams": 60,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-pasta",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:vegetable-soup",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Vegetable soup",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Vegetable soup",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Овощной суп",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Овочевий суп",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "овощной суп",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "овочевий суп",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "bowl",
+        "grams": 300,
+        "description": "1 bowl",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1800,
+      "portion_count": 6,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 300,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 100,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2644291",
+          "grams": 120,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "2710826",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346405",
+          "grams": 60,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685582",
+          "grams": 120,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:tomato-soup",
+    "type": "prepared_meal",
+    "category": "Супы",
+    "original_language": "en",
+    "name_original": "Tomato soup with cream",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Tomato soup with cream",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Томатный суп со сливками",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Томатний суп зі вершками",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "томатный суп",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "томатний суп",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "bowl",
+        "grams": 300,
+        "description": "1 bowl",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1200,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2685582",
+          "grams": 600,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346386",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:mashed-potatoes-sour-cream",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Mashed potatoes with sour cream",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Mashed potatoes with sour cream",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Картофельное пюре со сметаной",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Картопляне пюре зі сметаною",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "картофельное пюре",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "картопляне пюре",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 150,
+        "description": "150 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1200,
+      "portion_count": 8,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 1000,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346387",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:fried-potatoes-onion",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Pan-fried potatoes with onion",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Pan-fried potatoes with onion",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Жареный картофель с луком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Смажена картопля з цибулею",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "жареная картошка",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "смажена картопля",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 800,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 150,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 40,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:boiled-potatoes-garlic",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Boiled potatoes with garlic",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Boiled potatoes with garlic",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Варёный картофель с чесноком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Варена картопля з часником",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "варёная картошка",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "варена картопля",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 950,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 900,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:deruny",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Potato pancakes (deruny)",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Potato pancakes (deruny)",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Драники",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Деруни",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "драники",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "деруни",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 150,
+        "description": "3 pancakes",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 700,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 700,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 80,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 40,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:vareniki-potato",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Vareniki with potato",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Vareniki with potato",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Вареники с картофелем",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Вареники з картоплею",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "вареники",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "вареники",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1000,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 500,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 80,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:vareniki-cottage",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Vareniki with cottage cheese",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Vareniki with cottage cheese",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Вареники с творогом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Вареники з сиром",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "вареники с творогом",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "вареники з сиром",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 190,
+        "description": "190 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 950,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:cottage-cheese-5",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "746784",
+          "grams": 40,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:holubtsi",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Cabbage rolls with beef and rice",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Cabbage rolls with beef and rice",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Голубцы с говядиной и рисом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Голубці з яловичиною та рисом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "голубцы",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "голубці",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 220,
+        "description": "2 rolls",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1100,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:white-cabbage",
+          "grams": 500,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-white-rice",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2514743",
+          "grams": 350,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 80,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685582",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:buckwheat-mushrooms",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Buckwheat with mushrooms",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Buckwheat with mushrooms",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Гречка с грибами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Гречка з грибами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "гречка с грибами",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "гречка з грибами",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-buckwheat",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1999629",
+          "grams": 300,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 120,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:buckwheat-beef",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Buckwheat with beef",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Buckwheat with beef",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Гречка с говядиной",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Гречка з яловичиною",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "гречка с мясом",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "гречка з м'ясом",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 230,
+        "description": "230 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 950,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-buckwheat",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:lean-beef",
+          "grams": 350,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 120,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:syrniki-sour-cream",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Syrniki with sour cream",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Syrniki with sour cream",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Сырники со сметаной",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Сирники зі сметаною",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "сырники",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "сирники",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 120,
+        "description": "2 syrniki",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 650,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:cottage-cheese-5",
+          "grams": 500,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "746784",
+          "grams": 40,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346387",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:thin-pancakes",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Thin pancakes with milk",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Thin pancakes with milk",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Блины на молоке",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Млинці на молоці",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "блины",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "млинці",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 80,
+        "description": "2 pancakes",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 500,
+      "portion_count": 6,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 200,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "746784",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:apple-fritters",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Apple fritters",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Apple fritters",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Оладьи с яблоком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Оладки з яблуком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "оладьи",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "оладки",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 120,
+        "description": "3 fritters",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 600,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 200,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:apple",
+          "grams": 200,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "746784",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:pilaf-beef",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Pilaf with beef",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Pilaf with beef",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Плов с говядиной",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Плов з яловичиною",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "плов",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "плов",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 240,
+        "description": "240 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1200,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-white-rice",
+          "grams": 350,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:lean-beef",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 200,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 150,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 40,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:stewed-cabbage",
+    "type": "prepared_meal",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Stewed cabbage",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Stewed cabbage",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Тушёная капуста",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Тушкована капуста",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "тушёная капуста",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "тушкована капуста",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 220,
+        "description": "220 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:white-cabbage",
+          "grams": 800,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 120,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 120,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685580",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:vegetable-ragout",
+    "type": "prepared_meal",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Vegetable ragout",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Vegetable ragout",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Овощное рагу",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Овочеве рагу",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "овощное рагу",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "овочеве рагу",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 250,
+        "description": "250 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1000,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 400,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 150,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 120,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685568",
+          "grams": 250,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2258590",
+          "grams": 150,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685582",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:olivier-chicken",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Olivier salad with chicken",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Olivier salad with chicken",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Оливье с курицей",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Олів'є з куркою",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "оливье",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "олів'є",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 180,
+        "description": "180 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 300,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 100,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2644291",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:cucumber",
+          "grams": 150,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2646170",
+          "grams": 200,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346387",
+          "grams": 120,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:beet-salad",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Beetroot salad with garlic",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Beetroot salad with garlic",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Свёкольный салат с чесноком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Салат з буряка з часником",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "свекольный салат",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "салат з буряка",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 160,
+        "description": "160 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 500,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2685576",
+          "grams": 400,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346387",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:hard-cheese",
+          "grams": 40,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:pasta-bolognese",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Pasta Bolognese",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Pasta Bolognese",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Паста болоньезе",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Паста болоньєзе",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "паста болоньезе",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "паста болоньєзе",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 250,
+        "description": "250 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1300,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-pasta",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2514743",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685582",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:carbonara",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Spaghetti carbonara",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Spaghetti carbonara",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Спагетти карбонара",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Спагеті карбонара",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "карбонара",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "карбонара",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 230,
+        "description": "230 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 700,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-pasta",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "749420",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "325036",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:lasagna",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Lasagna with beef",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Lasagna with beef",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Лазанья с говядиной",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Лазанья з яловичиною",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "лазанья",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "лазанья",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 250,
+        "description": "250 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1500,
+      "portion_count": 6,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2514743",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685582",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "329370",
+          "grams": 200,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "325036",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:risotto-mushrooms",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Mushroom risotto",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Mushroom risotto",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Ризотто с грибами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Ризото з грибами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "ризотто",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "ризото",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 270,
+        "description": "270 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1100,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-white-rice",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1999629",
+          "grams": 250,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "325036",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:fried-rice-egg",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Fried rice with egg and vegetables",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Fried rice with egg and vegetables",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Жареный рис с яйцом и овощами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Смажений рис з яйцем та овочами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "жареный рис",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "смажений рис",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 220,
+        "description": "220 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-white-rice",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2644291",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 100,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 80,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:chicken-tomato-cream",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Chicken in creamy tomato sauce",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Chicken in creamy tomato sauce",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Курица в сливочно-томатном соусе",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Курка в вершково-томатному соусі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "курица в томатном соусе",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "курка в томатному соусі",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 220,
+        "description": "220 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2646170",
+          "grams": 500,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 120,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685582",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346386",
+          "grams": 120,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:mashed-sweet-potato",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Mashed sweet potato",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Mashed sweet potato",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Пюре из батата",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Пюре з батата",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "батат",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "батат",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 800,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2346404",
+          "grams": 900,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:greek-salad-feta",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Greek salad with feta",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Greek salad with feta",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Греческий салат с фетой",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Грецький салат з фетою",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "греческий салат",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "грецький салат",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 600,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:tomato",
+          "grams": 300,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:cucumber",
+          "grams": 200,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2259796",
+          "grams": 120,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 60,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:caesar-chicken",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Caesar-style chicken salad",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Caesar-style chicken salad",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Салат «Цезарь» с курицей",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Салат «Цезар» з куркою",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "цезарь",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "цезар",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 270,
+        "description": "270 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 550,
+      "portion_count": 2,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "746769",
+          "grams": 200,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2646170",
+          "grams": 200,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "325036",
+          "grams": 40,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2758993",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "2259793",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 15,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:hummus-homemade",
+    "type": "prepared_meal",
+    "category": "Закуски",
+    "original_language": "en",
+    "name_original": "Homemade hummus",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Homemade hummus",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Домашний хумус",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Домашній хумус",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "хумус",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "хумус",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 100,
+        "description": "100 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 500,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2644288",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 15,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:falafel",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Falafel",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Falafel",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Фалафель",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Фалафель",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "фалафель",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "фалафель",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 110,
+        "description": "4 falafel",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 450,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2644288",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:chili-con-carne",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Chili con carne",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Chili con carne",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Чили кон карне",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Чилі кон карне",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "чили",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "чилі",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 240,
+        "description": "240 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1200,
+      "portion_count": 5,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2514743",
+          "grams": 500,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2644289",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685582",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 120,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 15,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2710826",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2258590",
+          "grams": 150,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:shepherds-pie",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Shepherd's pie",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Shepherd's pie",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Картофельная запеканка с мясом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Картопляна запіканка з м'ясом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "пастуший пирог",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "пастуший пиріг",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 230,
+        "description": "230 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1400,
+      "portion_count": 6,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2514743",
+          "grams": 450,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 700,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 120,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 100,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2644291",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "2710826",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:fish-and-potatoes",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Fried cod with potatoes",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Fried cod with potatoes",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Жареная треска с картофелем",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Смажена тріска з картоплею",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "треска с картофелем",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "тріска з картоплею",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 300,
+        "description": "300 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2684444",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 500,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "789951",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:baked-salmon-vegetables",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Baked salmon with vegetables",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Baked salmon with vegetables",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Запечённый лосось с овощами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Запечений лосось з овочами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "лосось с овощами",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "лосось з овочами",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 400,
+        "description": "400 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 800,
+      "portion_count": 2,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2684441",
+          "grams": 350,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:broccoli",
+          "grams": 200,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 150,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685568",
+          "grams": 150,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:tuna-salad",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Tuna salad with egg",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Tuna salad with egg",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Салат с тунцом и яйцом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Салат з тунцем і яйцем",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "салат с тунцом",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "салат з тунцем",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 600,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "334194",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:cucumber",
+          "grams": 150,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 50,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2346387",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:tomato-mozzarella",
+    "type": "prepared_meal",
+    "category": "Салаты",
+    "original_language": "en",
+    "name_original": "Tomato and mozzarella salad",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Tomato and mozzarella salad",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Салат из томатов и моцареллы",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Салат з томатів і моцарели",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "томаты с моцареллой",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "томати з моцарелою",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 250,
+        "description": "250 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 500,
+      "portion_count": 2,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:tomato",
+          "grams": 300,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "329370",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:rice-boiled",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Boiled rice",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Boiled rice",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рис отварной",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Рис відварений",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "рис",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "рис",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 220,
+        "description": "220 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-white-rice",
+          "grams": 350,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:buckwheat-porridge",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Buckwheat porridge",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Buckwheat porridge",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Гречневая каша",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Гречана каша",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "гречка",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "гречка",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 800,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-buckwheat",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:oatmeal-apple",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Oatmeal with apple",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Oatmeal with apple",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Овсяная каша с яблоком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Вівсяна каша з яблуком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "овсянка с яблоком",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "вівсянка з яблуком",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 230,
+        "description": "230 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 700,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-oats",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:apple",
+          "grams": 150,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "746784",
+          "grams": 15,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:pasta-cheese",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Pasta with cheese",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Pasta with cheese",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Макароны с сыром",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Макарони з сиром",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "макароны с сыром",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "макарони з сиром",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 260,
+        "description": "260 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 800,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-pasta",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:hard-cheese",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:omelette-cheese",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Omelette with cheese",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Omelette with cheese",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Омлет с сыром",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Омлет з сиром",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "омлет с сыром",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "омлет з сиром",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 400,
+      "portion_count": 2,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 200,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:hard-cheese",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:fried-eggs-tomato",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Fried eggs with tomato",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Fried eggs with tomato",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Яичница с помидорами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Яєчня з помідорами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "яичница с помидорами",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "яєчня з помідорами",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 400,
+      "portion_count": 2,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 150,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:tomato",
+          "grams": 200,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 15,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:chicken-vegetables-baked",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Chicken breast baked with vegetables",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Chicken breast baked with vegetables",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Куриная грудка, запечённая с овощами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Куряча грудка, запечена з овочами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "курица с овощами",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "курка з овочами",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 300,
+        "description": "300 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2646170",
+          "grams": 450,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685568",
+          "grams": 200,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2258590",
+          "grams": 150,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:beef-stewed-vegetables",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Beef stewed with vegetables",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Beef stewed with vegetables",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Говядина, тушённая с овощами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Яловичина, тушкована з овочами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "тушёная говядина",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "тушкована яловичина",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 250,
+        "description": "250 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 1000,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:lean-beef",
+          "grams": 450,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 120,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 150,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685580",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:chicken-meatballs",
+    "type": "prepared_meal",
+    "category": "Мясные блюда",
+    "original_language": "en",
+    "name_original": "Chicken meatballs",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Chicken meatballs",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Куриные тефтели",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Курячі тефтелі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "куриные тефтели",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "курячі тефтелі",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 175,
+        "description": "3 meatballs",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 700,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2514746",
+          "grams": 500,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2758993",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:milk-2-5",
+          "grams": 60,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 80,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:cod-cutlets",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Cod cutlets",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Cod cutlets",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Котлеты из трески",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Котлети з тріски",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "рыбные котлеты",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "рибні котлети",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 160,
+        "description": "2 cutlets",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 650,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2684444",
+          "grams": 450,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 50,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2758993",
+          "grams": 80,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 80,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:baked-cod-vegetables",
+    "type": "prepared_meal",
+    "category": "Рыбные блюда",
+    "original_language": "en",
+    "name_original": "Baked cod with potatoes",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Baked cod with potatoes",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Запечённая треска с картофелем",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Запечена тріска з картоплею",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "треска запечённая",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "тріска запечена",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 300,
+        "description": "300 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 900,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2684444",
+          "grams": 400,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:potato",
+          "grams": 400,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 100,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 20,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:steamed-vegetables",
+    "type": "prepared_meal",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Steamed vegetables",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Steamed vegetables",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Овощи на пару",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Овочі на парі",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "овощи на пару",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "овочі на парі",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 230,
+        "description": "230 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 700,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:broccoli",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 200,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2685568",
+          "grams": 200,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2258590",
+          "grams": 150,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:rice-vegetables",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Rice with vegetables",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Rice with vegetables",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рис с овощами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Рис з овочами",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "рис с овощами",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "рис з овочами",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 240,
+        "description": "240 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 950,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-white-rice",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 120,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 100,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2644291",
+          "grams": 120,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "2710826",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:buckwheat-egg",
+    "type": "prepared_meal",
+    "category": "Гарниры",
+    "original_language": "en",
+    "name_original": "Buckwheat with egg",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Buckwheat with egg",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Гречка с яйцом",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Гречка з яйцем",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "гречка с яйцом",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "гречка з яйцем",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 250,
+        "description": "250 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 750,
+      "portion_count": 3,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-buckwheat",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 80,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 15,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:cottage-apple",
+    "type": "prepared_meal",
+    "category": "Завтраки",
+    "original_language": "en",
+    "name_original": "Cottage cheese with apple",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Cottage cheese with apple",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Творог с яблоком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Сир з яблуком",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "творог с яблоком",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "сир з яблуком",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 250,
+        "description": "250 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 500,
+      "portion_count": 2,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:cottage-cheese-5",
+          "grams": 300,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:apple",
+          "grams": 200,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "746784",
+          "grams": 15,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:shrimp-rice",
+    "type": "prepared_meal",
+    "category": "Готовые блюда",
+    "original_language": "en",
+    "name_original": "Shrimp fried rice",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Shrimp fried rice",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рис с креветками",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Рис з креветками",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "рис с креветками",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "рис з креветками",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 210,
+        "description": "210 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 850,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "pilot:dry-white-rice",
+          "grams": 280,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2684443",
+          "grams": 250,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:egg",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "2644291",
+          "grams": 100,
+          "edible_portion": 1.0,
+          "preparation_state": "cooked"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:carrot",
+          "grams": 80,
+          "edible_portion": 0.85,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 25,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  },
+  {
+    "source": "manual",
+    "source_id": "recipe:eggplant-stew",
+    "type": "prepared_meal",
+    "category": "Овощи",
+    "original_language": "en",
+    "name_original": "Eggplant stew",
+    "translations": [
+      {
+        "language": "en",
+        "name": "Eggplant stew",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved",
+        "is_primary": true
+      },
+      {
+        "language": "ru",
+        "name": "Рагу из баклажанов",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      },
+      {
+        "language": "uk",
+        "name": "Рагу з баклажанів",
+        "translation_source": "manual",
+        "translation_status": "verified",
+        "review_status": "approved"
+      }
+    ],
+    "aliases": [
+      {
+        "language": "ru",
+        "alias": "баклажаны тушёные",
+        "alias_type": "search"
+      },
+      {
+        "language": "uk",
+        "alias": "баклажани тушковані",
+        "alias_type": "search"
+      }
+    ],
+    "servings": [
+      {
+        "amount": 1,
+        "unit": "serving",
+        "grams": 200,
+        "description": "200 g",
+        "is_default": true
+      }
+    ],
+    "preparation_state": "cooked",
+    "approximate": true,
+    "dataset_version": "recipes-2026-11",
+    "recipe": {
+      "cooked_weight_grams": 800,
+      "portion_count": 4,
+      "quality": "estimated",
+      "notes": "Project-authored recipe; cooked yield estimated, salt and water excluded.",
+      "ingredients": [
+        {
+          "source": "usda",
+          "source_id": "2685577",
+          "grams": 400,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:tomato",
+          "grams": 250,
+          "edible_portion": 0.95,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "790646",
+          "grams": 120,
+          "edible_portion": 0.9,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "1104647",
+          "grams": 10,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        },
+        {
+          "source": "usda",
+          "source_id": "pilot:olive-oil",
+          "grams": 30,
+          "edible_portion": 1.0,
+          "preparation_state": "raw"
+        }
+      ]
+    }
+  }
+]
